@@ -1,0 +1,19 @@
+{
+  "name": "learnyourself",
+  "version": "1.0.0",
+  "description": "Service for learning by screencast",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dimaspirit/learnyourself.git"
+  },
+  "author": "dimaspirit",
+  "license": "Apache License 2.0",
+  "bugs": {
+    "url": "https://github.com/dimaspirit/learnyourself/issues"
+  },
+  "homepage": "https://github.com/dimaspirit/learnyourself"
+}

@@ -1,0 +1,22 @@
+# Node
+npm-debug.log
+ # node modules directory
+node_modules
+bower_components
+logs
+*.log
+
+# Sublime Text project files
+*.sublime-*
+
+# PHP / WEB Storm
+.idea/
+
+# OS generated files
+.DS_Store
+
+## Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
