@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/dimaspirit/learnyourself/issues"
   },
-  "homepage": "https://github.com/dimaspirit/learnyourself"
+  "homepage": "https://github.com/dimaspirit/learnyourself",
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  },
+  "dependencies": {
+    "grunt-bower-concat": "^0.4.0"
+  }
 }
