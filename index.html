@@ -4,13 +4,25 @@
 	<meta charset="UTF-8">
 	<title>App</title>
 
-	<link rel="stylesheet" type="text/css" href="dev/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="src/css/styles.css">
+
 </head>
 <body>
-<p>Hello</p>
 
+<div id="courses" class="courses">
 
-	<script src="build/js/libs.min.js"></script>
-	<script src="build/js/app.min.js"></script>
+</div>
+	<script type="text/template" id="course_view">
+		<h4><%= name %></h4>
+		<h6><%= description %></h6>
+		<span>(<%= lessons.length %> lesson)</span>
+	</script>
+
+	<!-- libs -->
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/underscore/underscore.js"></script>
+	<script src="bower_components/backbone/backbone.js"></script>
+	<!-- app -->
+	<script src="src/js/app.js"></script>
 </body>
 </html>
