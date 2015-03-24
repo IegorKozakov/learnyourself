@@ -1,3 +1,9 @@
+var helper = {
+  getTpl : function(id){
+    return _.template($('#' + id).html());
+  }
+}
+
 var coursesList = {
   "courses" : [
     {
@@ -56,14 +62,13 @@ var CoursesCollection = Backbone.Collection.extend({
 var CourseView = Backbone.View.extend({
 	tagName: 'div',
 	className: 'course',
-	tpl: '#course_view',
+	tpl: 'course_view',
 
 	initialize: function(){
 		this.render();
-		//this.listenTo(this.model, "change", this.render);
 	},
 	render: function(){
-		var tpl = _.template( $(this.tpl).html() );
+		var tpl = helper.getTpl(this.tpl);
 		this.$el.html( tpl(this.model.toJSON()) );
 	}
 });
@@ -74,15 +79,13 @@ var CoursesView = Backbone.View.extend({
 
 	initialize: function(){
     this.render();
-
-    this.render();
-		console.log(this.collection);
 	},
 	render: function(){
     this.$el.empty();
+
 		this.collection.each(function(course){
-      console.log(course);
 			var courseView = new CourseView({model: course});
+
       this.$el.append(courseView.$el);
 		}, this);
     return this;
