@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>App</title>
+    <meta charset="UTF-8">
+    <title>App</title>
 
-	<link rel="stylesheet" type="text/css" href="src/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="src/css/styles.css">
 
 </head>
 <body>
 
-<div id="courses" class="courses">
+<!-- <div id="courses" class="courses">
 
-</div>
-	<script type="text/template" id="course_view">
-		<h4><%= name %></h4>
-		<h6><%= description %></h6>
-		<span><%= lessons.length %> <%= (lessons.length > 1) ? 'lessons' : 'lesson' %> </span>
-	</script>
+</div> -->
+    <script type="text/template" id="course_view">
+    //  <h4><%= name %></h4>
+    //  <h6><%= description %></h6>
+    //  <span><%= lessons.length %> <%= (lessons.length > 1) ? 'lessons' : 'lesson' %> </span>
+    </script>
 
-	<!-- libs -->
-	<script src="bower_components/jquery/dist/jquery.js"></script>
-	<script src="bower_components/underscore/underscore.js"></script>
-	<script src="bower_components/backbone/backbone.js"></script>
-	<!-- custom -->
-	<script src="src/js/common.js"></script>
-	<script src="src/js/helpers.js"></script>
-	<script src="src/js/app.js"></script>
+    <!-- libs -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+
+    <script src="src/js/common.js"></script>
+    <script src="src/js/helpers.js"></script>
+
+    <!-- app -->
+    <script src="src/js/app/models.js"></script>
+    <script src="src/js/app/collections.js"></script>
+    <script src="src/js/app/views.js"></script>
+    <script src="src/js/app/router.js"></script>
+
+
+    <script src="src/js/main.js"></script>
 </body>
 </html>
