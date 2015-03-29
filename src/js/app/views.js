@@ -9,7 +9,8 @@
      */
     LY.Views.App = Backbone.View.extend({
         initialize: function() {
-            console.log(this.collection.toJSON());
+            var courses = new LY.Views.Courses({collection: LY.courses}).render();
+            $('.main').append(courses.render().el);
         }
     })
 
@@ -26,7 +27,6 @@
         },
         addOne: function(course) {
             var coursePreview = new LY.Views.coursePreview({ model: course});
-            console.log(course);
             this.$el.append(coursePreview.render().el);
         }
     });
@@ -34,13 +34,13 @@
     /**
      * View of preview course
      */
-
     LY.Views.coursePreview = Backbone.View.extend({
-        className: 'courses_preview',
-        tpl: '',
+        className: 'coursesPreview',
+        tpl: LY.Helpers.getTpl('previewCourse'),
 
         render: function() {
-            this.$el.html();
+            this.$el.html( this.tpl( this.model.toJSON() ) );
+            return this;
         }
     });
 

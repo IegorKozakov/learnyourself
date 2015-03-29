@@ -9,19 +9,24 @@
 </head>
 <body>
 
-<!-- <div id="courses" class="courses">
+    <main class="main">
 
-</div> -->
-    <script type="text/template" id="course_view">
-    //  <h4><%= name %></h4>
-    //  <h6><%= description %></h6>
-    //  <span><%= lessons.length %> <%= (lessons.length > 1) ? 'lessons' : 'lesson' %> </span>
+    </main>
+
+
+
+    <!-- tpl -->
+    <script id="previewCourse" type="text/template">
+        <h4>{{name}} </h4>
+        <h6>{{description}} </h6>
+        <span>{{lessons.length}} </span>
     </script>
 
     <!-- libs -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/backbone/backbone.js"></script>
+    <script src="bower_components/handlebars/handlebars.js"></script>
 
     <script src="src/js/common.js"></script>
     <script src="src/js/helpers.js"></script>
@@ -31,7 +36,6 @@
     <script src="src/js/app/collections.js"></script>
     <script src="src/js/app/views.js"></script>
     <script src="src/js/app/router.js"></script>
-
 
     <script src="src/js/main.js"></script>
 </body>

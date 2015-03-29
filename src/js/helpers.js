@@ -15,7 +15,7 @@
    * @return {[html]}      [compiles html of template]
    */
   LY.Helpers.getTpl = function(id) {
-    return _.template($('#' + id).html());
+    return Handlebars.compile( $('#' + id).html() );
   };
 
 }(window, jQuery));
