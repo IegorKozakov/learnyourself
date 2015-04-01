@@ -5,31 +5,42 @@
     LY.namespace('Router');
 
     LY.Router = Backbone.Router.extend({
+        $main: $('.main'),
+        loadView : function(view) {
+            this.view && this.view.remove();
+            this.view = view;
+            return this;
+        },
+        updateView: function(view) {
+            this.loadView(view);
+            this.$main.append(view.render().el);
+        },
         routes: {
-            '' : 'index'
-            // ,
-            // 'about(/)' : 'about',
-            // 'course:idCourse(/)' : 'course',
+            '' : 'index',
+            'about(/)' : 'about',
+            'course:idCourse(/)' : 'course',
             // 'course:idCourse/lesson:idLesson(/)': 'lesson',
-            // '*query' : 'default'
+            '*query' : 'default'
         },
 
         index: function() {
-            console.log('index page');
+            var that = this,
+                coursesPreview = new LY.Collections.CoursesPreview();
+
+            coursesPreview.fetch()
+                .then(function(){
+                    that.updateView(new LY.Views.CoursesPreview({collection: coursesPreview}));
+                });
+        },
+        course: function (idCourse) {
+            console.log(idCourse);
+        },
+        about: function() {
+            this.updateView(new LY.Views.aboutPage());
+        },
+        default: function(query) {
+            console.log('WTF? We don\'t know anythings about ' + query);
         }
-        // ,
-        // about: function() {
-        //     console.log('about page');
-        // },
-        // course: function(idCourse) {
-        //     console.log('page of course #' + idCourse );
-        // },
-        // lesson: function(idCourse, idLesson) {
-        //     console.log('page of course #' + idCourse + ' - lesson #' + idLesson);
-        // },
-        // default: function(query) {
-        //     console.log('WTF? We don\'t know anythings about ' + query);
-        // }
-  });
+    });
 
 }(window, jQuery, _, Backbone));

@@ -4,8 +4,10 @@
  */
 
 ;
-(function(window, $){
+(function(window, $, Handlebars){
   'use strict';
+
+  var PATH_TO_STATIC_PAGE = 'static_page/';
 
   LY.namespace('Helpers');
 
@@ -14,8 +16,39 @@
    * @param  {[string]} id [id of tag]
    * @return {[html]}      [compiles html of template]
    */
-  LY.Helpers.getTpl = function(id) {
-    return Handlebars.compile( $('#' + id).html() );
-  };
+    LY.Helpers.getTpl = function(id) {
+        return Handlebars.compile( $('#' + id).html() );
+    };
 
-}(window, jQuery));
+  /**
+   * [getStaticPage return static html page]
+   * @param  {[string]} name [name of html page (without .html)]
+   * @return {[string]} contentHtml [all contents from static page]
+   */
+    LY.Helpers.getStaticPage = function(name) {
+        var contentHtml = '';
+
+        $.ajax({
+            url: PATH_TO_STATIC_PAGE + name + '.html',
+            cache: false,
+            async: false,
+            dataType: "html",
+            success: function(data){
+                contentHtml = data;
+            }
+        });
+
+        return contentHtml;
+    };
+
+    /**
+     * [Handlebars custom function helper]
+     * @param  {[number]} val  [value]
+     * @param  {[string]} word [word which transform]
+     * @return {[string]}      [transformed word]
+     */
+    Handlebars.registerHelper('makeDeclension', function(val, word) {
+        return (val > 1) ? word+'s' : word;
+    });
+
+}(window, jQuery, Handlebars));

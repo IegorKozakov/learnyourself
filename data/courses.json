@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Start work with Backbone.js",
         "description": "In this course your understand how to work SPA app and we will create clone of Gmail.",
-        "tags": "Backbone, SPA app, JavaScript",
+        "tags": ["Backbone", "JavaScript", "Front-End development"],
         "lang": "ru",
         "authors": [
             {
@@ -23,14 +23,24 @@
                 "name": "What is Backbone?",
                 "description": "In this lesson we understand what is it backbobe.js",
                 "url": "O7gp4VL0otA"
+            },
+            {
+                "name": "What is Backbone?",
+                "description": "In this lesson we understand what is it backbobe.js",
+                "url": "O7gp4VL0otA"
             }
         ]
     },
-     {
+    {
         "id": 2,
         "name": "Start work with asd.js",
         "description": "In this course your understand how to work SPA app and we will create clone of Gmail.",
         "tags": "Backbone, SPA app, JavaScript",
+        "authors": [
+            {
+                "name": "Sorax"
+            }
+        ],
         "lessons": [
             {
                 "name": "What is Backbone?",

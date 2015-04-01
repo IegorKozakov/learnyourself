@@ -4,13 +4,12 @@
 
     LY.namespace('Models');
 
+    LY.Models.CoursePreview = Backbone.Model.extend({
+        'lang': 'ru'
+    });
+
     LY.Models.Course = Backbone.Model.extend({
-        defaults: {
-            'lang': 'en',
-            'edu': {
-            'finishLessons': []
-            }
-        }
+
     });
 
 }(window, jQuery, _, Backbone));

@@ -5,28 +5,17 @@
     LY.namespace('Views');
 
     /**
-     * Global View
-     */
-    LY.Views.App = Backbone.View.extend({
-        initialize: function() {
-            var courses = new LY.Views.Courses({collection: LY.courses}).render();
-            $('.main').append(courses.render().el);
-        }
-    })
-
-    /**
      * View of list of courses
      */
-    LY.Views.Courses = Backbone.View.extend({
-        className: 'courses',
+    LY.Views.CoursesPreview = Backbone.View.extend({
+        className: 'coursesPreview',
 
         render: function(){
-            this.$el.empty();
             this.collection.each( this.addOne, this);
             return this;
         },
         addOne: function(course) {
-            var coursePreview = new LY.Views.coursePreview({ model: course});
+            var coursePreview = new LY.Views.CoursePreview({ model: course});
             this.$el.append(coursePreview.render().el);
         }
     });
@@ -34,8 +23,8 @@
     /**
      * View of preview course
      */
-    LY.Views.coursePreview = Backbone.View.extend({
-        className: 'coursesPreview',
+    LY.Views.CoursePreview = Backbone.View.extend({
+        className: 'coursePreview',
         tpl: LY.Helpers.getTpl('previewCourse'),
 
         render: function() {
@@ -43,6 +32,19 @@
             return this;
         }
     });
+
+    /**
+     * View of about page
+     */
+    LY.Views.aboutPage = Backbone.View.extend({
+        tpl: 'about',
+        render: function(){
+            var content = LY.Helpers.getStaticPage('about');
+            $(this.el).html(content);
+
+            return this;
+        }
+    })
 
 
 }(window, jQuery, _, Backbone));

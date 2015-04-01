@@ -4,8 +4,8 @@
 
     LY.namespace('Collections');
 
-    LY.Collections.Courses = Backbone.Collection.extend({
-        model: LY.Models.Course,
+    LY.Collections.CoursesPreview = Backbone.Collection.extend({
+        model: LY.Models.CoursePreview,
         url: '/data/courses.json'
     });
 
