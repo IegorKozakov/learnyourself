@@ -18,8 +18,8 @@
         routes: {
             '' : 'index',
             'about(/)' : 'about',
-            'course:idCourse(/)' : 'course',
-            // 'course:idCourse/lesson:idLesson(/)': 'lesson',
+            'course/:idCourse(/)' : 'course',
+            'course/:idCourse/lesson/:idLesson' : 'lesson',
             '*query' : 'default'
         },
 
@@ -33,7 +33,19 @@
                 });
         },
         course: function (idCourse) {
-            console.log(idCourse);
+            var that = this;
+
+            $.getJSON('/data/courses.json', function(json, textStatus) {
+                var lessonObj = _.find(json, function(i) { return i.id == idCourse });
+
+                var courseDetail = new LY.Models.CourseDetail(lessonObj);
+                var courseDetailView = new LY.Views.CourseDetail({model: courseDetail});
+
+                that.updateView(courseDetailView);
+            });
+        },
+        lesson: function(idCourse, idLesson) {
+            console.log(idCourse, idLesson);
         },
         about: function() {
             this.updateView(new LY.Views.aboutPage());

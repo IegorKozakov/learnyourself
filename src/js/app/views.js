@@ -34,6 +34,19 @@
     });
 
     /**
+     * View of Lesson details
+     */
+    LY.Views.CourseDetail = Backbone.View.extend({
+        className: 'course_detail',
+        tpl: LY.Helpers.getTpl('courseDetail'),
+
+        render: function() {
+            this.$el.html( this.tpl( this.model.toJSON() ) );
+            return this;
+        }
+    });
+
+    /**
      * View of about page
      */
     LY.Views.aboutPage = Backbone.View.extend({
