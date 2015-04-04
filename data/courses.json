@@ -1,52 +1,68 @@
 [
-    {
-        "id": 1,
-        "name": "Start work with Backbone.js",
-        "description": "In this course your understand how to work SPA app and we will create clone of Gmail.",
-        "tags": ["Backbone", "JavaScript", "Front-End development"],
-        "lang": "ru",
-        "authors": [
-            {
-                "name": "LoftBlog",
-                "site": "http://loftblog.ru/",
-                "email": "loftblog@lb.ru",
-                "socialHubs": [
-                    {
-                    "twitter": "loftblog",
-                    "facebook": "loftblog"
-                    }
-                ]
-            }
-        ],
-        "lessons": [
-            {
-                "name": "What is Backbone?",
-                "description": "In this lesson we understand what is it backbobe.js",
-                "url": "O7gp4VL0otA"
-            },
-            {
-                "name": "What is Backbone?",
-                "description": "In this lesson we understand what is it backbobe.js",
-                "url": "O7gp4VL0otA"
-            }
+  {
+    "id": 1,
+    "title": "Javascript-джедай" ,
+    "description": "Основы языка Javascript, Javascript в бразуре, JSON, регулярные выражения, а так же ES5 методы массова",
+    "tags": ["Javascript", "JSON", "ES5", "Регулярные выражения"],
+    "lang": "ru",
+    "authors": [
+      {
+        "name": "Sorax",
+        "site": "http://sorax.org/",
+        "email": "art.sorax@gmail.com",
+        "social": {
+          "facebook": "soraxtuts",
+          "vk": "art.sorax",
+          "youtube": "ArtSorax"
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "title": "Введение",
+        "description": "Базовая информация о языке Javascript и о курсе в целом",
+        "url": "H6G63NKRSi8",
+        "tools": [
+          {
+            "title": "Парсер языка JAvascript",
+            "url": "http://esprima.org/demo/parse.html"
+          }
         ]
-    },
-    {
-        "id": 2,
-        "name": "Start work with asd.js",
-        "description": "In this course your understand how to work SPA app and we will create clone of Gmail.",
-        "tags": "Backbone, SPA app, JavaScript",
-        "authors": [
-            {
-                "name": "Sorax"
-            }
-        ],
-        "lessons": [
-            {
-                "name": "What is Backbone?",
-                "description": "In this lesson we understand what is it backbobe.js",
-                "url": "O7gp4VL0otA"
-            }
-        ]
-    }
+      },
+      {
+        "title": "Инструкции",
+        "url": "5JEkiHHUOFs",
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Основы Javascript",
+    "description": "Основы языка Javascript, Javascript в бразуре, события в Javascript",
+    "tags": ["Javascript"],
+    "lang": "ru",
+    "authors": [
+      {
+        "name": "LoftBlog",
+        "site": "http://loftblog.ru/",
+        "email": "info@loftblog.ru",
+        "social": {
+          "facebook": "loftblog",
+          "vk": "itloft",
+          "youtube": "loftblog"
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "title": "Введение",
+        "description": "Общие сведения языка Javascript, история создания языка, основные типы данных",
+        "url": "n0sPFaLsNeI"
+      },
+      {
+        "title": "Примитивные и объектные данные, обёртки",
+        "url": "p-Ob8gEJBJs"
+      } 
+    ]
+  }
 ]
