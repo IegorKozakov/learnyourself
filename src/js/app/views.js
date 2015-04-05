@@ -8,8 +8,7 @@
      * View of list of courses
      */
     LY.Views.CoursesPreview = Backbone.View.extend({
-        className: 'coursesPreview',
-
+        className: 'preview-courses',
         render: function(){
             this.collection.each( this.addOne, this);
             return this;
@@ -24,7 +23,7 @@
      * View of preview course
      */
     LY.Views.CoursePreview = Backbone.View.extend({
-        className: 'coursePreview',
+        className: 'preview-course',
         tpl: LY.Helpers.getTpl('previewCourse'),
 
         render: function() {

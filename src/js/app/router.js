@@ -5,6 +5,11 @@
     LY.namespace('Router');
 
     LY.Router = Backbone.Router.extend({
+        initialize: function() {
+            LY.courses = new LY.Collections.Courses();
+            /* setup set of defaults models */
+            LY.courses.fetch({ async: false });
+        },
         $main: $('.main'),
         loadView : function(view) {
             this.view && this.view.remove();
@@ -24,13 +29,7 @@
         },
 
         index: function() {
-            var that = this,
-                coursesPreview = new LY.Collections.CoursesPreview();
-
-            coursesPreview.fetch()
-                .then(function(){
-                    that.updateView(new LY.Views.CoursesPreview({collection: coursesPreview}));
-                });
+            this.updateView(new LY.Views.CoursesPreview({collection: LY.courses}));
         },
         course: function (idCourse) {
             var that = this;
@@ -54,5 +53,4 @@
             console.log('WTF? We don\'t know anythings about ' + query);
         }
     });
-
 }(window, jQuery, _, Backbone));
