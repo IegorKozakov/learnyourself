@@ -21,13 +21,7 @@
       {
         "title": "Введение",
         "description": "Базовая информация о языке Javascript и о курсе в целом",
-        "url": "H6G63NKRSi8",
-        "tools": [
-          {
-            "title": "Парсер языка JAvascript",
-            "url": "http://esprima.org/demo/parse.html"
-          }
-        ]
+        "url": "H6G63NKRSi8"
       },
       {
         "title": "Инструкции",

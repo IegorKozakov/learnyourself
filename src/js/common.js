@@ -7,6 +7,7 @@
     'use strict';
 
     window.LY = window.LY || {};
+    window.LY.version = '0.0.1';
 
     /**
     * [namespace - create new namespace]

@@ -44,7 +44,11 @@
             });
         },
         lesson: function(idCourse, idLesson) {
-            console.log(idCourse, idLesson);
+            var course = (LY.courses.get(idCourse)).toJSON(),
+                lesson = course.lessons[idLesson - 1];
+
+
+            this.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson(lesson)}))
         },
         about: function() {
             this.updateView(new LY.Views.aboutPage());
