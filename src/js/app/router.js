@@ -10,7 +10,7 @@
             /* setup set of defaults models */
             LY.courses.fetch({ async: false });
         },
-        $main: $('.main'),
+        $main: $('.j-main'),
         loadView : function(view) {
             this.view && this.view.remove();
             this.view = view;

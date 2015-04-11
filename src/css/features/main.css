@@ -1,0 +1,15 @@
+.main {
+	padding: 30px 0 35px 0;
+}
+
+.main__inner {
+	width: 92%;
+	max-width: 1140px;
+	margin: 0 auto;
+}
+
+@media screen and (min-width: 780px) {
+	.main__inner {
+		width: 98%;
+	}
+}

@@ -1,37 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>App</title>
+    <title>Learn Yourself</title>
 
-    <link rel="stylesheet" type="text/css" href="src/css/styles.css">
-
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="dest/css/styles.css">
 </head>
 <body>
-	<div class="page">
-		<header class="header">
-			<h1>Learn Yourself</h1>
+    <div class="page">
+        <header class="header">
+            <div class="header__inner">
+                <h1 class="header__logo">
+                    Learn<br>Yourself
+                    <span class="header__version">&#945;</span>
+                </h1>
+            </div>
+        </header>
 
-			<nav class="nav">
-				<ul>
-					<li>
-						<a href="#">Hoome</a>
-					</li>
-					<li>
-						<a href="#about">About</a>
-					</li>
-				</ul>
-			</nav>
-		</header>
-	</div>
+        <main class="main">
+            <div class="main__inner j-main">
 
-	<main class="main">
+            </div>
+        </main>
 
-	</main>
+        <footer class="footer">
+            <p>&#9400; dimaspirit 2015</p>
+        </footer>
+    </div>
 
-	<footer class="footer">
-		<p>&#9400; dimaspirit 2015</p>
-	</footer>
+
+
+
+
 
 
     <!-- tpl -->
@@ -42,15 +43,15 @@
             <h4 class="course_review__desc">{{description}}</h6>
 
             <p class="course_review__sum_lessons">
-                <span>{{lessons.length}}</span>&nbsp;{{makeDeclension lessons.length 'lesson'}}
+                <span>{{lessons.length}}</span>&nbsp;{{declOfNum lessons.length "урок/урока/уроков"}}
             </p>
 
             {{#each authors}}
-                <h5 class="course_review__author">from&nbsp; {{name}}</h5>
+                <h5 class="course_review__author">от&nbsp; {{name}}</h5>
             {{/each}}
 
             <p class="course_review__lang">{{lang}}</p>
-            <a href="#course/{{id}}" class="course_review__link">View</a>
+            <a href="#!/course/{{id}}" class="course_review__link">View</a>
         </div>
     </script>
 
@@ -62,7 +63,7 @@
             <h4 class="course_review__desc">{{description}}</h6>
 
             <p class="course_review__sum_lessons">
-                <span>{{lessons.length}}</span>&nbsp;{{makeDeclension lessons.length 'lesson'}}
+                <span>{{lessons.length}}</span>&nbsp;{{makeDeclension lessons.length ['lesson', 'sd', 'sa']}}
             </p>
 
             {{#each authors}}

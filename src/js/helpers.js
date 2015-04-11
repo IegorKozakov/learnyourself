@@ -47,8 +47,11 @@
      * @param  {[string]} word [word which transform]
      * @return {[string]}      [transformed word]
      */
-    Handlebars.registerHelper('makeDeclension', function(val, word) {
-        return (val > 1) ? word+'s' : word;
+    Handlebars.registerHelper('declOfNum', function(num, t) {
+      var cases = [2, 0, 1, 1, 1, 2],
+          titles = t.split('/');
+
+      return titles[ (num%100>4 && num%100<20)? 2 : cases[(num%10<5)?num%10:5] ];
     });
 
 }(window, jQuery, Handlebars));
