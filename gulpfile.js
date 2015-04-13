@@ -14,6 +14,7 @@ gulp.task('connect', function() {
 gulp.task('developCSS', function() {
     return gulp.src([
     		'src/css/base/reset.css',
+            'src/css/base/helpers.css',
     		'src/css/base/grid.css',
     		'src/css/common.css',
     		'src/css/features/*.css'

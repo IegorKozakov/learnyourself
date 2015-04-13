@@ -126,6 +126,19 @@ html,
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.h-pull-left {
+  float: left;
+}
+
+.h-pull-right {
+  float: right;
+}
+
+.h-cf:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 .grid {
   width: 100%;
   margin: 0 auto;
@@ -284,17 +297,21 @@ html {
   background: #ecf0f1;
 }
 
-.course_review__desc {
+.course_review__summary {
   padding: 0 0 25px 0;
   font-size: 1.6em;
 }
 
-.course_review__sum_lessons {
+.course_review__desc {
   font-size: 1.5em;
 }
 
-.course_review__sum_lessons span {
+.course_review__desc span {
   font-weight: 500;
+}
+
+.course_review__wrap_btn {
+  margin: 25px 0 0 0;
 }
 
 .course_review__link {
