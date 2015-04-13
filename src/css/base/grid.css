@@ -8,12 +8,14 @@
 		clear: both;
 	}
 
-[class*='col-'] {
-	float: left;
-	padding-right: 20px; /* column-space */
-}
+
 
 @media screen and (min-width: 780px) {
+	[class*='col-'] {
+		float: left;
+		padding-right: 20px; /* column-space */
+	}
+
 	.col-1-1 {
 		width: 100%;
 	}

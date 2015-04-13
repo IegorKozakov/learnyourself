@@ -1,4 +1,5 @@
 .preview_course {
+	width: 100%;
 	background: #fff;
 	margin: 0 0 20px 0;
 
@@ -20,6 +21,7 @@
 	padding: 0 0 15px 0;
 
 	font-size: 2.4em;
+	font-weight: 500;
 	color: #454747;
 }
 	.course_review__title:after {
@@ -41,6 +43,34 @@
 	font-size: 1.6em;
 }
 
+.course_review__sum_lessons {
+	font-size: 1.5em;
+}
+
+.course_review__sum_lessons span {
+	font-weight: 500;
+}
+
+.course_review__link {
+	display: inline-block;
+
+	padding: 6px 30px;
+
+	background-color: #65d494;
+	border: 1px solid #5dc288;
+	border-radius: 4px;
+
+	font-size: 1.6em;
+	font-weight: 500;
+	color: #fff;
+	text-decoration: none;
+
+	transition: background-color .4s ease;
+}
+	.course_review__link:hover,
+	.course_review__link:active {
+		background: #5dc288;
+	}
 
 
 

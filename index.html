@@ -29,12 +29,6 @@
         </footer>
     </div>
 
-
-
-
-
-
-
     <!-- tpl -->
     <script id="previewCourse" type="x-handlebars-template">
         <div class="course_review__inner">
@@ -44,34 +38,32 @@
 
             <p class="course_review__sum_lessons">
                 <span>{{lessons.length}}</span>&nbsp;{{declOfNum lessons.length "урок/урока/уроков"}}
+                от&nbsp;<span>{{author.name}}</span>
             </p>
 
-            {{#each authors}}
-                <h5 class="course_review__author">от&nbsp; {{name}}</h5>
-            {{/each}}
 
-            <p class="course_review__lang">{{lang}}</p>
-            <a href="#!/course/{{id}}" class="course_review__link">View</a>
+            <div class="course_review__wrap_btn">
+                <a href="#!/course/{{id}}" class="course_review__link">View</a>
+            </div>
         </div>
     </script>
 
-
     <script id="courseDetail" type="x-handlebars-template">
-        <div class="course_details__inner">
-            <h2 class="course_review__title">Details abours '{{name}}' course</h2>
+        // <div class="course_details__inner">
+        //     <h2 class="course_review__title">Details abours '{{name}}' course</h2>
 
-            <h4 class="course_review__desc">{{description}}</h6>
+        //     <h4 class="course_review__desc">{{description}}</h6>
 
-            <p class="course_review__sum_lessons">
-                <span>{{lessons.length}}</span>&nbsp;{{makeDeclension lessons.length ['lesson', 'sd', 'sa']}}
-            </p>
+        //     <p class="course_review__sum_lessons">
+        //         <span>{{lessons.length}}</span>&nbsp;{{makeDeclension lessons.length ['lesson', 'sd', 'sa']}}
+        //     </p>
 
-            {{#each authors}}
-                <h5 class="course_review__author">from&nbsp; {{name}}</h5>
-            {{/each}}
+        //     {{#each authors}}
+        //         <h5 class="course_review__author">from&nbsp; {{name}}</h5>
+        //     {{/each}}
 
-            <p class="course_review__lang">{{lang}}</p>
-        </div>
+        //     <p class="course_review__lang">{{lang}}</p>
+        // </div>
     </script>
 
     <script id="lesson" type="x-handlebars-template">
