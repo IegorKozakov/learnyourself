@@ -23,13 +23,14 @@
         routes: {
             '' : 'index',
             'about(/)' : 'about',
-            'course/:idCourse(/)' : 'course',
-            'course/:idCourse/lesson/:idLesson' : 'lesson',
+            '!/course/:idCourse(/)' : 'course',
+            '!/course/:idCourse/lesson/:idLesson' : 'lesson',
             '*query' : 'default'
         },
 
         index: function() {
-            this.updateView(new LY.Views.CoursesPreview({collection: LY.courses}));
+            var viewOfCoursesPreview = new LY.Views.CoursesPreview({collection: LY.courses})
+            this.updateView(viewOfCoursesPreview);
         },
         course: function (idCourse) {
             var that = this;

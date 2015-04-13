@@ -44,14 +44,13 @@
     /**
      * [Handlebars custom function helper - DECLARATION OF NUMBER]
      * @param  {[number]} n [value]
-     * @param  {[string]} t [words separated by commas]
+     * @param  {[string]} t [words separated by /]
      * @return {[string]}      [transformed word]
      */
     Handlebars.registerHelper('declOfNum', function(n, t) {
       var cases = [2, 0, 1, 1, 1, 2],
-          titles = t.split(',');
+          titles = t.split('/');
 
-      return titles[ (n%100>4 && n%100<20)? 2 : cases[(n%10<5)?n%10:5] ];
+      return titles[ (n%100>4 && n%100<20) ? 2 : cases[(n%10<5) ? n%10:5] ];
     });
-
 }(window, jQuery, Handlebars));

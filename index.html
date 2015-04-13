@@ -25,7 +25,9 @@
         </main>
 
         <footer class="footer">
-            <p>&#9400; dimaspirit 2015</p>
+            <div class="footer__inner">
+                <p>&#9400;&nbsp;<a href="https://twitter.com/dima4people" class="footer__link" target="_blank">dimaspirit</a>&nbsp;2015</p>
+            </div>
         </footer>
     </div>
 
@@ -42,27 +44,19 @@
             </p>
 
             <div class="course_review__wrap_btn h-cf">
-                <a href="#!/course/{{id}}" class="course_review__link h-pull-right">View</a>
+                <a href="#!/course/{{id}}" class="course_review__link h-pull-right">Подробней</a>
             </div>
         </div>
     </script>
 
     <script id="courseDetail" type="x-handlebars-template">
-        // <div class="course_details__inner">
-        //     <h2 class="course_review__title">Details abours '{{name}}' course</h2>
+        <div class="course_details__inner">
+            <h2 class="course_review__title">Details abours '{{name}}' course</h2>
 
-        //     <h4 class="course_review__desc">{{description}}</h6>
+            <h4 class="course_review__desc">{{description}}</h6>
 
-        //     <p class="course_review__sum_lessons">
-        //         <span>{{lessons.length}}</span>&nbsp;{{makeDeclension lessons.length ['lesson', 'sd', 'sa']}}
-        //     </p>
-
-        //     {{#each authors}}
-        //         <h5 class="course_review__author">from&nbsp; {{name}}</h5>
-        //     {{/each}}
-
-        //     <p class="course_review__lang">{{lang}}</p>
-        // </div>
+            <p class="course_review__lang">{{lang}}</p>
+        </div>
     </script>
 
     <script id="lesson" type="x-handlebars-template">
