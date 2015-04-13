@@ -5,8 +5,7 @@
     "description": "Основы языка Javascript, Javascript в бразуре, JSON, регулярные выражения, а так же ES5 методы массова",
     "tags": ["Javascript", "JSON", "ES5", "Регулярные выражения"],
     "lang": "ru",
-    "authors": [
-      {
+    "authors": {
         "name": "Sorax",
         "site": "http://sorax.org/",
         "email": "art.sorax@gmail.com",
@@ -16,7 +15,7 @@
           "youtube": "ArtSorax"
         }
       }
-    ],
+    ,
     "lessons": [
       {
         "title": "Введение",
@@ -35,18 +34,16 @@
     "description": "Основы языка Javascript, Javascript в бразуре, события в Javascript",
     "tags": ["Javascript"],
     "lang": "ru",
-    "authors": [
-      {
-        "name": "LoftBlog",
-        "site": "http://loftblog.ru/",
-        "email": "info@loftblog.ru",
-        "social": {
-          "facebook": "loftblog",
-          "vk": "itloft",
-          "youtube": "loftblog"
-        }
+    "authors": {
+      "name": "LoftBlog",
+      "site": "http://loftblog.ru/",
+      "email": "info@loftblog.ru",
+      "social": {
+        "facebook": "loftblog",
+        "vk": "itloft",
+        "youtube": "loftblog"
       }
-    ],
+    },
     "lessons": [
       {
         "title": "Введение",

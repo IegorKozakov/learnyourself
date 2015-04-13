@@ -269,6 +269,7 @@ html {
   margin: 0 0 20px 0;
   padding: 0 0 15px 0;
   font-size: 2.4em;
+  font-weight: 500;
   color: #454747;
 }
 
@@ -282,7 +283,16 @@ html {
   background: #ecf0f1;
 }
 
-.course_review__desc {
+.course_review__summary {
   padding: 0 0 25px 0;
   font-size: 1.6em;
+}
+
+.course_review__desc {
+  margin: 0 0 25px 0;
+  font-size: 1.5em;
+}
+
+.course_review__desc span {
+  font-weight: 500;
 }

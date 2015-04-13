@@ -30,27 +30,18 @@
     </div>
 
 
-
-
-
-
-
     <!-- tpl -->
     <script id="previewCourse" type="x-handlebars-template">
         <div class="course_review__inner">
             <h2 class="course_review__title">{{title}}</h2>
 
-            <h4 class="course_review__desc">{{description}}</h6>
+            <h4 class="course_review__summary">{{description}}</h6>
 
-            <p class="course_review__sum_lessons">
-                <span>{{lessons.length}}</span>&nbsp;{{declOfNum lessons.length "урок/урока/уроков"}}
+            <p class="course_review__desc">
+                <span>{{lessons.length}}</span>&nbsp;{{declOfNum lessons.length "урок,урока,уроков"}}
+                от&nbsp;<span>{{authors.name}}</span>
             </p>
 
-            {{#each authors}}
-                <h5 class="course_review__author">от&nbsp; {{name}}</h5>
-            {{/each}}
-
-            <p class="course_review__lang">{{lang}}</p>
             <a href="#!/course/{{id}}" class="course_review__link">View</a>
         </div>
     </script>
