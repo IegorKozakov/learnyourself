@@ -7,6 +7,7 @@
     LY.Router = Backbone.Router.extend({
         initialize: function() {
             LY.courses = new LY.Collections.Courses();
+
             /* setup set of defaults models */
             LY.courses.fetch({ async: false });
         },
@@ -33,21 +34,11 @@
             this.updateView(viewOfCoursesPreview);
         },
         course: function (idCourse) {
-            var that = this;
-
-            $.getJSON('/data/courses.json', function(json, textStatus) {
-                var lessonObj = _.find(json, function(i) { return i.id == idCourse });
-
-                var courseDetail = new LY.Models.CourseDetail(lessonObj);
-                var courseDetailView = new LY.Views.CourseDetail({model: courseDetail});
-
-                that.updateView(courseDetailView);
-            });
+            this.updateView(new LY.Views.CourseDetail({ model: LY.courses.get(idCourse) }) );
         },
         lesson: function(idCourse, idLesson) {
-            var course = (LY.courses.get(idCourse)).toJSON(),
-                lesson = course.lessons[idLesson - 1];
-
+            var course = LY.courses.get(idCourse),
+                lesson = course.get('lessons')[idLesson];
 
             this.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson(lesson)}))
         },

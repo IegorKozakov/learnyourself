@@ -36,7 +36,7 @@
      * View of CourseDetail details
      */
     LY.Views.CourseDetail = Backbone.View.extend({
-        className: 'course_detail',
+        className: 'course_details',
         tpl: LY.Helpers.getTpl('courseDetail'),
 
         render: function() {
