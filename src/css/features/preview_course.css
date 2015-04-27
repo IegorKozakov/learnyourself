@@ -1,5 +1,6 @@
 .preview_courses {
     width: 100%;
+    max-width: 620px;
     margin: 0 auto;
 }
     .preview_courses:after {
@@ -88,29 +89,3 @@
     .course_review__link:active {
         background: #5dc288;
     }
-
-@media screen and (min-width: 780px) {
-    .preview_course {
-        width: 50%;
-        float: left;
-        padding-right: 20px;
-    }
-}
-
-@media screen and (min-width: 780px) and (max-width: 1019px) {
-    .preview_course:nth-child(2n) {
-        padding-right: 0;
-    }
-}
-
-@media screen and (min-width: 1020px) {
-    .preview_course {
-        width: 25%;
-    }
-
-    .preview_course:nth-child(4n) {
-        padding-right: 0;
-    }
-}
-
-

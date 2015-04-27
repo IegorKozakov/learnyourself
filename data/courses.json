@@ -1,34 +1,6 @@
 [
   {
     "id": 1,
-    "title": "Javascript-джедай" ,
-    "description": "Основы языка Javascript, Javascript в бразуре, JSON, регулярные выражения, а так же ES5 методы массова",
-    "tags": ["Javascript", "JSON", "ES5", "Регулярные выражения"],
-    "lang": "ru",
-    "author": {
-      "name": "Sorax",
-      "site": "http://sorax.org/",
-      "email": "art.sorax@gmail.com",
-      "social": {
-        "facebook": "soraxtuts",
-        "vk": "art.sorax",
-        "youtube": "ArtSorax"
-      }
-    },
-    "lessons": [
-      {
-        "title": "Введение",
-        "description": "Базовая информация о языке Javascript и о курсе в целом",
-        "url": "H6G63NKRSi8"
-      },
-      {
-        "title": "Инструкции",
-        "url": "5JEkiHHUOFs"
-      }
-    ]
-  },
-  {
-    "id": 2,
     "title": "Основы Javascript",
     "description": "Основы языка Javascript, Javascript в бразуре, события в Javascript",
     "tags": ["Javascript"],
@@ -47,11 +19,11 @@
       {
         "title": "Введение",
         "description": "Общие сведения языка Javascript, история создания языка, основные типы данных",
-        "url": "n0sPFaLsNeI"
+        "id": "n0sPFaLsNeI"
       },
       {
         "title": "Примитивные и объектные данные, обёртки",
-        "url": "p-Ob8gEJBJs"
+        "id": "p-Ob8gEJBJs"
       }
     ]
   }
