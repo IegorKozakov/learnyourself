@@ -11,6 +11,10 @@
 }
 
 .header__inner {
+    position: relative;
+    width: 94%;
+    max-width: 1260px;
+    margin: 0 auto;
     padding: 18px 0;
 }
 

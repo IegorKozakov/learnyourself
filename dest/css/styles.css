@@ -5,6 +5,9 @@
  *  - page
  *  - main
  *  - footer
+ *
+ * width: 94%;
+ * max-width: 1260px;
  */
 
 /**
@@ -185,7 +188,7 @@ html {
 
 .main__inner,
 .footer__inner {
-  width: 92%;
+  width: 94%;
   margin: 0 auto;
 }
 
@@ -317,6 +320,10 @@ html {
 }
 
 .header__inner {
+  position: relative;
+  width: 94%;
+  max-width: 1260px;
+  margin: 0 auto;
   padding: 18px 0;
 }
 

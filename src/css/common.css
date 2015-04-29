@@ -5,6 +5,9 @@
  *  - page
  *  - main
  *  - footer
+ *
+ * width: 94%;
+ * max-width: 1260px;
  */
 /**
  RESET 
@@ -98,7 +101,7 @@ html {
 
 .main__inner,
 .footer__inner {
-    width: 92%;
+    width: 94%;
     margin: 0 auto;
 }
 
