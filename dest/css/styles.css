@@ -312,6 +312,7 @@ html {
 }
 .header {
   width: 100%;
+  padding: 18px 0;
   font-size: 10px;
   line-height: 1;
   background: #fff;
@@ -324,7 +325,21 @@ html {
   width: 94%;
   max-width: 1260px;
   margin: 0 auto;
-  padding: 18px 0;
+}
+
+.header__home {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 14px;
+  color: #bcc0c1;
+  text-decoration: none;
+  -webkit-transition: color .4s ease;
+  transition: color .4s ease;
+}
+
+.header__home:hover {
+  color: #939595;
 }
 
 .header__logo {
