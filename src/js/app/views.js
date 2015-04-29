@@ -59,7 +59,7 @@
     });
 
     /**
-     * View of about page
+     * View of about page 
      */
     LY.Views.aboutPage = Backbone.View.extend({
         tpl: 'about',

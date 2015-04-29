@@ -23,7 +23,7 @@
         },
         routes: {
             '' : 'index',
-            'about(/)' : 'about',
+            '!/about(/)' : 'about',
             '!/course/:idCourse(/)' : 'course',
             '!/course/:idCourse/lesson/:idLesson' : 'lesson',
             '*query' : 'default'
@@ -46,7 +46,7 @@
             this.updateView(new LY.Views.aboutPage());
         },
         default: function(query) {
-            console.log('WTF? We don\'t know anythings about ' + query);
+            console.log('We don\'t know anythings about ' + query);
         }
     });
 }(window, jQuery, _, Backbone));

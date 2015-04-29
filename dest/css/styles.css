@@ -327,10 +327,11 @@ html {
   margin: 0 auto;
 }
 
-.header__home {
+.header__home,
+.header__about {
+  display: inline-block;
   position: absolute;
   bottom: 0;
-  left: 0;
   font-size: 14px;
   color: #bcc0c1;
   text-decoration: none;
@@ -338,7 +339,16 @@ html {
   transition: color .4s ease;
 }
 
-.header__home:hover {
+.header__home {
+  left: 0;
+}
+
+.header__about {
+  right: 0;
+}
+
+.header__home:hover,
+.header__about:hover {
   color: #939595;
 }
 

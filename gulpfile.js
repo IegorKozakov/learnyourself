@@ -58,14 +58,17 @@ gulp.task('concat-js-libs', function() {
 });
 
 gulp.task('html', function() {
-    return gulp.src('index.html')
+    return gulp.src([
+        'index.html',
+        'static_page/**/*.html'
+    ])
     .pipe(livereload());
 });
 
 gulp.task('watch', function() {
     livereload.listen({ start: true });
     gulp.watch(path.css.src + '**/*.css', ['styles']);
-    gulp.watch('index.html', ['html']);
+    gulp.watch(['index.html', 'static_page/**/*.html'], ['html']);
 });
 
 gulp.task('default', ['watch', 'styles']);

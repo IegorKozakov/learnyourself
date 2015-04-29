@@ -1,6 +1,6 @@
 ;
 (function(window, $, _, Backbone){
-	'use strict';
+    'use strict';
 
     LY.namespace('Collections');
 
