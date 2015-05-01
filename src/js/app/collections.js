@@ -6,12 +6,12 @@
 
     LY.Collections.CoursesPreview = Backbone.Collection.extend({
         model: LY.Models.CoursePreview,
-        url: '/data/courses.json'
+        url: 'learnyourself/data/courses.json'
     });
 
     LY.Collections.Courses = Backbone.Collection.extend({
         model: LY.Models.Course,
-        url: '/data/courses.json'
+        url: 'learnyourself/data/courses.json'
     });
 
 }(window, jQuery, _, Backbone));
