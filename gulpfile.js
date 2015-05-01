@@ -19,7 +19,8 @@ var path = {
         dest: 'dest/css/'
     },
     js : {
-        dest: 'dest/js'
+        src: 'src/js/',
+        dest: 'dest/js/'
     }
 }
 
