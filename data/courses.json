@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "Основы Javascript",
+    "description": "Основы языка Javascript, Javascript в бразуре, события в Javascript",
+    "tags": ["Javascript"],
+    "lang": "ru",
+    "author": {
+      "name": "LoftBlog",
+      "site": "http://loftblog.ru/",
+      "email": "info@loftblog.ru",
+      "social": {
+        "facebook": "loftblog",
+        "vk": "itloft",
+        "youtube": "loftblog"
+      }
+    },
+    "lessons": [
+      {
+        "title": "Введение",
+        "description": "Общие сведения языка Javascript, история создания языка, основные типы данных",
+        "id": "n0sPFaLsNeI"
+      },
+      {
+        "title": "Примитивные и объектные данные, обёртки",
+        "id": "p-Ob8gEJBJs"
+      }
+    ]
+  }
+]

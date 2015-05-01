@@ -1,16 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-	<meta charset="UTF-8">
-	<title>App</title>
+    <meta charset="UTF-8">
+    <title>Learn Yourself</title>
 
-	<link rel="stylesheet" type="text/css" href="dev/css/styles.css">
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="dest/css/styles.css">
 </head>
 <body>
-<p>Hello</p>
+    <div class="page">
+        <header class="header">
+            <div class="header__inner">
+                <a href="#/" class="header__home">Home</a>
 
+                <h1 class="header__logo">
+                    Learn<br>Yourself
+                    <span class="header__version">&#945;</span>
+                </h1>
 
-	<script src="build/js/libs.min.js"></script>
-	<script src="build/js/app.min.js"></script>
+                <a href="#!/about" class="header__about">About</a>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="main__inner j-main">
+
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer__inner">
+                <p>&#9400;&nbsp;<a href="https://twitter.com/dima4people" class="footer__link" target="_blank">dimaspirit</a>&nbsp;2015</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- tpl -->
+    <script id="previewCourse" type="x-handlebars-template">
+        <div class="course_review__inner">
+            <h2 class="course_review__title">{{title}}</h2>
+
+            <h4 class="course_review__summary">{{description}}</h6>
+
+            <p class="course_review__desc">
+                <span>{{lessons.length}}</span>&nbsp;{{declOfNum lessons.length "урок/урока/уроков"}}
+                от&nbsp;<span>{{author.name}}</span>
+            </p>
+
+            <div class="course_review__wrap_btn h-cf">
+                <a href="#!/course/{{id}}" class="course_review__link h-pull-right">Подробней</a>
+            </div>
+        </div>
+    </script>
+
+    <script id="courseDetail" type="x-handlebars-template">
+        <div class="course_details__inner">
+            <h2 class="course_details__title">{{title}}</h2>
+
+            <h4 class="course_details__summary">{{description}}</h6>
+
+            <div class="course_details__desc">
+                <p>
+                    <span>Об авторе:</span>
+                    {{author.name}}, {{author.site}}, {{author.email}}
+                </p>
+                <p>
+                    <span>Лекции:</span>
+                    {{#each lessons}}
+                        <a href="#!/course/{{../id}}/lesson/{{@index}} " class="course_details__link">{{title}}</a>,
+                    {{/each}}
+                </p>
+                <p><span></span></p>
+            </div>
+        </div>
+    </script>
+
+    <script id="lesson" type="x-handlebars-template">
+        <div class="lesson__inner">
+            <h2 class="lesson__title">{{title}}</h2>
+
+            <div class="lesson__video">
+                <iframe src="https://www.youtube.com/embed/{{id}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <h4 class="lesson__desc">{{description}}</h6>
+        </div>
+    </script>
+
+    <!-- libs -->
+    <script src="dest/js/libs.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/backbonefire/0.5.1/backbonefire.min.js"></script>
+    <script src="src/js/helpers.js"></script>
+
+    <!-- app -->
+    <script src="src/js/app/models.js"></script>
+    <script src="src/js/app/collections.js"></script>
+    <script src="src/js/app/views.js"></script>
+    <script src="src/js/app/router.js"></script>
 </body>
 </html>
