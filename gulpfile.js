@@ -19,6 +19,8 @@ var path = {
         dest: 'dest/css/'
     },
     js : {
+        app: 'src/js/app/',
+        src: 'src/js/',
         dest: 'dest/js'
     }
 }
@@ -57,6 +59,19 @@ gulp.task('concat-js-libs', function() {
     .pipe(gulp.dest(path.js.dest));
 });
 
+gulp.task('concat-js-app', function() {
+    return gulp.src([
+        path.js.src + 'helpers.js',
+        path.js.app + 'models.js',
+        path.js.app + 'collections.js',
+        path.js.app + 'views.js',
+        path.js.app + 'router.js'
+    ])
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest(path.js.dest))
+    .pipe(livereload());
+});
+
 gulp.task('html', function() {
     return gulp.src([
         'index.html',
@@ -65,10 +80,16 @@ gulp.task('html', function() {
     .pipe(livereload());
 });
 
+gulp.task('tpl', function() {
+    return gulp.src(['src/tpl/*.html']).pipe(livereload());
+});
+
 gulp.task('watch', function() {
     livereload.listen({ start: true });
     gulp.watch(path.css.src + '**/*.css', ['styles']);
+    gulp.watch([path.js.app + '*.js', path.js.src + 'helpers.js'] , ['concat-js-app']);
     gulp.watch(['index.html', 'static_page/**/*.html'], ['html']);
+    gulp.watch(['src/tpl/*.html'], ['tpl']);
 });
 
-gulp.task('default', ['watch', 'styles']);
+gulp.task('default', ['watch', 'styles', 'concat-js-libs', 'concat-js-app', 'html', 'tpl']);

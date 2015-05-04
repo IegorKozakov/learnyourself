@@ -38,7 +38,8 @@
         return parent;
     };
 
-    var PATH_TO_STATIC_PAGE = 'static_page/';
+    var PATH_TO_STATIC_PAGE = 'static_page/',
+        PATH_TO_TPL = 'src/tpl/';
 
     LY.namespace('Helpers');
 
@@ -48,7 +49,24 @@
     * @return {[html]}      [compiles html of template]
     */
     LY.Helpers.getTpl = function(id) {
-        return Handlebars.compile( $('#' + id).html() );
+        var $tpl = $('#' + id),
+            tplHTML = '';
+                
+        if(!$tpl.length) {
+            $.ajax({
+                url: PATH_TO_TPL + id + '.html',
+                cache: false,
+                async: false,
+                dataType: "html",
+                success: function(data){
+                    tplHTML = data;
+                }
+            });
+        } else {
+            tplHTML = $tpl.html();
+        }
+
+        return Handlebars.compile( tplHTML );
     };
 
   /**
