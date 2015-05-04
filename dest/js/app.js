@@ -109,13 +109,9 @@
 
     LY.namespace('Models');
 
+    LY.Models.CoursePreview = Backbone.Model.extend({});
+
     LY.Models.Course = Backbone.Model.extend({});
-
-    LY.Models.CoursePreview = Backbone.Model.extend({
-        'lang': 'ru'
-    });
-
-    LY.Models.CourseDetail = Backbone.Model.extend({});
 
     LY.Models.Lesson = Backbone.Model.extend({});
 
@@ -128,12 +124,12 @@
 
     LY.Collections.CoursesPreview = Backbone.Collection.extend({
         model: LY.Models.CoursePreview,
-        url: '/data/courses.json'
+        url: 'learnyourself/data/courses.json'
     });
 
     LY.Collections.Courses = Backbone.Collection.extend({
         model: LY.Models.Course,
-        url: '/data/courses.json'
+        url: 'learnyourself/data/courses.json'
     });
 
 }(window, jQuery, _, Backbone));
@@ -149,10 +145,10 @@
     LY.Views.CoursesPreview = Backbone.View.extend({
         className: 'preview_courses',
         render: function(){
-            this.collection.each( this.addOne, this);
+            this.collection.each( this.renderCourse, this);
             return this;
         },
-        addOne: function(course) {
+        renderCourse: function(course) {
             var coursePreview = new LY.Views.CoursePreview({ model: course});
             this.$el.append(coursePreview.render().el);
         }
@@ -198,7 +194,7 @@
     });
 
     /**
-     * View of about page 
+     * View of about page
      */
     LY.Views.aboutPage = Backbone.View.extend({
         tpl: 'about',

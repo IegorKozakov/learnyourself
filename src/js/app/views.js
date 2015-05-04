@@ -10,10 +10,10 @@
     LY.Views.CoursesPreview = Backbone.View.extend({
         className: 'preview_courses',
         render: function(){
-            this.collection.each( this.addOne, this);
+            this.collection.each( this.renderCourse, this);
             return this;
         },
-        addOne: function(course) {
+        renderCourse: function(course) {
             var coursePreview = new LY.Views.CoursePreview({ model: course});
             this.$el.append(coursePreview.render().el);
         }
@@ -59,7 +59,7 @@
     });
 
     /**
-     * View of about page 
+     * View of about page
      */
     LY.Views.aboutPage = Backbone.View.extend({
         tpl: 'about',
