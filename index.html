@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="ru">
+<!--[if lt IE 9 ]>              <html class="oldie" lang="ru" dir="ltr"> <![endif]-->
+<!--[if IE 9 ]>                 <html class="ie9" lang="ru" dir="ltr"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="ru" dir="ltr"> <!--<![endif]-->
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Learn Yourself</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,700,300italic,400italic&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
+    <meta name="author" content="dimaspirit" />
+    <meta name="keywords" content="learnyourself, screencast, dimaspirit" />
+    <meta name="description" content="Learnyourself - сервис для самообучения с помощью скринкастов с youtube" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui" />
+    <meta name="HandheldFriendly" content="true">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Internet Explore -->
+    <meta http-equiv="cleartype" content="on">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <link rel="stylesheet" href="dest/css/styles.css">
 </head>
 <body>
@@ -36,23 +49,6 @@
     </div>
 
     <!-- tpl -->
-    <script id="previewCourse" type="x-handlebars-template">
-        <div class="course_review__inner">
-            <h2 class="course_review__title">{{title}}</h2>
-
-            <h4 class="course_review__summary">{{description}}</h6>
-
-            <p class="course_review__desc">
-                <span>{{lessons.length}}</span>&nbsp;{{declOfNum lessons.length "урок/урока/уроков"}}
-                от&nbsp;<span>{{author.name}}</span>
-            </p>
-
-            <div class="course_review__wrap_btn h-cf">
-                <a href="#!/course/{{id}}" class="course_review__link h-pull-right">Подробней</a>
-            </div>
-        </div>
-    </script>
-
     <script id="courseDetail" type="x-handlebars-template">
         <div class="course_details__inner">
             <h2 class="course_details__title">{{title}}</h2>
@@ -89,14 +85,7 @@
 
     <!-- libs -->
     <script src="dest/js/libs.min.js"></script>
-    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/backbonefire/0.5.1/backbonefire.min.js"></script>
-    <script src="src/js/helpers.js"></script>
-
     <!-- app -->
-    <script src="src/js/app/models.js"></script>
-    <script src="src/js/app/collections.js"></script>
-    <script src="src/js/app/views.js"></script>
-    <script src="src/js/app/router.js"></script>
+    <script src="dest/js/app.js"></script>
 </body>
 </html>
