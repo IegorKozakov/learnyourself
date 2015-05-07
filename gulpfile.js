@@ -81,7 +81,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('tpl', function() {
-    return gulp.src(['src/tpl/*.html']).pipe(livereload());
+    return gulp.src(['src/tpl/**/*.html']).pipe(livereload());
 });
 
 gulp.task('watch', function() {
@@ -89,7 +89,7 @@ gulp.task('watch', function() {
     gulp.watch(path.css.src + '**/*.css', ['styles']);
     gulp.watch([path.js.app + '*.js', path.js.src + 'helpers.js'] , ['concat-js-app']);
     gulp.watch(['index.html', 'static_page/**/*.html'], ['html']);
-    gulp.watch(['src/tpl/*.html'], ['tpl']);
+    gulp.watch(['src/tpl/**/*.html'], ['tpl']);
 });
 
 gulp.task('default', ['watch', 'styles', 'concat-js-libs', 'concat-js-app', 'html', 'tpl']);

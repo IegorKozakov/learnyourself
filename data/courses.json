@@ -1,29 +1,21 @@
 [
   {
     "id": 1,
-    "title": "Основы Javascript",
-    "description": "Основы языка Javascript, Javascript в бразуре, события в Javascript",
-    "tags": ["Javascript"],
+    "title": "Программирование на С",
+    "tags": ["C"],
     "lang": "ru",
     "author": {
-      "name": "LoftBlog",
-      "site": "http://loftblog.ru/",
-      "email": "info@loftblog.ru",
+      "name": "Gena ANTG",
       "social": {
-        "facebook": "loftblog",
-        "vk": "itloft",
-        "youtube": "loftblog"
+        "vk": "antg_official",
+        "youtube": "GenaANTG"
       }
     },
     "lessons": [
       {
-        "title": "Введение",
-        "description": "Общие сведения языка Javascript, история создания языка, основные типы данных",
-        "id": "n0sPFaLsNeI"
-      },
-      {
-        "title": "Примитивные и объектные данные, обёртки",
-        "id": "p-Ob8gEJBJs"
+        "title": "Общие моменты",
+        "description": "В данном видео мы с Вами рассмотрим основные моменты на которые стоит обратить внимание перед тем, как начать программировать. Что нужно знать, чтобы стать программистом? Я отвечу на вопросы, которые мне часто задают. ",
+        "id": "kCYT19xs8mE"
       }
     ]
   }

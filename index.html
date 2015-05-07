@@ -48,41 +48,6 @@
         </footer>
     </div>
 
-    <!-- tpl -->
-    <script id="courseDetail" type="x-handlebars-template">
-        <div class="course_details__inner">
-            <h2 class="course_details__title">{{title}}</h2>
-
-            <h4 class="course_details__summary">{{description}}</h6>
-
-            <div class="course_details__desc">
-                <p>
-                    <span>Об авторе:</span>
-                    {{author.name}}, {{author.site}}, {{author.email}}
-                </p>
-                <p>
-                    <span>Лекции:</span>
-                    {{#each lessons}}
-                        <a href="#!/course/{{../id}}/lesson/{{@index}} " class="course_details__link">{{title}}</a>,
-                    {{/each}}
-                </p>
-                <p><span></span></p>
-            </div>
-        </div>
-    </script>
-
-    <script id="lesson" type="x-handlebars-template">
-        <div class="lesson__inner">
-            <h2 class="lesson__title">{{title}}</h2>
-
-            <div class="lesson__video">
-                <iframe src="https://www.youtube.com/embed/{{id}}" frameborder="0" allowfullscreen></iframe>
-            </div>
-
-            <h4 class="lesson__desc">{{description}}</h6>
-        </div>
-    </script>
-
     <!-- libs -->
     <script src="dest/js/libs.min.js"></script>
     <!-- app -->

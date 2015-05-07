@@ -1,0 +1,37 @@
+<div class="course_details__inner">
+    <h2 class="course_details__title">{{title}}</h2>
+
+    {{#if description}}
+        <h4 class="course_details__summary">{{description}}</h6>
+    {{/if}}
+
+    <div class="course_details__desc">
+        <p>
+            <span>Об авторе:</span>
+            {{author.name}}
+
+            {{#if author.site}}
+                , {{author.site}}
+            {{/if}}
+            
+            {{#if author.email}}
+                , {{author.email}}
+            {{/if}}
+
+            {{#if author.social.vk}}
+                , {{author.social.vk}}
+            {{/if}}
+
+            {{#if author.social.youtube}}
+                , {{author.social.youtube}}
+            {{/if}}
+        </p>
+        <p>
+            <span>Лекции:</span>
+            {{#each lessons}}
+                <a href="#!/course/{{../id}}/lesson/{{@index}} " class="course_details__link">{{title}}</a>,
+            {{/each}}
+        </p>
+        <p><span></span></p>
+    </div>
+</div>
