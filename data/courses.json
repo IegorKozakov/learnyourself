@@ -1,22 +1,84 @@
 [
-  {
-    "id": 1,
-    "title": "Программирование на С",
-    "tags": ["C"],
-    "lang": "ru",
-    "author": {
-      "name": "Gena ANTG",
-      "social": {
-        "vk": "antg_official",
-        "youtube": "GenaANTG"
-      }
+    {
+        "id": 1,
+        "title": "HTML5 Tutorials",
+        "tags": ["HTML", "HTML5"],
+        "lang": "en",
+        "author": {
+            "name": "LevelUpTuts",
+            "site": "http://leveluptuts.com/",
+            "social": {
+                "fb": "LevelUpTuts",
+                "g+": "117523881242375147756",
+                "twitter": "leveluptuts",
+                "youtube": "LevelUpTuts"
+            }
+        },
+        "lessons": [
+            {
+                "title": "What is HTML5?",
+                "description": "The 1st video in our HTML5 Tutorial series. This video contains no actual coding, but does give you a view into what we will be covering in this series. Stay tuned for an all encompassing, engaging series.",
+                "id": "0aUtQPZcqxE"
+            }
+        ]
     },
-    "lessons": [
-      {
-        "title": "Общие моменты",
-        "description": "В данном видео мы с Вами рассмотрим основные моменты на которые стоит обратить внимание перед тем, как начать программировать. Что нужно знать, чтобы стать программистом? Я отвечу на вопросы, которые мне часто задают. ",
-        "id": "kCYT19xs8mE"
-      }
-    ]
-  }
+    {
+        "id": 2,
+        "title": "HTML5 для начинающих",
+        "tags": ["HTML", "HTML5"],
+        "lang": "ru",
+        "author": {
+            "name": "Magisters",
+            "site": "http://www.magisters.org/",
+            "social": {
+                "vk": "webmagisters",
+                "g+": "+webmagistersru",
+                "twitter": "magisters_org",
+                "youtube": "WebMagistersRu"
+            }
+        },
+        "lessons": [
+            {
+                "title": "Введение в HTML",
+                "description": "В этом уроке мы начнем изучать HTML5. Мы рассмотрим пример кода простейшей веб-страницы и коротко о нем поговорим. Также Вы узнаете что такое HTML и из чего он состоит. Приятного просмотра!",
+                "id": "gGYV7Gb7LTo"
+            },
+            {
+                "title": "Установка Notepad++",
+                "description": "В этом уроке мы скачаем и установим Notepad++. Данная программа необходима для создания HTML-страниц и подсветки синтаксиса. Подробнее об этом смотрите в уроке.",
+                "id": "m-aN5GBeqW8"
+            },
+            {
+                "title": "Синтаксис HTML-элемента",
+                "description": "В этом уроке мы поговорим о правилах написания HTML-элементов. Как правильно использовать тэги и размещать в них контент.",
+                "id": "e2ZMQ97JgUY"
+            },
+            {
+                "title": "HTML-атрибуты",
+                "description": "В этом уроке мы с Вами узнаем, что такое HTML-атрибуты, для чего они нужны и как их использовать.",
+                "id": "yLnSlsT6zHk"
+            },
+            {
+                "title": "HTML-заголовки и текст",
+                "description": "В этом уроке мы поговорим о заголовках и основном тексте. О том как поисковые системы индексируют текстовую информацию. К тому же, расскажу о некоторых нюансах HTML.",
+                "id": "0PGZOq7FM0M"
+            },
+            {
+                "title": "Форматирование текста",
+                "description": "В этом уроке я расскажу Вам как форматировать текст при помощи HTML5: как сделать текст жирным, как сделать его курсивом, как сделать его надстрочным или подстрочным, как его выделить, словно маркером, как разместить цитату из другого источника.",
+                "id": "P0g_d2mWxK0"
+            },
+            {
+                "title": "HTML-ссылки и еще о форматировании",
+                "description": "В этом уроке я расскажу Вам еще несколько тегов форматирования текста в HTML5. Также расскажу об HTML-ссылках все, что нужно знать.",
+                "id": "A9is5Fokuoo"
+            },
+            {
+                "title": "HTML-ссылки и еще о форматировании",
+                "description": "В этом уроке я расскажу Вам еще несколько тегов форматирования текста в HTML5. Также расскажу об HTML-ссылках все, что нужно знать.",
+                "id": "A9is5Fokuoo"
+            }
+        ]
+    }
+
 ]
