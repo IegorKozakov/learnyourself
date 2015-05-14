@@ -120,7 +120,7 @@
 (function(window, $, _, Backbone){
     'use strict';
 
-    var COURSES_DATA = '/data/courses.json';
+    var COURSES_DATA = window.location.toString() + '/data/courses.json';
 
     LY.namespace('Collections');
 
