@@ -1,30 +1,145 @@
 [
-  {
-    "id": 1,
-    "title": "Основы Javascript",
-    "description": "Основы языка Javascript, Javascript в бразуре, события в Javascript",
-    "tags": ["Javascript"],
-    "lang": "ru",
-    "author": {
-      "name": "LoftBlog",
-      "site": "http://loftblog.ru/",
-      "email": "info@loftblog.ru",
-      "social": {
-        "facebook": "loftblog",
-        "vk": "itloft",
-        "youtube": "loftblog"
-      }
+    {
+        "id": 1,
+        "title": "HTML5 Tutorials",
+        "tags": ["HTML", "HTML5"],
+        "lang": "en",
+        "author": {
+            "name": "LevelUpTuts",
+            "site": "http://leveluptuts.com/",
+            "social": {
+                "fb": "LevelUpTuts",
+                "g+": "117523881242375147756",
+                "twitter": "leveluptuts",
+                "youtube": "LevelUpTuts"
+            }
+        },
+        "lessons": [
+            {
+                "title": "What is HTML5?",
+                "description": "The 1st video in our HTML5 Tutorial series. This video contains no actual coding, but does give you a view into what we will be covering in this series. Stay tuned for an all encompassing, engaging series.",
+                "id": "0aUtQPZcqxE"
+            },
+            {
+                "title": "Starting Your First HTML5 Site",
+                "description": "The 2nd video in our HTML5 Tutorial series. Here, I show you how to convert an HTML4.01 site into HTML5. The conversion is unimportant, what's key here is what tags you need to start your HTML5 site.",
+                "id": "sfLBWj5lPgA"
+            },
+            {
+                "title": "Site Structure - Header, Section, Aside, and Footer",
+                "description": "The 3rd video in our HTML5 Tutorial series. Here, I show you how to use the new Header, Section, Aside and Footer elements to more semantically structure your site.",
+                "id": "DR1upYr2UbA"
+            },
+            {
+                "title": "HTML5 Shiv",
+                "description": "The 4th video in our HTML5 Tutorial series. Here, I show you how to use the HTML5 Shiv to make sure you code is compatible with older browsers.",
+                "id": "H3YXBMKdqS0"
+            },
+            {
+                "title": "HTML5 Boilerplate",
+                "description": "The 5th video in our HTML5 Tutorial series. Here, I show you how to use HTML5 Boilerplate to start your new projects.",
+                "id": "dJ8v1XZS7uc"
+            }
+        ]
     },
-    "lessons": [
-      {
-        "title": "Введение",
-        "description": "Общие сведения языка Javascript, история создания языка, основные типы данных",
-        "id": "n0sPFaLsNeI"
-      },
-      {
-        "title": "Примитивные и объектные данные, обёртки",
-        "id": "p-Ob8gEJBJs"
-      }
-    ]
-  }
+    {
+        "id": 2,
+        "title": "HTML5 для начинающих",
+        "tags": ["HTML", "HTML5"],
+        "lang": "ru",
+        "author": {
+            "name": "Magisters",
+            "site": "http://www.magisters.org/",
+            "social": {
+                "vk": "webmagisters",
+                "g+": "+webmagistersru",
+                "twitter": "magisters_org",
+                "youtube": "WebMagistersRu"
+            }
+        },
+        "lessons": [
+            {
+                "title": "Введение в HTML",
+                "description": "В этом уроке мы начнем изучать HTML5. Мы рассмотрим пример кода простейшей веб-страницы и коротко о нем поговорим. Также Вы узнаете что такое HTML и из чего он состоит. Приятного просмотра!",
+                "id": "gGYV7Gb7LTo"
+            },
+            {
+                "title": "Установка Notepad++",
+                "description": "В этом уроке мы скачаем и установим Notepad++. Данная программа необходима для создания HTML-страниц и подсветки синтаксиса. Подробнее об этом смотрите в уроке.",
+                "id": "m-aN5GBeqW8"
+            },
+            {
+                "title": "Синтаксис HTML-элемента",
+                "description": "В этом уроке мы поговорим о правилах написания HTML-элементов. Как правильно использовать тэги и размещать в них контент.",
+                "id": "e2ZMQ97JgUY"
+            },
+            {
+                "title": "HTML-атрибуты",
+                "description": "В этом уроке мы с Вами узнаем, что такое HTML-атрибуты, для чего они нужны и как их использовать.",
+                "id": "yLnSlsT6zHk"
+            },
+            {
+                "title": "HTML-заголовки и текст",
+                "description": "В этом уроке мы поговорим о заголовках и основном тексте. О том как поисковые системы индексируют текстовую информацию. К тому же, расскажу о некоторых нюансах HTML.",
+                "id": "0PGZOq7FM0M"
+            },
+            {
+                "title": "Форматирование текста",
+                "description": "В этом уроке я расскажу Вам как форматировать текст при помощи HTML5: как сделать текст жирным, как сделать его курсивом, как сделать его надстрочным или подстрочным, как его выделить, словно маркером, как разместить цитату из другого источника.",
+                "id": "P0g_d2mWxK0"
+            },
+            {
+                "title": "HTML-ссылки и еще о форматировании",
+                "description": "В этом уроке я расскажу Вам еще несколько тегов форматирования текста в HTML5. Также расскажу об HTML-ссылках все, что нужно знать.",
+                "id": "A9is5Fokuoo"
+            },
+            {
+                "title": "HTML-тег HEAD и его содержимое",
+                "description": "Поговорим подробнее об элементе HEAD и его содержимом.",
+                "id": "qjNiL_1OrWc"
+            },
+            {
+                "title": "Вставка изображений",
+                "description": "В этом видео-уроке Вы научитесь вставлять с помощью HTML5 изображения. Контролировать их ширину и высоту. А также расскажу немного о SEO-оптимизации изображений.",
+                "id": "HIWWdKCNV4k"
+            },
+            {
+                "title": "Создание HTML-таблиц",
+                "description": "В этом уроке я научу Вас создавать HTML-таблицы. Также мы поговорим об их редактировании и форматировании.",
+                "id": "g15y9WLiPII"
+            },
+            {
+                "title": " Создание HTML-списков",
+                "description": "В этом уроке мы поговорим о написании и синтаксисе HTML-списков. Списки - очень важный элемент в HTML, так как на его основе, как правило, строится навигация и некоторые другие элементы веб-страницы. Приятного просмотра!",
+                "id": "mKSXz_GF8ik"
+            },
+            {
+                "title": "Создание HTML-форм",
+                "description": "В этом уроке Вы узнаете, как создавать HTML-формы. Какие типы и способы вводу данных существуют. Также расскажу о механизме отправки данных через созданную форму. Приятного просмотра!",
+                "id": "h3-tUVYLWzA"
+            },
+            {
+                "title": "Блочные и строчные элементы",
+                "description": "Привет, друзья! В этом уроке я рассказу о важном аспекте HTML5 со стороны верстки. Я расскажу о блочных и строчных элементах. Чтобы понять о чем это я, смотрим урок! Приятного просмотра.",
+                "id": "gxDr3rTD-qQ"
+            },
+            {
+                "title": "Основы CSS и блочной верстки",
+                "description": "В этом уроке я Вам расскажу о применении CSS, о блочной верстке. В результате Вы получите ясное понимание блочной верстки, почему она именно блочная.",
+                "id": "WYBwHFFgakU"
+            },
+            {
+                "title": "Поговорим о JavaScript",
+                "description": "Привет, друзья! В этом уроке я расскажу Вам немного о JavaScript и его применении. Данный урок рассчитан лишь на ознакомление с этим языком.",
+                "id": "RSJDTW1sOog"
+            },
+            {
+                "title": "Заключение",
+                "description": "В этом видео я расскажу, что же делать дальше, куда двигаться и что изучать, чтобы не останавливаться на достигнутом и стать профессиональным веб-мастером.",
+                "id": "KRUchoUasHc"
+            }
+
+        ]
+    }
+
 ]

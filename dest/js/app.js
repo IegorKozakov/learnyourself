@@ -120,16 +120,18 @@
 (function(window, $, _, Backbone){
     'use strict';
 
+    var COURSES_DATA = window.location.toString() + '/data/courses.json';
+
     LY.namespace('Collections');
 
     LY.Collections.CoursesPreview = Backbone.Collection.extend({
         model: LY.Models.CoursePreview,
-        url: 'learnyourself/data/courses.json'
+        url: COURSES_DATA
     });
 
     LY.Collections.Courses = Backbone.Collection.extend({
         model: LY.Models.Course,
-        url: 'learnyourself/data/courses.json'
+        url: COURSES_DATA
     });
 
 }(window, jQuery, _, Backbone));
@@ -172,7 +174,7 @@
      */
     LY.Views.CourseDetail = Backbone.View.extend({
         className: 'course_details',
-        tpl: LY.Helpers.getTpl('courseDetail'),
+        tpl: LY.Helpers.getTpl('course_detail'),
 
         render: function() {
             this.$el.html( this.tpl( this.model.toJSON() ) );

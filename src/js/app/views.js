@@ -37,7 +37,7 @@
      */
     LY.Views.CourseDetail = Backbone.View.extend({
         className: 'course_details',
-        tpl: LY.Helpers.getTpl('courseDetail'),
+        tpl: LY.Helpers.getTpl('course_detail'),
 
         render: function() {
             this.$el.html( this.tpl( this.model.toJSON() ) );
