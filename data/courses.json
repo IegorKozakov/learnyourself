@@ -19,6 +19,26 @@
                 "title": "What is HTML5?",
                 "description": "The 1st video in our HTML5 Tutorial series. This video contains no actual coding, but does give you a view into what we will be covering in this series. Stay tuned for an all encompassing, engaging series.",
                 "id": "0aUtQPZcqxE"
+            },
+            {
+                "title": "Starting Your First HTML5 Site",
+                "description": "The 2nd video in our HTML5 Tutorial series. Here, I show you how to convert an HTML4.01 site into HTML5. The conversion is unimportant, what's key here is what tags you need to start your HTML5 site.",
+                "id": "sfLBWj5lPgA"
+            },
+            {
+                "title": "Site Structure - Header, Section, Aside, and Footer",
+                "description": "The 3rd video in our HTML5 Tutorial series. Here, I show you how to use the new Header, Section, Aside and Footer elements to more semantically structure your site.",
+                "id": "DR1upYr2UbA"
+            },
+            {
+                "title": "HTML5 Shiv",
+                "description": "The 4th video in our HTML5 Tutorial series. Here, I show you how to use the HTML5 Shiv to make sure you code is compatible with older browsers.",
+                "id": "H3YXBMKdqS0"
+            },
+            {
+                "title": "HTML5 Boilerplate",
+                "description": "The 5th video in our HTML5 Tutorial series. Here, I show you how to use HTML5 Boilerplate to start your new projects.",
+                "id": "dJ8v1XZS7uc"
             }
         ]
     },
