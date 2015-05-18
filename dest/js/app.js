@@ -69,11 +69,11 @@
         return Handlebars.compile( tplHTML );
     };
 
-  /**
-   * [getStaticPage return static html page]
-   * @param  {[string]} name [name of html page (without .html)]
-   * @return {[string]} contentHtml [all contents from static page]
-   */
+    /**
+    * [getStaticPage return static html page]
+    * @param  {[string]} name [name of html page (without .html)]
+    * @return {[string]} contentHtml [all contents from static page]
+    */
     LY.Helpers.getStaticPage = function(name) {
         var contentHtml = '';
 
@@ -89,6 +89,20 @@
 
         return contentHtml;
     };
+
+    /**
+    * [getUrlOrigin return origin of URL]
+    * @return {[string]} window.location.origin
+    */
+    LY.Helpers.getUrlOrigin = function() {
+        var wl = window.location;
+
+        if (!wl.origin) { 
+            wl.origin = wl.protocol + "//" + wl.hostname + (wl.port ? ':' + wl.port: '');
+        }
+
+        return wl.origin;
+    }
 
     /**
      * [Handlebars custom function helper - DECLARATION OF NUMBER]
@@ -120,7 +134,7 @@
 (function(window, $, _, Backbone){
     'use strict';
 
-    var COURSES_DATA = window.location.toString() + '/data/courses.json';
+    var COURSES_DATA = LY.Helpers.getUrlOrigin() + '/data/courses.json';
 
     LY.namespace('Collections');
 
