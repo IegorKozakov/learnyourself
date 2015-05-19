@@ -123,8 +123,6 @@
 
     LY.namespace('Models');
 
-    LY.Models.CoursePreview = Backbone.Model.extend({});
-
     LY.Models.Course = Backbone.Model.extend({});
 
     LY.Models.Lesson = Backbone.Model.extend({});
@@ -137,11 +135,6 @@
     var COURSES_DATA = LY.Helpers.getUrlOrigin() + '/data/courses.json';
 
     LY.namespace('Collections');
-
-    LY.Collections.CoursesPreview = Backbone.Collection.extend({
-        model: LY.Models.CoursePreview,
-        url: COURSES_DATA
-    });
 
     LY.Collections.Courses = Backbone.Collection.extend({
         model: LY.Models.Course,

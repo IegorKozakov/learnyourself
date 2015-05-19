@@ -49,6 +49,16 @@
                 "title": "The Time Element",
                 "description": "The 7th video in our HTML5 Tutorial series. Here, I show you how to use the time element.",
                 "id": "QvDhz51v6SE"
+            },
+            {
+                "title": "Figure and Figcaption",
+                "description": "The 8th video in our HTML5 Tutorial series. Here, I show you how to use figure and figcaption to have essential content with captions.",
+                "id": "JdagGAxAow0"
+            },
+            {
+                "title": "Form Input Types",
+                "description": "The 9th video in our HTML5 Tutorial series. Here, I show you some of the new form input types!",
+                "id": "pbm7e-lPGl0"
             }
         ]
     },
@@ -148,8 +158,6 @@
                 "description": "В этом видео я расскажу, что же делать дальше, куда двигаться и что изучать, чтобы не останавливаться на достигнутом и стать профессиональным веб-мастером.",
                 "id": "KRUchoUasHc"
             }
-
         ]
     }
-
 ]
