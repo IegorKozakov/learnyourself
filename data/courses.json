@@ -59,6 +59,46 @@
                 "title": "Form Input Types",
                 "description": "The 9th video in our HTML5 Tutorial series. Here, I show you some of the new form input types!",
                 "id": "pbm7e-lPGl0"
+            },
+            {
+                "title": "Form Input Types",
+                "description": "The 10th video in our HTML5 Tutorial series. Here, I show you even more form input types.",
+                "id": "9tbTunXSFh4"
+            },
+            {
+                "title": "Form Attributes",
+                "description": "The 11th video in our HTML5 Tutorial series. Here, I show you the new form attributes in HTML5.",
+                "id": "IVqUK_gT-jU"
+            },
+            {
+                "title": "Video Part 1",
+                "description": "The 12th video in our HTML5 Tutorial series. Here, I show you the basics of getting video up and running on your website. This is a barebones usage of HTML5 Video.",
+                "id": "Npe4IDsj-gs"
+            },
+            {
+                "title": "Video Part 2: Compatibility and Formats",
+                "description": "The 13th video in our HTML5 Tutorial series. Here, I talk about how to support the most modern browsers at once with the correct video formats.",
+                "id": "VlrqKPXVRXk"
+            },
+            {
+                "title": "Video Part 3: HTML5 Attributes",
+                "description": "The 14th video in our HTML5 Tutorial series. Here, I show you the video attributes in HTML5.",
+                "id": "N92D-_c3s"
+            },
+            {
+                "title": "Video Part 4: Supporting All Browsers with Video For Everybody",
+                "description": "The 15th video in our HTML5 Tutorial series. Here, I show you how to get video working on all browsers with a flash fallback.",
+                "id": "pz1MDDs5y8Q"
+            },
+            {
+                "title": "How To Play Audio With HTML5",
+                "description": "The 16th video in our HTML5 Tutorial series. Here, I show you the basics of HTML5 Audio, and you get to hear me sing.",
+                "id": "mBSsef52kT8"
+            },
+            {
+                "title": " HTML5 Custom Data Attributes",
+                "description": "The 17th video in our HTML5 Tutorial series. Here, I show you the how to use custom data attributes to add data to HTML elements.",
+                "id": "ewIF02B5wX8"
             }
         ]
     },
