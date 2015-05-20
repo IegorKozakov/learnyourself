@@ -2,7 +2,8 @@
 (function(window, $, _, Backbone){
     'use strict';
 
-    var COURSES_DATA = LY.Helpers.getUrlOrigin() + '/data/courses.json';
+    var PATH_TO_DATA = '/data/courses.json',
+        COURSES_DATA = (LY.Helpers.getNameOfServer === 'github') ? LY.Helpers.getUrlOrigin() + '/learnyourself' + PATH_TO_DATA : LY.Helpers.getUrlOrigin() + PATH_TO_DATA;
 
     LY.namespace('Collections');
 

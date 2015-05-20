@@ -14,7 +14,7 @@
         Backbone.history.start();
     });
 
-    /** XXX - don't know - main.js or helpers.js
+    /**
     * [namespace - create new namespace]
     * @param  {[string]} newNamespace [name of new namespace]
     * @return {[object]}              [root namespace object]
@@ -51,7 +51,7 @@
     LY.Helpers.getTpl = function(id) {
         var $tpl = $('#' + id),
             tplHTML = '';
-                
+
         if(!$tpl.length) {
             $.ajax({
                 url: PATH_TO_TPL + id + '.html',
@@ -97,12 +97,20 @@
     LY.Helpers.getUrlOrigin = function() {
         var wl = window.location;
 
-        if (!wl.origin) { 
+        if (!wl.origin) {
             wl.origin = wl.protocol + "//" + wl.hostname + (wl.port ? ':' + wl.port: '');
         }
 
         return wl.origin;
     }
+
+    /**
+    * [getNameOfServer return name fo server]
+    * @return {[string]} 'github' / 'others'
+    */
+    LY.Helpers.getNameOfServer = function() {
+        return ( window.location.host.indexOf('github') !== -1 ) ? 'github' : 'others';
+    };
 
     /**
      * [Handlebars custom function helper - DECLARATION OF NUMBER]
