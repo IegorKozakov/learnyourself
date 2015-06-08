@@ -131,7 +131,13 @@
 
     LY.namespace('Models');
 
-    LY.Models.Course = Backbone.Model.extend({});
+    LY.Models.Course = Backbone.Model.extend({
+        default: {
+            'id': 0,
+            'title': '',
+            'lang': 'en'
+        }
+    });
 
     LY.Models.Lesson = Backbone.Model.extend({});
 
@@ -161,7 +167,7 @@
      * View of list of courses
      */
     LY.Views.CoursesPreview = Backbone.View.extend({
-        className: 'preview_courses',
+        className: 'courses_preview',
         render: function(){
             this.collection.each( this.renderCourse, this);
             return this;
@@ -199,7 +205,7 @@
     });
 
     /**
-     * View of CourseDetail details
+     * View of Lesson details
      */
     LY.Views.Lesson = Backbone.View.extend({
         className: 'lesson',
@@ -222,9 +228,7 @@
 
             return this;
         }
-    })
-
-
+    });
 }(window, jQuery, _, Backbone));
 ;
 (function(window, $, _, Backbone){

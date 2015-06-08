@@ -4,7 +4,13 @@
 
     LY.namespace('Models');
 
-    LY.Models.Course = Backbone.Model.extend({});
+    LY.Models.Course = Backbone.Model.extend({
+        default: {
+            'id': 0,
+            'title': '',
+            'lang': 'en'
+        }
+    });
 
     LY.Models.Lesson = Backbone.Model.extend({});
 

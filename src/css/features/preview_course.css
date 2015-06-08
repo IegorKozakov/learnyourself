@@ -1,9 +1,9 @@
-.preview_courses {
+.courses_preview {
     width: 100%;
     max-width: 620px;
     margin: 0 auto;
 }
-    .preview_courses:after {
+    .courses_preview:after {
         content: "";
         display: table;
         clear: both;
