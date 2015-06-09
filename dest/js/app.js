@@ -167,9 +167,10 @@
      * View of list of courses
      */
     LY.Views.CoursesPreview = Backbone.View.extend({
+        className: 'courses_preview',
         tpl: LY.Helpers.getTpl('courses_preview'),
         events: {
-            'change #opt': 'selectList'
+            'change #lang': 'selectList'
         },
 
         render: function(){
@@ -182,8 +183,17 @@
             var coursePreview = new LY.Views.CoursePreview({ model: course});
             this.$el.append(coursePreview.render().el);
         },
-        selectList: function() {
-            console.log('asd');
+        selectList: function(e) {
+            var $currentEl = $(e.currentTarget),
+                filterName = $currentEl.attr('name'),
+                filterValue = $currentEl.val(),
+                filterObj = {};
+
+                filterObj[filterName] = filterValue;
+                console.log(filterObj);
+
+            var collectionFiltered = this.collection.where(filterObj);
+            console.log(collectionFiltered);
         }
     });
 
