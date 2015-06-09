@@ -11,7 +11,7 @@
  * max-width: 1260px;
  */
 /**
- RESET 
+ RESET
  */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -43,6 +43,7 @@ footer, header, hgroup, menu, nav, section {
 body {
     font-family: 'Fira Sans', sans-serif;
     line-height: 1;
+    overflow-y: scroll;
 }
 
 ol, ul {
@@ -63,7 +64,7 @@ html,
 }
 
 /**
- * HELPERS 
+ * HELPERS
  */
 .h-pull-left {
     float: left;

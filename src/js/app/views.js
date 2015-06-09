@@ -8,14 +8,23 @@
      * View of list of courses
      */
     LY.Views.CoursesPreview = Backbone.View.extend({
-        className: 'courses_preview',
+        tpl: LY.Helpers.getTpl('courses_preview'),
+        events: {
+            'change #opt': 'selectList'
+        },
+
         render: function(){
+            this.$el.append(this.tpl());
+
             this.collection.each( this.renderCourse, this);
             return this;
         },
         renderCourse: function(course) {
             var coursePreview = new LY.Views.CoursePreview({ model: course});
             this.$el.append(coursePreview.render().el);
+        },
+        selectList: function() {
+            console.log('asd');
         }
     });
 

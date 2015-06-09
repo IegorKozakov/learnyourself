@@ -12,7 +12,7 @@
  */
 
 /**
- RESET 
+ RESET
  */
 
 html,
@@ -123,6 +123,7 @@ section {
 body {
   font-family: 'Fira Sans', sans-serif;
   line-height: 1;
+  overflow-y: scroll;
 }
 
 ol,
@@ -147,7 +148,7 @@ html,
 }
 
 /**
- * HELPERS 
+ * HELPERS
  */
 
 .h-pull-left {
