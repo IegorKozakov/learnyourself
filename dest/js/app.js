@@ -172,10 +172,16 @@
         events: {
             'change #lang': 'selectList'
         },
-
+        initialize: function() {
+           this.on('render', this.renderCourses);
+           this.listenTo(this.collection , 'reset', this.renderCourses); 
+        },
         render: function(){
+            this.$el.empty();
             this.$el.append(this.tpl());
-
+            return this.trigger('render');
+        },
+        renderCourses: function() {
             this.collection.each( this.renderCourse, this);
             return this;
         },
@@ -185,15 +191,13 @@
         },
         selectList: function(e) {
             var $currentEl = $(e.currentTarget),
-                filterName = $currentEl.attr('name'),
-                filterValue = $currentEl.val(),
                 filterObj = {};
 
-                filterObj[filterName] = filterValue;
-                console.log(filterObj);
+            /* filter params */
+            filterObj[$currentEl.attr('name')] = $currentEl.val();
+            var collectionFiltered = this.collection.where(filterObj)
 
-            var collectionFiltered = this.collection.where(filterObj);
-            console.log(collectionFiltered);
+            LY.courses.reset(collectionFiltered);
         }
     });
 
