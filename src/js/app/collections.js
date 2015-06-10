@@ -9,7 +9,7 @@
 
     LY.Collections.Courses = Backbone.Collection.extend({
         model: LY.Models.Course,
-        url: COURSES_DATA
+        url: COURSES_DATA,
     });
 
 }(window, jQuery, _, Backbone));

@@ -153,7 +153,7 @@
 
     LY.Collections.Courses = Backbone.Collection.extend({
         model: LY.Models.Course,
-        url: COURSES_DATA
+        url: COURSES_DATA,
     });
 
 }(window, jQuery, _, Backbone));
@@ -173,15 +173,17 @@
             'change #lang': 'selectList'
         },
         initialize: function() {
+           this.collection.original = this.collection.clone();
+
            this.on('render', this.renderCourses);
-           this.listenTo(this.collection , 'reset', this.renderCourses); 
+           this.listenTo(this.collection , 'reset', this.renderCourses);
         },
         render: function(){
-            this.$el.empty();
             this.$el.append(this.tpl());
             return this.trigger('render');
         },
         renderCourses: function() {
+            this.$el.find('.preview_course').remove();
             this.collection.each( this.renderCourse, this);
             return this;
         },
@@ -195,7 +197,7 @@
 
             /* filter params */
             filterObj[$currentEl.attr('name')] = $currentEl.val();
-            var collectionFiltered = this.collection.where(filterObj)
+            var collectionFiltered = this.collection.original.where(filterObj)
 
             LY.courses.reset(collectionFiltered);
         }
@@ -262,6 +264,7 @@
     LY.Router = Backbone.Router.extend({
         initialize: function() {
             LY.courses = new LY.Collections.Courses();
+            LY.courses.original = LY.courses.clone();
 
             /* setup set of defaults models */
             LY.courses.fetch({ async: false });

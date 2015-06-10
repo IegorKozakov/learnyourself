@@ -14,15 +14,17 @@
             'change #lang': 'selectList'
         },
         initialize: function() {
+           this.collection.original = this.collection.clone();
+
            this.on('render', this.renderCourses);
-           this.listenTo(this.collection , 'reset', this.renderCourses); 
+           this.listenTo(this.collection , 'reset', this.renderCourses);
         },
         render: function(){
-            this.$el.empty();
             this.$el.append(this.tpl());
             return this.trigger('render');
         },
         renderCourses: function() {
+            this.$el.find('.preview_course').remove();
             this.collection.each( this.renderCourse, this);
             return this;
         },
@@ -36,7 +38,7 @@
 
             /* filter params */
             filterObj[$currentEl.attr('name')] = $currentEl.val();
-            var collectionFiltered = this.collection.where(filterObj)
+            var collectionFiltered = this.collection.original.where(filterObj)
 
             LY.courses.reset(collectionFiltered);
         }

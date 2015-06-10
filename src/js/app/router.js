@@ -7,6 +7,7 @@
     LY.Router = Backbone.Router.extend({
         initialize: function() {
             LY.courses = new LY.Collections.Courses();
+            LY.courses.original = LY.courses.clone();
 
             /* setup set of defaults models */
             LY.courses.fetch({ async: false });
