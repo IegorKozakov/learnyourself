@@ -182,14 +182,20 @@
             this.$el.append(this.tpl());
             return this.trigger('render');
         },
+        _getArticleContainer: function(){
+            return this.$('.articles-container');
+        },
         renderCourses: function() {
-            this.$el.find('.preview_course').remove();
+            this._getArticleContainer().empty();
+            // this.$el.find('.preview_course').remove();
+
             this.collection.each( this.renderCourse, this);
             return this;
         },
         renderCourse: function(course) {
             var coursePreview = new LY.Views.CoursePreview({ model: course});
-            this.$el.append(coursePreview.render().el);
+            this._getArticleContainer().append(coursePreview.render().el);
+            // this.$el.append(coursePreview.render().el);
         },
         selectList: function(e) {
             var $currentEl = $(e.currentTarget),
