@@ -163,6 +163,55 @@
 
     LY.namespace('Views');
 
+    LY.Views.Course = Backbone.View.extend({
+        className: 'preview_course',
+        tpl: LY.Helpers.getTpl('course_preview'),
+
+        render: function() {
+            this.$el.html( this.tpl( this.model.toJSON() ) );
+            return this;
+        }
+    });
+
+    LY.Views.Courses = Backbone.View.extend({
+        className: 'courses',
+        render: function(){
+            this.$el.empty();
+
+            this.collection.each(function(i) {
+                var item = new LY.Views.Course({model: i});
+                this.$el.append(item.render().el);
+            }, this);
+
+            return this;
+        },
+        renderCourse: function(course) {
+            var coursePreview = new LY.Views.CoursePreview({ model: course});
+            this.$el.append(coursePreview.render().el);
+        },
+    });
+
+    /**
+     * View of index page
+     */
+    LY.Views.IndexDirectoryView = Backbone.View.extend({
+        className: 'index',
+        tpl: LY.Helpers.getTpl('index_directory'),
+        initialize: function() {
+
+          //  this.coursesPreview.on('some_event', this.someMethod, this);
+        },
+        render: function () {
+            this.$el.html(this.tpl());
+
+            this.$('#courses').html(new LY.Views.Courses({collection: LY.courses}).render().el);
+
+            return this;
+        }
+    });
+
+    
+
     /**
      * View of list of courses
      */
@@ -225,41 +274,41 @@
     /**
      * View of CourseDetail details
      */
-    LY.Views.CourseDetail = Backbone.View.extend({
-        className: 'course_details',
-        tpl: LY.Helpers.getTpl('course_detail'),
+    // LY.Views.CourseDetail = Backbone.View.extend({
+    //     className: 'course_details',
+    //     tpl: LY.Helpers.getTpl('course_detail'),
 
-        render: function() {
-            this.$el.html( this.tpl( this.model.toJSON() ) );
-            return this;
-        }
-    });
+    //     render: function() {
+    //         this.$el.html( this.tpl( this.model.toJSON() ) );
+    //         return this;
+    //     }
+    // });
 
     /**
      * View of Lesson details
      */
-    LY.Views.Lesson = Backbone.View.extend({
-        className: 'lesson',
-        tpl: LY.Helpers.getTpl('lesson'),
+    // LY.Views.Lesson = Backbone.View.extend({
+    //     className: 'lesson',
+    //     tpl: LY.Helpers.getTpl('lesson'),
 
-        render: function() {
-            this.$el.html( this.tpl( this.model.toJSON() ) );
-            return this;
-        }
-    });
+    //     render: function() {
+    //         this.$el.html( this.tpl( this.model.toJSON() ) );
+    //         return this;
+    //     }
+    // });
 
     /**
      * View of about page
      */
-    LY.Views.aboutPage = Backbone.View.extend({
-        tpl: 'about',
-        render: function(){
-            var content = LY.Helpers.getStaticPage('about');
-            $(this.el).html(content);
+    // LY.Views.aboutPage = Backbone.View.extend({
+    //     tpl: 'about',
+    //     render: function(){
+    //         var content = LY.Helpers.getStaticPage('about');
+    //         $(this.el).html(content);
 
-            return this;
-        }
-    });
+    //         return this;
+    //     }
+    // });
 }(window, jQuery, _, Backbone));
 ;
 (function(window, $, _, Backbone){
@@ -268,6 +317,7 @@
     LY.namespace('Router');
 
     LY.Router = Backbone.Router.extend({
+        $main: $('.j-main'),
         initialize: function() {
             LY.courses = new LY.Collections.Courses();
             LY.courses.original = LY.courses.clone();
@@ -275,7 +325,6 @@
             /* setup set of defaults models */
             LY.courses.fetch({ async: false });
         },
-        $main: $('.j-main'),
         loadView : function(view) {
             this.view && this.view.remove();
             this.view = view;
@@ -294,8 +343,10 @@
         },
 
         index: function() {
-            var viewOfCoursesPreview = new LY.Views.CoursesPreview({collection: LY.courses})
-            this.updateView(viewOfCoursesPreview);
+            var indexDirectoryView = new LY.Views.IndexDirectoryView();
+            this.updateView(indexDirectoryView);
+            //var viewOfCoursesPreview = new LY.Views.CoursesPreview({collection: LY.courses})
+            //this.updateView(viewOfCoursesPreview);
         },
         course: function (idCourse) {
             this.updateView(new LY.Views.CourseDetail({ model: LY.courses.get(idCourse) }) );

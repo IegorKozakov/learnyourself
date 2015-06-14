@@ -5,6 +5,7 @@
     LY.namespace('Router');
 
     LY.Router = Backbone.Router.extend({
+        $main: $('.j-main'),
         initialize: function() {
             LY.courses = new LY.Collections.Courses();
             LY.courses.original = LY.courses.clone();
@@ -12,7 +13,6 @@
             /* setup set of defaults models */
             LY.courses.fetch({ async: false });
         },
-        $main: $('.j-main'),
         loadView : function(view) {
             this.view && this.view.remove();
             this.view = view;
@@ -31,8 +31,10 @@
         },
 
         index: function() {
-            var viewOfCoursesPreview = new LY.Views.CoursesPreview({collection: LY.courses})
-            this.updateView(viewOfCoursesPreview);
+            var indexDirectoryView = new LY.Views.IndexDirectoryView();
+            this.updateView(indexDirectoryView);
+            //var viewOfCoursesPreview = new LY.Views.CoursesPreview({collection: LY.courses})
+            //this.updateView(viewOfCoursesPreview);
         },
         course: function (idCourse) {
             this.updateView(new LY.Views.CourseDetail({ model: LY.courses.get(idCourse) }) );
