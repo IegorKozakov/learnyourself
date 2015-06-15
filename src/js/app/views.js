@@ -7,7 +7,6 @@
     LY.Views.Course = Backbone.View.extend({
         className: 'preview_course',
         tpl: LY.Helpers.getTpl('course_preview'),
-
         render: function() {
             this.$el.html( this.tpl( this.model.toJSON() ) );
             return this;
@@ -27,84 +26,70 @@
             return this;
         },
         renderCourse: function(course) {
-            var coursePreview = new LY.Views.CoursePreview({ model: course});
+            var coursePreview = new LY.Views.CoursePreview({model: course});
             this.$el.append(coursePreview.render().el);
         },
+    });
+
+    LY.Views.Filters = Backbone.View.extend({
+        class: 'filters',
+        tpl : LY.Helpers.getTpl('filters'),
+        render: function() {
+            this.$el.html( this.tpl() );
+            return this;
+        }
     });
 
     /**
      * View of index page
      */
-    LY.Views.IndexDirectoryView = Backbone.View.extend({
+    LY.Views.IndexDirectory = Backbone.View.extend({
         className: 'index',
         tpl: LY.Helpers.getTpl('index_directory'),
+        events: {
+            'change #filterBylang': 'setFilter'
+        },
         initialize: function() {
-
-          //  this.coursesPreview.on('some_event', this.someMethod, this);
+            this.on("change:filterType", this.filterByType, this);
+            LY.courses.on("reset", this.renderFilteredList, this);
         },
         render: function () {
             this.$el.html(this.tpl());
 
             this.$('#courses').html(new LY.Views.Courses({collection: LY.courses}).render().el);
+            this.$('#filters').html(new  LY.Views.Filters().render().el);
 
             return this;
+        },
+        setFilter: function(e) {
+            this.filter = e.currentTarget.value;
+            this.trigger("change:filterType");
+        },
+        filterByType: function() {
+            if(this.filter === 'all') {
+                LY.courses.reset(LY.courses.original.toJSON());
+            } else {
+                var filter = this.filter,
+                    filtered = _.filter(LY.courses.original.models, function (item) {
+                        return item.get('lang') === filter;
+                    });
+
+                LY.courses.reset(filtered);
+            }
+        },
+        renderFilteredList: function() {
+            console.log('asd');
+            this.$('#courses').html(new LY.Views.Courses({collection: LY.courses}).render().el);
         }
     });
 
-    
 
     /**
-     * View of list of courses
+     * View of CourseDetail details
      */
-    LY.Views.CoursesPreview = Backbone.View.extend({
-        className: 'courses_preview',
-        tpl: LY.Helpers.getTpl('courses_preview'),
-        events: {
-            'change #lang': 'selectList'
-        },
-        initialize: function() {
-           this.collection.original = this.collection.clone();
-
-           this.on('render', this.renderCourses);
-           this.listenTo(this.collection , 'reset', this.renderCourses);
-        },
-        render: function(){
-            this.$el.append(this.tpl());
-            return this.trigger('render');
-        },
-        _getArticleContainer: function(){
-            return this.$('.articles-container');
-        },
-        renderCourses: function() {
-            this._getArticleContainer().empty();
-            // this.$el.find('.preview_course').remove();
-
-            this.collection.each( this.renderCourse, this);
-            return this;
-        },
-        renderCourse: function(course) {
-            var coursePreview = new LY.Views.CoursePreview({ model: course});
-            this._getArticleContainer().append(coursePreview.render().el);
-            // this.$el.append(coursePreview.render().el);
-        },
-        selectList: function(e) {
-            var $currentEl = $(e.currentTarget),
-                filterObj = {};
-
-            /* filter params */
-            filterObj[$currentEl.attr('name')] = $currentEl.val();
-            var collectionFiltered = this.collection.original.where(filterObj)
-
-            LY.courses.reset(collectionFiltered);
-        }
-    });
-
-    /**
-     * View of preview course
-     */
-    LY.Views.CoursePreview = Backbone.View.extend({
-        className: 'preview_course',
-        tpl: LY.Helpers.getTpl('course_preview'),
+    LY.Views.CourseDetail = Backbone.View.extend({
+        className: 'course_details',
+        tpl: LY.Helpers.getTpl('course_detail'),
 
         render: function() {
             this.$el.html( this.tpl( this.model.toJSON() ) );
@@ -113,41 +98,28 @@
     });
 
     /**
-     * View of CourseDetail details
-     */
-    // LY.Views.CourseDetail = Backbone.View.extend({
-    //     className: 'course_details',
-    //     tpl: LY.Helpers.getTpl('course_detail'),
-
-    //     render: function() {
-    //         this.$el.html( this.tpl( this.model.toJSON() ) );
-    //         return this;
-    //     }
-    // });
-
-    /**
      * View of Lesson details
      */
-    // LY.Views.Lesson = Backbone.View.extend({
-    //     className: 'lesson',
-    //     tpl: LY.Helpers.getTpl('lesson'),
+    LY.Views.Lesson = Backbone.View.extend({
+        className: 'lesson',
+        tpl: LY.Helpers.getTpl('lesson'),
 
-    //     render: function() {
-    //         this.$el.html( this.tpl( this.model.toJSON() ) );
-    //         return this;
-    //     }
-    // });
+        render: function() {
+            this.$el.html( this.tpl( this.model.toJSON() ) );
+            return this;
+        }
+    });
 
     /**
      * View of about page
      */
-    // LY.Views.aboutPage = Backbone.View.extend({
-    //     tpl: 'about',
-    //     render: function(){
-    //         var content = LY.Helpers.getStaticPage('about');
-    //         $(this.el).html(content);
+    LY.Views.aboutPage = Backbone.View.extend({
+        tpl: 'about',
+        render: function(){
+            var content = LY.Helpers.getStaticPage('about');
+            $(this.el).html(content);
 
-    //         return this;
-    //     }
-    // });
+            return this;
+        }
+    });
 }(window, jQuery, _, Backbone));

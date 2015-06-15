@@ -8,10 +8,10 @@
         $main: $('.j-main'),
         initialize: function() {
             LY.courses = new LY.Collections.Courses();
-            LY.courses.original = LY.courses.clone();
 
             /* setup set of defaults models */
             LY.courses.fetch({ async: false });
+            LY.courses.original = LY.courses.clone();
         },
         loadView : function(view) {
             this.view && this.view.remove();
@@ -31,8 +31,8 @@
         },
 
         index: function() {
-            var indexDirectoryView = new LY.Views.IndexDirectoryView();
-            this.updateView(indexDirectoryView);
+            var indexDirectory = new LY.Views.IndexDirectory();
+            this.updateView(indexDirectory);
             //var viewOfCoursesPreview = new LY.Views.CoursesPreview({collection: LY.courses})
             //this.updateView(viewOfCoursesPreview);
         },
