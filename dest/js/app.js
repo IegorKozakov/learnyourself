@@ -237,7 +237,6 @@
             }
         },
         renderFilteredList: function() {
-            console.log('asd');
             this.$('#courses').html(new LY.Views.Courses({collection: LY.courses}).render().el);
         }
     });
