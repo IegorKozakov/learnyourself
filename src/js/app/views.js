@@ -10,6 +10,22 @@
         render: function() {
             this.$el.html( this.tpl( this.model.toJSON() ) );
             return this;
+        },
+        events: {
+            'click #starred': 'toogleStarred'
+        },
+        toogleStarred: function(e) {
+            var originalModel = LY.courses.original.get(+e.currentTarget.value);
+
+            if ( this.model.get('starred') ) {
+                this.model.set('starred', false);
+                originalModel.set('starred', false);
+            } else {
+                this.model.set('starred', true);
+                originalModel.set('starred', true);
+            }
+
+            this.render();
         }
     });
 
@@ -57,7 +73,7 @@
             this.$el.html(this.tpl());
 
             this.$('#courses').html(new LY.Views.Courses({collection: LY.courses}).render().el);
-            this.$('#filters').html(new  LY.Views.Filters().render().el);
+            this.$('#filters').html(new LY.Views.Filters().render().el);
 
             return this;
         },
@@ -75,7 +91,9 @@
                     });
 
                 LY.courses.reset(filtered);
+
             }
+            console.log(LY.courses.toJSON());
         },
         renderFilteredList: function() {
             this.$('#courses').html(new LY.Views.Courses({collection: LY.courses}).render().el);

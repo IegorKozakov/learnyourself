@@ -5,10 +5,11 @@
     LY.namespace('Models');
 
     LY.Models.Course = Backbone.Model.extend({
-        default: {
+        defaults: {
             'id': 0,
             'title': '',
-            'lang': 'en'
+            'lang': 'en',
+            'starred': false
         }
     });
 
