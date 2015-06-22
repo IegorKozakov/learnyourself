@@ -15,7 +15,10 @@
             'click #starred': 'toogleStarred'
         },
         toogleStarred: function(e) {
-            var originalModel = LY.courses.original.get(+e.currentTarget.value);
+            var $btn = $(e.currentTarget),
+                courseId = +$btn.val(),
+                action = $btn.data('flag'),
+                originalModel = LY.courses.original.get(courseId);
 
             if ( this.model.get('starred') ) {
                 this.model.set('starred', false);
@@ -25,7 +28,14 @@
                 originalModel.set('starred', true);
             }
 
-            this.render();
+            if ( LY.Helpers.updateStarredInStorage(courseId, action) ) {
+                this.render();
+            } else {
+                /* TODO: make error for people */
+                console.log('Something bad! Reload page');
+            }
+
+            
         }
     });
 

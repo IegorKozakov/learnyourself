@@ -3,7 +3,7 @@
  *  - getTpl
  */
 ;
-(function(window, $, Handlebars){
+(function(window, $, Handlebars, _){
     'use strict';
 
     window.LY = window.LY || {};
@@ -112,11 +112,37 @@
         return ( window.location.host.indexOf('github') !== -1 ) ? 'github' : 'others';
     };
 
+
+    LY.Helpers.updateStarredInStorage = function(courseId, flag){
+        var updateStarred = [],
+            alreadyStarred = JSON.parse(localStorage.getItem('starred')) || [],
+            flag = $.trim(flag);
+
+        if( flag === 'add' ) {
+            if ( alreadyStarred.indexOf(courseId) !== -1 ) {
+                return false;
+            } else {
+                alreadyStarred.push(courseId);
+                updateStarred = alreadyStarred;
+            }
+        } else if( flag === 'remove' ) {
+             updateStarred = _.without(alreadyStarred, courseId);
+        }
+
+        updateStarred.sort(function(a,b){return a-b;})
+
+        localStorage.setItem('starred', JSON.stringify(updateStarred));
+        return true;
+    };
+
+    /**
+     * Handlebars Helpers
+     */
     /**
      * [Handlebars custom function helper - DECLARATION OF NUMBER]
      * @param  {[number]} n [value]
      * @param  {[string]} t [words separated by /]
-     * @return {[string]}      [transformed word]
+     * @return {[string]}   [transformed word]
      */
     Handlebars.registerHelper('declOfNum', function(n, t) {
         var cases = [2, 0, 1, 1, 1, 2],
@@ -124,7 +150,7 @@
 
         return titles[ (n%100>4 && n%100<20) ? 2 : cases[(n%10<5) ? n%10:5] ];
     });
-}(window, jQuery, Handlebars));
+}(window, jQuery, Handlebars, _));
 ;
 (function(window, $, _, Backbone){
     'use strict';
@@ -137,6 +163,9 @@
             'title': '',
             'lang': 'en',
             'starred': false
+        },
+        initialize: function() {
+            console.log(this.get('id'));
         }
     });
 
@@ -175,7 +204,10 @@
             'click #starred': 'toogleStarred'
         },
         toogleStarred: function(e) {
-            var originalModel = LY.courses.original.get(+e.currentTarget.value);
+            var $btn = $(e.currentTarget),
+                courseId = +$btn.val(),
+                action = $btn.data('flag'),
+                originalModel = LY.courses.original.get(courseId);
 
             if ( this.model.get('starred') ) {
                 this.model.set('starred', false);
@@ -185,7 +217,14 @@
                 originalModel.set('starred', true);
             }
 
-            this.render();
+            if ( LY.Helpers.updateStarredInStorage(courseId, action) ) {
+                this.render();
+            } else {
+                /* TODO: make error for people */
+                console.log('Something bad! Reload page');
+            }
+
+            
         }
     });
 

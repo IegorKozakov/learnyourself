@@ -10,6 +10,9 @@
             'title': '',
             'lang': 'en',
             'starred': false
+        },
+        initialize: function() {
+            console.log(this.get('id'));
         }
     });
 
