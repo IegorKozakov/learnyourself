@@ -112,7 +112,12 @@
         return ( window.location.host.indexOf('github') !== -1 ) ? 'github' : 'others';
     };
 
-
+    /**
+     * [updateStarredInStorage update array of starred courses in localStorage]
+     * @param  {[number]} courseId [id of course]
+     * @param  {[string]} flag     [name of action]
+     * @return {[boolean]}         [true if all is alright, false is error]
+     */
     LY.Helpers.updateStarredInStorage = function(courseId, flag){
         var updateStarred = [],
             alreadyStarred = JSON.parse(localStorage.getItem('starred')) || [],
@@ -165,7 +170,13 @@
             'starred': false
         },
         initialize: function() {
-            console.log(this.get('id'));
+            var starredCourses = JSON.parse(localStorage.getItem('starred'));
+
+            if(!starredCourses) { return false }
+
+            if( starredCourses.indexOf(this.get('id')) !== -1) {
+                this.set('starred', true);
+            }
         }
     });
 
