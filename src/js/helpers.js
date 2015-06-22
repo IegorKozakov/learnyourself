@@ -3,7 +3,7 @@
  *  - getTpl
  */
 ;
-(function(window, $, Handlebars){
+(function(window, $, Handlebars, _){
     'use strict';
 
     window.LY = window.LY || {};
@@ -113,10 +113,41 @@
     };
 
     /**
+     * [updateStarredInStorage update array of starred courses in localStorage]
+     * @param  {[number]} courseId [id of course]
+     * @param  {[string]} flag     [name of action]
+     * @return {[boolean]}         [true if all is alright, false is error]
+     */
+    LY.Helpers.updateStarredInStorage = function(courseId, flag){
+        var updateStarred = [],
+            alreadyStarred = JSON.parse(localStorage.getItem('starred')) || [],
+            flag = $.trim(flag);
+
+        if( flag === 'add' ) {
+            if ( alreadyStarred.indexOf(courseId) !== -1 ) {
+                return false;
+            } else {
+                alreadyStarred.push(courseId);
+                updateStarred = alreadyStarred;
+            }
+        } else if( flag === 'remove' ) {
+             updateStarred = _.without(alreadyStarred, courseId);
+        }
+
+        updateStarred.sort(function(a,b){return a-b;})
+
+        localStorage.setItem('starred', JSON.stringify(updateStarred));
+        return true;
+    };
+
+    /**
+     * Handlebars Helpers
+     */
+    /**
      * [Handlebars custom function helper - DECLARATION OF NUMBER]
      * @param  {[number]} n [value]
      * @param  {[string]} t [words separated by /]
-     * @return {[string]}      [transformed word]
+     * @return {[string]}   [transformed word]
      */
     Handlebars.registerHelper('declOfNum', function(n, t) {
         var cases = [2, 0, 1, 1, 1, 2],
@@ -124,4 +155,4 @@
 
         return titles[ (n%100>4 && n%100<20) ? 2 : cases[(n%10<5) ? n%10:5] ];
     });
-}(window, jQuery, Handlebars));
+}(window, jQuery, Handlebars, _));

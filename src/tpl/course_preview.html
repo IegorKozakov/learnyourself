@@ -1,6 +1,12 @@
 <div class="course_review__inner">
     <h2 class="course_review__title">{{title}}</h2>
 
+    {{#if starred}}
+        <button type="button" id="starred" name="starredBtn" value="{{id}}" data-flag="remove">Забыть</button> 
+    {{else}}
+        <button type="button" id="starred" name="starredBtn" value="{{id}}" data-flag="add">Запомнить</button> 
+    {{/if}}
+
     <h4 class="course_review__summary">{{description}}</h6>
 
     <p class="course_review__desc">
