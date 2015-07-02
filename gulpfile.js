@@ -2,22 +2,22 @@
  * For livereload read
  * [https://scotch.io/tutorials/a-quick-guide-to-using-livereload-with-gulp]
  */
+var gulp         = require('gulp');
 
-var gulp         = require('gulp'),
-    concatCss    = require('gulp-concat-css'),
+var sass         = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
-    minifyCss    = require('gulp-minify-css'),
-    rename       = require("gulp-rename"),
-    uglify       = require('gulp-uglify'),
-    concat       = require('gulp-concat'),
+    minifyCss    = require('gulp-minify-css');
+
+var uglify       = require('gulp-uglify'),
+    concat       = require('gulp-concat');
+
+var rename       = require("gulp-rename"),
     livereload   = require('gulp-livereload');
 
 var path = {
+    sass: 'src/scss/',
+    css: 'dest/css/',
     bower: 'bower_components/',
-    css : {
-        src: 'src/css/',
-        dest: 'dest/css/'
-    },
     js : {
         app: 'src/js/app/',
         src: 'src/js/',
@@ -25,26 +25,34 @@ var path = {
     }
 }
 
-gulp.task('styles', function() {
-    return gulp.src([
-        path.css.src + 'common.css',
-        path.css.src + 'features/*.css'
-    ])
-    .pipe(concatCss('styles.css'))
-    .pipe(autoprefixer({
-        browsers: [
-            'last 4 version',
-            'FireFox 28',
-            'ie 9',
-            'Safari 5'
-        ],
-        cascade: false
-    }))
-    .pipe(gulp.dest(path.css.dest))
-    .pipe(livereload());
+/**
+ * STYLES
+ */
+gulp.task('sass', function () {
+    return gulp.src( path.sass + '*.scss' )
+        .pipe( sass().on('error', sass.logError) )
+        .pipe( gulp.dest( 'dest/css/' ) )
 });
 
-gulp.task('concat-js-libs', function() {
+gulp.task('build-css', ['sass'], function() {
+    return gulp.src(path.css + 'main.css')
+        .pipe(autoprefixer({
+            browsers: [
+                'last 2 version',
+                'ie 9'
+            ],
+            cascade: false
+        }))
+        .pipe( rename({ suffix: '.min' }) )
+        .pipe( minifyCss() )
+        .pipe(gulp.dest( path.css ))
+        .pipe( livereload() );
+});
+
+/**
+ * JS
+ */
+gulp.task('build-js-libs', function() {
     return gulp.src([
         path.bower + 'jquery/dist/jquery.js',
         path.bower + 'underscore/underscore.js',
@@ -59,7 +67,7 @@ gulp.task('concat-js-libs', function() {
     .pipe(gulp.dest(path.js.dest));
 });
 
-gulp.task('concat-js-app', function() {
+gulp.task('build-js-app', function() {
     return gulp.src([
         path.js.src + 'helpers.js',
         path.js.app + 'models.js',
@@ -68,10 +76,18 @@ gulp.task('concat-js-app', function() {
         path.js.app + 'router.js'
     ])
     .pipe(concat('app.js'))
+    .pipe(uglify())
+    .pipe(rename({
+        suffix: '.min'
+    }))
     .pipe(gulp.dest(path.js.dest))
+
     .pipe(livereload());
 });
 
+/**
+ * HTML
+ */
 gulp.task('html', function() {
     return gulp.src([
         'index.html',
@@ -80,16 +96,22 @@ gulp.task('html', function() {
     .pipe(livereload());
 });
 
+/**
+ * TPL
+ */
 gulp.task('tpl', function() {
     return gulp.src(['src/tpl/**/*.html']).pipe(livereload());
 });
 
+/**
+ * WATCH */
 gulp.task('watch', function() {
     livereload.listen({ start: true });
-    gulp.watch(path.css.src + '**/*.css', ['styles']);
-    gulp.watch([path.js.app + '*.js', path.js.src + 'helpers.js'] , ['concat-js-app']);
+
+    gulp.watch(path.sass + '**/*.scss', ['build-css']);
+    gulp.watch([path.js.app + '*.js', path.js.src + 'helpers.js'] , ['build-js-app']);
     gulp.watch(['index.html', 'static_page/**/*.html'], ['html']);
     gulp.watch(['src/tpl/**/*.html'], ['tpl']);
 });
 
-gulp.task('default', ['watch', 'styles', 'concat-js-libs', 'concat-js-app', 'html', 'tpl']);
+gulp.task('default', ['watch', 'build-css', 'build-js-libs', 'build-js-app', 'html', 'tpl']);
