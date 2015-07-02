@@ -112,7 +112,12 @@
         return ( window.location.host.indexOf('github') !== -1 ) ? 'github' : 'others';
     };
 
-
+    /**
+     * [updateStarredInStorage update array of starred courses in localStorage]
+     * @param  {[number]} courseId [id of course]
+     * @param  {[string]} flag     [name of action]
+     * @return {[boolean]}         [true if all is alright, false is error]
+     */
     LY.Helpers.updateStarredInStorage = function(courseId, flag){
         var updateStarred = [],
             alreadyStarred = JSON.parse(localStorage.getItem('starred')) || [],

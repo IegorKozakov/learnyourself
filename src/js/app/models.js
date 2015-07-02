@@ -12,7 +12,13 @@
             'starred': false
         },
         initialize: function() {
-            console.log(this.get('id'));
+            var starredCourses = JSON.parse(localStorage.getItem('starred'));
+
+            if(!starredCourses) { return false }
+
+            if( starredCourses.indexOf(this.get('id')) !== -1) {
+                this.set('starred', true);
+            }
         }
     });
 
