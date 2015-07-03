@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,300italic,400italic,500italic&subset=cyrillic,latin);
 @viewport {
   width: device-width;
   zoom: 1.0; }
@@ -105,3 +106,33 @@ button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
   padding: 0; }
+
+.header__inner:after {
+  display: block;
+  clear: both;
+  content: ''; }
+
+/* Layout */
+.header {
+  width: 100%;
+  margin: 0 0 30px 0;
+  background: #fff;
+  border-bottom: 1px solid #dadada;
+  font: 300 16px/1 "Fira Sans", sans-serif; }
+
+.header__inner {
+  width: 95%;
+  margin: 0 auto;
+  padding: 20px 0; }
+
+.header__home {
+  float: left; }
+
+.header__logo {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #42ae77; }
+
+.header__about {
+  float: right; }
