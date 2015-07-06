@@ -1,6 +1,7 @@
 .header {
     width: 100%;
     margin: 0 0 30px 0;
+    padding: 20px 0;
 
     background: #fff;
     border-bottom: 1px solid #dadada;
@@ -9,25 +10,35 @@
 }
 
 .header__inner {
+    position: relative;
     width: 95%;
     margin: 0 auto;
-    padding: 20px 0;
     
     @extend %clearfix;
-}
-
-.header__home {
-    float: left;
 }
 
 .header__logo {
     text-align: center;
 
-    font-size: (24em/16);
+    font-size: (18em/16);
     font-weight: 500;
-    color: #42ae77;
+    line-height: 0.834;
+    color: #ff5744;
 }
 
-.header__about {
-    float: right;
+.header__link {
+    position: absolute;
+    bottom: 0;
+
+    font-weight: 400;
+    color: #333;
 }
+
+    .header__home {
+        @extend .header__link;
+        left: 0;
+    }
+    .header__about {
+        @extend .header__link;
+        right: 0;
+    }
