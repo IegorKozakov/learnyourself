@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,300italic,400italic,500italic&subset=cyrillic,latin);
+/* Base */
 @viewport {
   width: device-width;
   zoom: 1.0; }
@@ -56,7 +57,7 @@ a {
   text-decoration: none; }
 
 a:focus {
-  outline: thin dotted; }
+  outline: none; }
 
 a:active,
 a:hover {
@@ -111,15 +112,30 @@ input::-moz-focus-inner {
   border: 0;
   padding: 0; }
 
+select {
+  outline: none; }
+
+/* Utils */
 .header__inner:after {
   display: block;
   clear: both;
   content: ''; }
 
+/* Component */
+.ct-select {
+  display: inline-block;
+  padding: 6px 8px;
+  font: 300 16px/1 "Fira Sans", sans-serif;
+  color: #666;
+  border: 1px solid #dadada;
+  border-radius: 3px;
+  transition: all 0.4s ease; }
+  .ct-select:focus {
+    border-color: #666; }
+
 /* Layout */
 .header {
   width: 100%;
-  margin: 0 0 30px 0;
   padding: 20px 0;
   background: #fff;
   border-bottom: 1px solid #dadada;
@@ -127,7 +143,8 @@ input::-moz-focus-inner {
 
 .header__inner {
   position: relative;
-  width: 95%;
+  width: 90%;
+  max-width: 1190px;
   margin: 0 auto; }
 
 .header__logo {
@@ -137,14 +154,48 @@ input::-moz-focus-inner {
   line-height: 0.834;
   color: #ff5744; }
 
-.header__link, .header__home, .header__about {
+.header__additional_wrap, .header__additional_wrap-left, .header__additional_wrap-right {
   position: absolute;
-  bottom: 0;
-  font-weight: 400;
-  color: #333; }
+  bottom: 0; }
 
-.header__home {
+.header__additional_wrap-left {
   left: 0; }
 
-.header__about {
+.header__additional_wrap-right {
   right: 0; }
+
+.header__link {
+  position: relative;
+  font-weight: 400;
+  color: #666; }
+  .header__link:before {
+    content: " ";
+    width: 0;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #999;
+    transition: all 0.4s ease; }
+  .header__link:hover:before,
+  .header__link:focus:before {
+    width: 100%; }
+  .header__link:active {
+    color: #999; }
+  .header__link:active:before {
+    background-color: #999; }
+
+.main {
+  padding: 20px 0; }
+
+.main__inner {
+  width: 90%;
+  margin: 0 auto; }
+
+.filters {
+  margin: 0 0 20px 0;
+  font: 300 16px/1 "Fira Sans", sans-serif; }
+
+.filters__label {
+  margin: 0 20px 0 0;
+  color: #a9a9a9; }

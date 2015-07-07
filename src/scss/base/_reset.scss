@@ -75,7 +75,7 @@ a {
 
 // address outline inconsistency between Chrome and other browsers
 a:focus {
-  outline: thin dotted;
+  outline: none;
 }
 
 // improve readability when focused and also mouse hovered in all browsers
@@ -150,3 +150,8 @@ input::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
+
+// remove standart outline for focus
+select {
+  outline: none;
+} 

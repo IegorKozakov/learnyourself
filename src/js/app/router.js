@@ -33,8 +33,6 @@
         index: function() {
             var indexDirectory = new LY.Views.IndexDirectory();
             this.updateView(indexDirectory);
-            //var viewOfCoursesPreview = new LY.Views.CoursesPreview({collection: LY.courses})
-            //this.updateView(viewOfCoursesPreview);
         },
         course: function (idCourse) {
             this.updateView(new LY.Views.CourseDetail({ model: LY.courses.get(idCourse) }) );

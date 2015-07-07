@@ -58,7 +58,8 @@
     });
 
     LY.Views.Filters = Backbone.View.extend({
-        class: 'filters',
+        tagName: 'aside',
+        className: 'filters',
         tpl : LY.Helpers.getTpl('filters'),
         render: function() {
             this.$el.html( this.tpl() );
@@ -81,7 +82,6 @@
         },
         render: function () {
             this.$el.html(this.tpl());
-
             this.$('#courses').html(new LY.Views.Courses({collection: LY.courses}).render().el);
             this.$('#filters').html(new LY.Views.Filters().render().el);
 

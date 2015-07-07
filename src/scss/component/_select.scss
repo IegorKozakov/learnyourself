@@ -1,0 +1,15 @@
+.ct-select {
+    display: inline-block;
+    padding: 6px 8px;
+
+    font: $font;
+    color: #666;
+
+    border: 1px solid #dadada;
+    border-radius: 3px;
+    transition: $standart-animation;
+
+    &:focus {
+        border-color: #666;
+    }
+}

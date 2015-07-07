@@ -76,10 +76,6 @@ gulp.task('build-js-app', function() {
         path.js.app + 'router.js'
     ])
     .pipe(concat('app.js'))
-    .pipe(uglify())
-    .pipe(rename({
-        suffix: '.min'
-    }))
     .pipe(gulp.dest(path.js.dest))
 
     .pipe(livereload());
