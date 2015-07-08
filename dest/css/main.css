@@ -199,3 +199,11 @@ select {
 .filters__label {
   margin: 0 20px 0 0;
   color: #a9a9a9; }
+
+.courses_preview__list {
+  font-size: 0; }
+
+.courses_preview__item {
+  display: inline-block;
+  width: 100%;
+  font: 300 16px/1 "Fira Sans", sans-serif; }

@@ -205,7 +205,8 @@
     LY.namespace('Views');
 
     LY.Views.Course = Backbone.View.extend({
-        className: 'preview_course',
+        tagName: 'li',
+        className: 'courses_preview__item',
         tpl: LY.Helpers.getTpl('course_preview'),
         render: function() {
             this.$el.html( this.tpl( this.model.toJSON() ) );
@@ -240,7 +241,8 @@
     });
 
     LY.Views.Courses = Backbone.View.extend({
-        className: 'courses',
+        tagName: 'ul',
+        className: 'courses_preview__list',
         render: function(){
             this.$el.empty();
 
@@ -282,7 +284,7 @@
         },
         render: function () {
             this.$el.html(this.tpl());
-            this.$('#courses').html(new LY.Views.Courses({collection: LY.courses}).render().el);
+            this.$('#courses_preview').html(new LY.Views.Courses({collection: LY.courses}).render().el);
             this.$('#filters').html(new LY.Views.Filters().render().el);
 
             return this;
@@ -306,7 +308,7 @@
             console.log(LY.courses.toJSON());
         },
         renderFilteredList: function() {
-            this.$('#courses').html(new LY.Views.Courses({collection: LY.courses}).render().el);
+            this.$('#courses_preview').html(new LY.Views.Courses({collection: LY.courses}).render().el);
         }
     });
 
