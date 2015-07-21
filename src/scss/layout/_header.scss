@@ -3,7 +3,7 @@
     padding: 20px 0;
 
     background: #fff;
-    border-bottom: 1px solid #dadada;
+    border-bottom: 1px solid #f0f1f7;
 
     font: $font;
 }
@@ -20,10 +20,10 @@
 .header__logo {
     text-align: center;
 
-    font-size: (18em/16);
+    font-size: (21em/16);
     font-weight: 500;
     line-height: 0.834;
-    color: #ff5744;
+    color: #13c2c3;
 }
 
 .header__additional_wrap {
@@ -42,33 +42,12 @@
 .header__link {
     position: relative;
     font-weight: 400;
-    color: #666;
+    color: #a1a4b3;
 
-    &:before {
-        content: " ";
-        width: 0;
-        height: 1px;
+    transition: $standart-animation;
 
-        position: absolute;
-        bottom: 0;
-        left: 0;
-
-        background-color: #999;
-
-        transition: $standart-animation;
-    }
-
-    &:hover:before,
-    &:focus:before {
-        width: 100%;
-    }
-
+    &:hover,
     &:active {
-        color: #999;
-    }
-    &:active:before {
-        background-color: #999;
+        color: #737580;
     }
 }
-
-    

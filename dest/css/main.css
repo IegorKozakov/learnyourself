@@ -126,19 +126,20 @@ select {
   display: inline-block;
   padding: 6px 8px;
   font: 300 16px/1 "Fira Sans", sans-serif;
-  color: #666;
-  border: 1px solid #dadada;
-  border-radius: 3px;
-  transition: all 0.4s ease; }
+  color: #8a8c9a;
+  border: 1px solid #e6e8f2;
+  border-radius: 4px;
+  transition: all 0.3s ease; }
+  .ct-select:hover,
   .ct-select:focus {
-    border-color: #666; }
+    border-color: #8a8c9a; }
 
 /* Layout */
 .header {
   width: 100%;
   padding: 20px 0;
   background: #fff;
-  border-bottom: 1px solid #dadada;
+  border-bottom: 1px solid #f0f1f7;
   font: 300 16px/1 "Fira Sans", sans-serif; }
 
 .header__inner {
@@ -149,10 +150,10 @@ select {
 
 .header__logo {
   text-align: center;
-  font-size: 1.125em;
+  font-size: 1.3125em;
   font-weight: 500;
   line-height: 0.834;
-  color: #ff5744; }
+  color: #13c2c3; }
 
 .header__additional_wrap, .header__additional_wrap-left, .header__additional_wrap-right {
   position: absolute;
@@ -167,26 +168,14 @@ select {
 .header__link {
   position: relative;
   font-weight: 400;
-  color: #666; }
-  .header__link:before {
-    content: " ";
-    width: 0;
-    height: 1px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background-color: #999;
-    transition: all 0.4s ease; }
-  .header__link:hover:before,
-  .header__link:focus:before {
-    width: 100%; }
+  color: #a1a4b3;
+  transition: all 0.3s ease; }
+  .header__link:hover,
   .header__link:active {
-    color: #999; }
-  .header__link:active:before {
-    background-color: #999; }
+    color: #737580; }
 
 .main {
-  padding: 20px 0; }
+  padding: 25px 0; }
 
 .main__inner {
   width: 90%;
@@ -197,8 +186,8 @@ select {
   font: 300 16px/1 "Fira Sans", sans-serif; }
 
 .filters__label {
-  margin: 0 20px 0 0;
-  color: #a9a9a9; }
+  margin: 0 15px 0 0;
+  color: #9ea0a6; }
 
 .courses_preview__list {
   font-size: 0; }
