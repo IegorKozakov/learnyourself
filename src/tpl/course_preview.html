@@ -2,9 +2,9 @@
     <h2 class="course_review__title">{{title}}</h2>
 
     {{#if starred}}
-        <button type="button" id="starred" name="starredBtn" value="{{id}}" data-flag="remove">Забыть</button> 
+        <button type="button" id="starred" name="starredBtn" value="{{id}}" data-flag="remove" class="course_review__star">Забыть</button>
     {{else}}
-        <button type="button" id="starred" name="starredBtn" value="{{id}}" data-flag="add">Запомнить</button> 
+        <button type="button" id="starred" name="starredBtn" value="{{id}}" data-flag="add" class="course_review__star">Запомнить</button>
     {{/if}}
 
     <h4 class="course_review__summary">{{description}}</h6>
@@ -13,7 +13,7 @@
         <span>{{lessons.length}}</span>&nbsp;{{declOfNum lessons.length "урок/урока/уроков"}}&nbsp;от&nbsp;<span>{{author.name}}</span>
     </p>
 
-    <div class="course_review__wrap_btn h-cf">
-        <a href="#!/course/{{id}}" class="course_review__link h-pull-right">Подробней</a>
+    <div class="course_review__wrap_btn">
+        <a href="#!/course/{{id}}" class="course_review__link">Подробней</a>
     </div>
 </div>

@@ -1,3 +1,7 @@
+.courses_preview {
+
+}
+
 .courses_preview__list {
     font-size: 0;
 }
@@ -6,4 +10,70 @@
     display: inline-block;
     width: 100%;
     font: $font;
+
+}
+
+.courses_preview__item:last-child {
+    border-bottom: none;
+}
+
+.course_review__inner {
+    position: relative;
+
+    width: 81.25%;
+    margin: 20px auto 0;
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid #e6e8f2;
+}
+
+.course_review__title {
+    margin: 0 0 20px 0;
+
+    font-size: (21em/16);
+    font-weight: 500;
+    line-height: 1.25;
+    color: #292b33;
+}
+
+.course_review__star {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.course_review__desc {
+    margin: 0 0 25px 0;
+    color: #919399;
+}
+
+.course_review__desc span {
+    font-weight: 400;
+    color: #292b33;
+}
+
+.course_review__wrap_btn {
+    @extend %clearfix;
+}
+
+.course_review__link {
+    float: right;
+
+    font-size: (16em/16);
+    font-weight: 400;
+    color: #13c2c3;
+
+    display: inline-block;
+    padding: 11px 18px;
+
+    background-color: transparent;
+    border: 1px solid #13c2c3;
+    border-radius: 4px;
+
+    transition: background-color, color .3s ease;
+
+    &:hover {
+        background-color: #13c2c3;
+        color: #fff;
+    }
 }

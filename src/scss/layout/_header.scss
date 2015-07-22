@@ -13,7 +13,7 @@
     width: 90%;
     max-width: $container-max-width;
     margin: 0 auto;
-    
+
     @extend %clearfix;
 }
 
@@ -35,7 +35,7 @@
         left: 0;
     }
     .header__additional_wrap-right {
-        @extend  .header__additional_wrap;
+        @extend .header__additional_wrap;
         right: 0;
     }
 
