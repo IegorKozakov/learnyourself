@@ -145,15 +145,14 @@
      */
     /**
      * [Handlebars custom function helper - DECLARATION OF NUMBER]
-     * @param  {[number]} n [value]
-     * @param  {[string]} t [words separated by /]
-     * @return {[string]}   [transformed word]
+     * @param  {[number]} val   [value]
+     * @param  {[string]} t     [words separated by \]
+     * @return {[string]}       [transformed word]
      */
-    Handlebars.registerHelper('declOfNum', function(n, t) {
-        var cases = [2, 0, 1, 1, 1, 2],
-        titles = t.split('/');
+    Handlebars.registerHelper('declOfNum', function(val, t) {
+        var titles = t.split('\\');
 
-        return titles[ (n%100>4 && n%100<20) ? 2 : cases[(n%10<5) ? n%10:5] ];
+        return (val === 1) ? titles[0] : titles[1];
     });
 }(window, jQuery, Handlebars, _));
 ;
@@ -213,9 +212,9 @@
             return this;
         },
         events: {
-            'click #starred': 'toogleStarred'
+            'click #starred': 'toggleStarred'
         },
-        toogleStarred: function(e) {
+        toggleStarred: function(e) {
             var $btn = $(e.currentTarget),
                 courseId = +$btn.val(),
                 action = $btn.data('flag'),
@@ -235,8 +234,6 @@
                 /* TODO: make error for people */
                 console.log('Something bad! Reload page');
             }
-
-            
         }
     });
 
@@ -252,11 +249,7 @@
             }, this);
 
             return this;
-        },
-        renderCourse: function(course) {
-            var coursePreview = new LY.Views.CoursePreview({model: course});
-            this.$el.append(coursePreview.render().el);
-        },
+        }
     });
 
     LY.Views.Filters = Backbone.View.extend({

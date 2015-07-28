@@ -13,9 +13,9 @@
             return this;
         },
         events: {
-            'click #starred': 'toogleStarred'
+            'click #starred': 'toggleStarred'
         },
-        toogleStarred: function(e) {
+        toggleStarred: function(e) {
             var $btn = $(e.currentTarget),
                 courseId = +$btn.val(),
                 action = $btn.data('flag'),
@@ -35,8 +35,6 @@
                 /* TODO: make error for people */
                 console.log('Something bad! Reload page');
             }
-
-            
         }
     });
 
@@ -52,11 +50,7 @@
             }, this);
 
             return this;
-        },
-        renderCourse: function(course) {
-            var coursePreview = new LY.Views.CoursePreview({model: course});
-            this.$el.append(coursePreview.render().el);
-        },
+        }
     });
 
     LY.Views.Filters = Backbone.View.extend({
