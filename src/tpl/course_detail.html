@@ -6,32 +6,21 @@
     {{/if}}
 
     <div class="course_details__desc">
-        <p>
-            <span>Об авторе:</span>
-            {{author.name}}
-
-            {{#if author.site}}
-                , {{author.site}}
-            {{/if}}
+        <div class="course_details__lessons">
+            <h4 class="course_details__lessons_title">Lessons:</h4>
             
-            {{#if author.email}}
-                , {{author.email}}
-            {{/if}}
+            <ul class="course_details__lessons_list">
+                {{#each lessons}}
+                    <li class="course_details__lessons_item">
+                        <a href="#!/course/{{../id}}/lesson/{{@index}} " class="course_details__link">{{title}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
 
-            {{#if author.social.vk}}
-                , {{author.social.vk}}
-            {{/if}}
-
-            {{#if author.social.youtube}}
-                , {{author.social.youtube}}
-            {{/if}}
-        </p>
-        <p>
-            <span>Лекции:</span>
-            {{#each lessons}}
-                <a href="#!/course/{{../id}}/lesson/{{@index}} " class="course_details__link">{{title}}</a>,
-            {{/each}}
-        </p>
-        <p><span></span></p>
+        <div class="course_details__author">
+            <h4 class="course_details__author_title">About author:</h4>
+            {{author.name}}
+        </div>
     </div>
 </div>
