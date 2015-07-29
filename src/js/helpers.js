@@ -1,21 +1,9 @@
-/**
- * helpers.js
- *  - getTpl
- */
 ;
 (function(window, $, Handlebars, _){
     'use strict';
 
     window.LY = window.LY || {};
     window.LY.version = '0.0.1';
-
-    window.LY.Youtube = {
-        api: {
-            key: 'AIzaSyAUBSra4QHGfwaycOyPxWZ3iB0P6dF6k4w',
-            url: 'https://www.googleapis.com/youtube/v3/',
-            getPlaylist: 'playlists'
-        }
-    }
 
     $(function(){
         new LY.Router();
@@ -46,10 +34,10 @@
         return parent;
     };
 
+    LY.namespace('Helpers');
+
     var PATH_TO_STATIC_PAGE = 'static_page/',
         PATH_TO_TPL = 'src/tpl/';
-
-    LY.namespace('Helpers');
 
     /**
     * [getTpl get template by id]
@@ -120,6 +108,12 @@
         return ( window.location.host.indexOf('github') !== -1 ) ? 'github' : 'others';
     };
 
+    LY.Helpers.getPathToData = function(){
+        var pathIn = '/data/courses.json';
+
+        return (LY.Helpers.getNameOfServer() === 'github') ? LY.Helpers.getUrlOrigin() + '/learnyourself' + pathIn : LY.Helpers.getUrlOrigin() + pathIn;
+    };
+
     /**
      * [updateStarredInStorage update array of starred courses in localStorage]
      * @param  {[number]} courseId [id of course]
@@ -149,8 +143,9 @@
     };
 
     /**
-     * Handlebars Helpers
+     * HANDLEBARS HELPERS
      */
+
     /**
      * [Handlebars custom function helper - DECLARATION OF NUMBER]
      * @param  {[number]} val   [value]

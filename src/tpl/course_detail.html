@@ -1,8 +1,8 @@
 <div class="course_details__inner">
-    <h2 class="course_details__title">{{title}}</h2>
+    <h2 class="course_details__title">{{snippet.title}}</h2>
 
-    {{#if description}}
-        <h4 class="course_details__summary">{{description}}</h6>
+    {{#if snippet.description}}
+        <h4 class="course_details__summary">{{snippet.description}}</h6>
     {{/if}}
 
     <div class="course_details__desc">
@@ -20,7 +20,7 @@
 
         <div class="course_details__author">
             <h4 class="course_details__author_title">About author:</h4>
-            {{author.name}}
+            {{snippet.channelTitle}}
         </div>
     </div>
 </div>

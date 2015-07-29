@@ -70,6 +70,7 @@ gulp.task('build-js-libs', function() {
 gulp.task('build-js-app', function() {
     return gulp.src([
         path.js.src + 'helpers.js',
+        path.js.src + 'youtubeAPI.js',
         path.js.app + 'models.js',
         path.js.app + 'collections.js',
         path.js.app + 'views.js',
@@ -105,7 +106,7 @@ gulp.task('watch', function() {
     livereload.listen({ start: true });
 
     gulp.watch(path.sass + '**/*.scss', ['build-css']);
-    gulp.watch([path.js.app + '*.js', path.js.src + 'helpers.js'] , ['build-js-app']);
+    gulp.watch([path.js.app + '*.js', path.js.src + '*.js'] , ['build-js-app']);
     gulp.watch(['index.html', 'static_page/**/*.html'], ['html']);
     gulp.watch(['src/tpl/**/*.html'], ['tpl']);
 });
