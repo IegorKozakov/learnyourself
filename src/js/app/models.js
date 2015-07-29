@@ -7,7 +7,6 @@
     LY.Models.Course = Backbone.Model.extend({
         defaults: {
             'id': 0,
-            'title': '',
             'lang': 'en',
             'starred': false
         },

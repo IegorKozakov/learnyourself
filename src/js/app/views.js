@@ -78,8 +78,9 @@
         },
         render: function () {
             this.$el.html(this.tpl());
-            this.$('#courses_preview').html(new LY.Views.Courses({collection: LY.courses}).render().el);
+
             this.$('#filters').html(new LY.Views.Filters().render().el);
+            this.$('#courses_preview').html(new LY.Views.Courses({collection: LY.courses}).render().el);
 
             return this;
         },

@@ -9,6 +9,14 @@
     window.LY = window.LY || {};
     window.LY.version = '0.0.1';
 
+    window.LY.Youtube = {
+        api: {
+            key: 'AIzaSyAUBSra4QHGfwaycOyPxWZ3iB0P6dF6k4w',
+            url: 'https://www.googleapis.com/youtube/v3/',
+            getPlaylist: 'playlists'
+        }
+    }
+
     $(function(){
         new LY.Router();
         Backbone.history.start();

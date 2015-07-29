@@ -9,6 +9,14 @@
     window.LY = window.LY || {};
     window.LY.version = '0.0.1';
 
+    window.LY.Youtube = {
+        api: {
+            key: 'AIzaSyAUBSra4QHGfwaycOyPxWZ3iB0P6dF6k4w',
+            url: 'https://www.googleapis.com/youtube/v3/',
+            getPlaylist: 'playlists'
+        }
+    }
+
     $(function(){
         new LY.Router();
         Backbone.history.start();
@@ -164,7 +172,6 @@
     LY.Models.Course = Backbone.Model.extend({
         defaults: {
             'id': 0,
-            'title': '',
             'lang': 'en',
             'starred': false
         },
@@ -186,16 +193,11 @@
 (function(window, $, _, Backbone){
     'use strict';
 
-    var PATH_TO_DATA = '/data/courses.json',
-        COURSES_DATA = (LY.Helpers.getNameOfServer() === 'github') ? LY.Helpers.getUrlOrigin() + '/learnyourself' + PATH_TO_DATA : LY.Helpers.getUrlOrigin() + PATH_TO_DATA;
-
     LY.namespace('Collections');
 
     LY.Collections.Courses = Backbone.Collection.extend({
-        model: LY.Models.Course,
-        url: COURSES_DATA
+        model: LY.Models.Course
     });
-
 }(window, jQuery, _, Backbone));
 ;
 (function(window, $, _, Backbone){
@@ -277,8 +279,9 @@
         },
         render: function () {
             this.$el.html(this.tpl());
-            this.$('#courses_preview').html(new LY.Views.Courses({collection: LY.courses}).render().el);
+
             this.$('#filters').html(new LY.Views.Filters().render().el);
+            this.$('#courses_preview').html(new LY.Views.Courses({collection: LY.courses}).render().el);
 
             return this;
         },
@@ -354,11 +357,69 @@
     LY.Router = Backbone.Router.extend({
         $main: $('.j-main'),
         initialize: function() {
-            LY.courses = new LY.Collections.Courses();
+            var PATH_TO_DATA = '/data/courses_v1.json',
+                PATH_TO_COURSES_DATA = (LY.Helpers.getNameOfServer() === 'github') ? LY.Helpers.getUrlOrigin() + '/learnyourself' + PATH_TO_DATA : LY.Helpers.getUrlOrigin() + PATH_TO_DATA,
+                coursesList,
+                pathToPlaylists = LY.Youtube.api.url + LY.Youtube.api.getPlaylist + '?' + 'part=snippet,contentDetails&' + 'key=' + LY.Youtube.api.key + '&id=',
+                modelsProto;
+
+
+            $.ajax({
+                type: 'GET',
+                dataType: "json",
+                async: false,
+                url: PATH_TO_COURSES_DATA,
+                success: function(data) {
+                    data.forEach(function(el, i){
+                        pathToPlaylists += el.playlistId;
+
+                        if(i !== (data.length - 1)) { pathToPlaylists += ','}
+                    });
+                }
+            });
+
+            $.ajax({
+                type: 'GET',
+                dataType: "json",
+                async: false,
+                url: pathToPlaylists,
+                success: function(data) {
+                    modelsProto = data.items;
+
+                    modelsProto.forEach(function(el, i){
+                        el.id = i;
+                    });
+
+                    LY.courses = new LY.Collections.Courses(modelsProto);
+                }
+            });
+
+            //$.getJSON(PATH_TO_COURSES_DATA)
+                // .done(function(data) {
+                //     data.forEach(function(el, i){
+                //         pathToPlaylists += el.playlistId;
+
+                //         if(i !== (data.length - 1)) { pathToPlaylists += ','}
+                //     });
+
+                //     $.get(pathToPlaylists)
+                //     .done(function(d) {
+                //         modelsProto = d.items;
+
+                //         modelsProto.forEach(function(el, i){
+                //             el.id = i;
+                //         });
+
+                //         LY.courses = new LY.Collections.Courses(modelsProto);
+                //     })
+                // });
+
+            // console.log(modelsProto);
+            // LY.courses = new LY.Collections.Courses();
 
             /* setup set of defaults models */
-            LY.courses.fetch({ async: false });
-            LY.courses.original = LY.courses.clone();
+            //LY.courses.fetch({ async: false });
+            //LY.courses.original = LY.courses.clone();
         },
         loadView : function(view) {
             this.view && this.view.remove();
