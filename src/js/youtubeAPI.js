@@ -10,7 +10,7 @@
             PLAYLIST_ITEMS: 'playlistItems'
         },
         getPlaylistItems: function(playlistId) {
-            var requestUrl = this.urls.MAIN + this.urls.PLAYLIST_ITEMS + '?part=snippet&maxResults=50' + '&playlistId=' + playlistId + 'key=' + this.KEY;
+            var requestUrl = this.urls.MAIN + this.urls.PLAYLIST_ITEMS + '?part=snippet&maxResults=50' + '&playlistId=' + playlistId + '&key=' + this.KEY;
 
             $.getJSON(requestUrl).done(function(data) {
                 console.log(data);
