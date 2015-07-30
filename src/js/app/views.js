@@ -74,13 +74,13 @@
         },
         initialize: function() {
             this.on("change:filterType", this.filterByType, this);
-            LY.courses.on("reset", this.renderFilteredList, this);
+            this.collection.on("reset", this.renderFilteredList, this);
         },
         render: function () {
             this.$el.html(this.tpl());
 
             this.$('#filters').html(new LY.Views.Filters().render().el);
-            this.$('#courses_preview').html(new LY.Views.Courses({collection: LY.courses}).render().el);
+            this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
 
             return this;
         },
@@ -90,20 +90,20 @@
         },
         filterByType: function() {
             if(this.filter === 'all') {
-                LY.courses.reset(LY.courses.original.toJSON());
+                this.collection.reset(this.collection.original.toJSON());
             } else {
                 var filter = this.filter,
-                    filtered = _.filter(LY.courses.original.models, function (item) {
+                    filtered = _.filter(this.collection.original.models, function (item) {
                         return item.get('lang') === filter;
                     });
 
-                LY.courses.reset(filtered);
+                this.collection.reset(filtered);
 
             }
-            console.log(LY.courses.toJSON());
+            console.log(this.collection.toJSON());
         },
         renderFilteredList: function() {
-            this.$('#courses_preview').html(new LY.Views.Courses({collection: LY.courses}).render().el);
+            this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
         }
     });
 

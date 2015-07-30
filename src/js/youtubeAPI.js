@@ -31,19 +31,22 @@
                     break;
             }
 
-            return urls.MAIN + obj + '?'+ 'key=' + KEY + '&part='  + part + '&maxResult=' + maxRes;
+            return urls.MAIN + obj + '?'+ 'key=' + KEY + '&part='  + part + '&maxResults=' + maxRes;
         }
 
         return {
-            getRequestUrlPlayLists: function(part, idPlaylists, maxResults) {
-                var idPLs = removeWhiteSpace(idPlaylists),
+            getRequestUrlPlayLists: function(part, playlistsId, maxResults) {
+                var idPLs = removeWhiteSpace(playlistsId),
                     partChecked = encodeURIComponent( removeWhiteSpace(part) );
                     commonPartOfRequest = getCommonPartOfRequest('playlists', partChecked, maxResults);
 
                 return commonPartOfRequest + '&id=' + encodeURIComponent( removeWhiteSpace(idPLs) );
             },
-            getRequestUrlPlayListItems: function() {
+            getRequestUrlPlayListItems: function(part, playlistId) {
+                var partChecked = encodeURIComponent( removeWhiteSpace(part) ),
+                    commonPartOfRequest = getCommonPartOfRequest('playlistItems', partChecked);
 
+                return commonPartOfRequest + '&playlistId=' + playlistId;
             }
         }
     }());

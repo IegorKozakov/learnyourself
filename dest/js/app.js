@@ -191,19 +191,22 @@
                     break;
             }
 
-            return urls.MAIN + obj + '?'+ 'key=' + KEY + '&part='  + part + '&maxResult=' + maxRes;
+            return urls.MAIN + obj + '?'+ 'key=' + KEY + '&part='  + part + '&maxResults=' + maxRes;
         }
 
         return {
-            getRequestUrlPlayLists: function(part, idPlaylists, maxResults) {
-                var idPLs = removeWhiteSpace(idPlaylists),
+            getRequestUrlPlayLists: function(part, playlistsId, maxResults) {
+                var idPLs = removeWhiteSpace(playlistsId),
                     partChecked = encodeURIComponent( removeWhiteSpace(part) );
                     commonPartOfRequest = getCommonPartOfRequest('playlists', partChecked, maxResults);
 
                 return commonPartOfRequest + '&id=' + encodeURIComponent( removeWhiteSpace(idPLs) );
             },
-            getRequestUrlPlayListItems: function() {
+            getRequestUrlPlayListItems: function(part, playlistId) {
+                var partChecked = encodeURIComponent( removeWhiteSpace(part) ),
+                    commonPartOfRequest = getCommonPartOfRequest('playlistItems', partChecked);
 
+                return commonPartOfRequest + '&playlistId=' + playlistId;
             }
         }
     }());
@@ -334,13 +337,13 @@
         },
         initialize: function() {
             this.on("change:filterType", this.filterByType, this);
-            LY.courses.on("reset", this.renderFilteredList, this);
+            this.collection.on("reset", this.renderFilteredList, this);
         },
         render: function () {
             this.$el.html(this.tpl());
 
             this.$('#filters').html(new LY.Views.Filters().render().el);
-            this.$('#courses_preview').html(new LY.Views.Courses({collection: LY.courses}).render().el);
+            this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
 
             return this;
         },
@@ -350,20 +353,20 @@
         },
         filterByType: function() {
             if(this.filter === 'all') {
-                LY.courses.reset(LY.courses.original.toJSON());
+                this.collection.reset(this.collection.original.toJSON());
             } else {
                 var filter = this.filter,
-                    filtered = _.filter(LY.courses.original.models, function (item) {
+                    filtered = _.filter(this.collection.original.models, function (item) {
                         return item.get('lang') === filter;
                     });
 
-                LY.courses.reset(filtered);
+                this.collection.reset(filtered);
 
             }
-            console.log(LY.courses.toJSON());
+            console.log(this.collection.toJSON());
         },
         renderFilteredList: function() {
-            this.$('#courses_preview').html(new LY.Views.Courses({collection: LY.courses}).render().el);
+            this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
         }
     });
 
@@ -413,6 +416,84 @@
 
     LY.namespace('Router');
 
+    LY.namespace('API.Youtube');
+
+    LY.API.Youtube = {
+        loadPlaylists: function() {
+            return $.ajax({
+                type: 'GET',
+                dataType: "json",
+                url: LY.Helpers.getPathToData()
+            });
+        },
+        loadPlaylistDetails: function(parts) {
+            var defer = $.Deferred();
+
+            function _getRequestForPlaylistYA (array) {
+                var request = LY.YoutubeAPI.urls.MAIN + LY.YoutubeAPI.urls.PLAYLISTS + '?' + 'part=snippet,contentDetails&' + 'key=' + LY.YoutubeAPI.KEY + '&id=';
+
+                _.each(array, function(el, i){
+                    request += el.playlistId;
+
+                    if(i !== (array.length - 1)) { request += ','}
+                });
+                return request;
+            }
+
+            LY.API.Youtube.loadPlaylists().done(function(response){
+                $.ajax({
+                        type: 'GET',
+                        dataType: "json",
+                        async: false,
+                        url: _getRequestForPlaylistYA(response),
+                        success: function(data) {
+                           defer.resolve(data);
+                        }
+                    });
+            });
+
+            // return $.when(LY.API.Youtube.loadPlaylists()).then(function(response){
+            //     $.ajax({
+            //             type: 'GET',
+            //             dataType: "json",
+            //             async: false,
+            //             url: _getRequestForPlaylistYA(response),
+            //             // success: function(data) {
+            //                // defer.resolve(data);
+            //             // }
+            //         });
+            // });
+
+            return defer.promise();
+        },
+
+        loadCourses: function() {
+var defer = $.Deferred();
+
+if(LY.courses === undefined){
+                                LY.API.Youtube.loadPlaylistDetails(['snippet']).done(function(data){
+                debugger
+                                        console.log(data);
+                                        var modelsProto = data.items;
+
+                                        modelsProto.forEach(function(el, i){
+                                            el.id = i;
+                                        });
+
+
+                                        LY.courses = new LY.Collections.Courses(modelsProto);
+                                        LY.courses.original = LY.courses.clone();
+                                        defer.resolve(LY.courses);
+                });
+}else{
+    defer.resolve(LY.courses);
+}
+
+
+                                        return defer.promise();
+        }
+    };
+
     LY.Router = Backbone.Router.extend({
         $main: $('.j-main'),
         initialize: function() {
@@ -420,37 +501,36 @@
                 coursesList,
                 modelsProto;
 
+            // $.ajax({
+            //     type: 'GET',
+            //     dataType: "json",
+            //     async: false,
+            //     url: LY.Helpers.getPathToData(),
+            //     success: function(data) {
+            //         $.ajax({
+            //             type: 'GET',
+            //             dataType: "json",
+            //             async: false,
+            //             url: that._getRequestForPlaylistYA(data),
+            //             success: function(data) {
+            //                 console.log(data);
+            //                 modelsProto = data.items;
 
-            $.ajax({
-                type: 'GET',
-                dataType: "json",
-                async: false,
-                url: LY.Helpers.getPathToData(),
-                success: function(data) {
-                    console.log(that._getRequestForPlaylistYA(data));
-                    $.ajax({
-                        type: 'GET',
-                        dataType: "json",
-                        async: false,
-                        url: that._getRequestForPlaylistYA(data),
-                        success: function(data) {
-                            modelsProto = data.items;
+            //                 modelsProto.forEach(function(el, i){
+            //                     el.id = i;
+            //                 });
 
-                            modelsProto.forEach(function(el, i){
-                                el.id = i;
-                            });
+            //                 LY.courses = new LY.Collections.Courses(modelsProto);
+            //             }
+            //         });
+            //     }
+            // });
 
-                            LY.courses = new LY.Collections.Courses(modelsProto);
-                        }
-                    });
-                }
-            });
+            // _.each(LY.courses.models, function(m, i, list) {
+            //     console.log(m);
+            // });
 
-            _.each(LY.courses.models, function(m, i, list) {
-                console.log(m);
-            });
-
-            LY.courses.original = LY.courses.clone();
+            // LY.courses.original = LY.courses.clone();
         },
         _getRequestForPlaylistYA: function(array) {
             var request = LY.YoutubeAPI.urls.MAIN + LY.YoutubeAPI.urls.PLAYLISTS + '?' + 'part=snippet,contentDetails&' + 'key=' + LY.YoutubeAPI.KEY + '&id=';
@@ -480,8 +560,16 @@
         },
 
         index: function() {
-            var indexDirectory = new LY.Views.IndexDirectory();
-            this.updateView(indexDirectory);
+            var that =  this;
+            debugger
+            LY.API.Youtube.loadCourses().done(function(courses){
+                debugger
+                var indexDirectory = new LY.Views.IndexDirectory({
+                    collection: courses
+                });
+                that.updateView(indexDirectory);
+            });
+            
         },
         course: function (idCourse) {
             this.updateView(new LY.Views.CourseDetail({ model: LY.courses.get(idCourse) }) );
