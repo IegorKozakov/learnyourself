@@ -51,7 +51,6 @@
 
                 if(i !== (array.length - 1)) { request += ','}
             });
-            console.log(request);
             return request;
         },
         loadView : function(view) {
