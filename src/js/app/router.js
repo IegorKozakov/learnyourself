@@ -4,8 +4,6 @@
 
     LY.namespace('Router');
 
-    LY.namespace('API.Youtube');
-
     LY.API.Youtube = {
         loadPlaylists: function() {
             return $.ajax({
@@ -40,85 +38,42 @@
                     });
             });
 
-            // return $.when(LY.API.Youtube.loadPlaylists()).then(function(response){
-            //     $.ajax({
-            //             type: 'GET',
-            //             dataType: "json",
-            //             async: false,
-            //             url: _getRequestForPlaylistYA(response),
-            //             // success: function(data) {
-            //                // defer.resolve(data);
-            //             // }
-            //         });
-            // });
-
             return defer.promise();
         },
 
         loadCourses: function() {
-var defer = $.Deferred();
+            var defer = $.Deferred();
 
-if(LY.courses === undefined){
-                                LY.API.Youtube.loadPlaylistDetails(['snippet']).done(function(data){
-                debugger
-                                        console.log(data);
-                                        var modelsProto = data.items;
+                if(LY.courses === undefined){
+                    LY.API.Youtube.loadPlaylistDetails(['snippet']).done(function(data){
+    
+                        var modelsProto = data.items;
 
-                                        modelsProto.forEach(function(el, i){
-                                            el.id = i;
-                                        });
-
-
-                                        LY.courses = new LY.Collections.Courses(modelsProto);
-                                        LY.courses.original = LY.courses.clone();
-                                        defer.resolve(LY.courses);
-                });
-}else{
-    defer.resolve(LY.courses);
-}
+                        modelsProto.forEach(function(el, i){
+                            el.id = i;
+                        });
 
 
-                                        return defer.promise();
+                        LY.courses = new LY.Collections.Courses(modelsProto);
+                        LY.courses.original = LY.courses.clone();
+                        defer.resolve(LY.courses);
+                    });
+                }else{
+                    defer.resolve(LY.courses);
+                }
+                
+                return defer.promise();
         }
     };
 
     LY.Router = Backbone.Router.extend({
         $main: $('.j-main'),
         initialize: function() {
+
+
             var that = this,
                 coursesList,
                 modelsProto;
-
-            // $.ajax({
-            //     type: 'GET',
-            //     dataType: "json",
-            //     async: false,
-            //     url: LY.Helpers.getPathToData(),
-            //     success: function(data) {
-            //         $.ajax({
-            //             type: 'GET',
-            //             dataType: "json",
-            //             async: false,
-            //             url: that._getRequestForPlaylistYA(data),
-            //             success: function(data) {
-            //                 console.log(data);
-            //                 modelsProto = data.items;
-
-            //                 modelsProto.forEach(function(el, i){
-            //                     el.id = i;
-            //                 });
-
-            //                 LY.courses = new LY.Collections.Courses(modelsProto);
-            //             }
-            //         });
-            //     }
-            // });
-
-            // _.each(LY.courses.models, function(m, i, list) {
-            //     console.log(m);
-            // });
-
-            // LY.courses.original = LY.courses.clone();
         },
         _getRequestForPlaylistYA: function(array) {
             var request = LY.YoutubeAPI.urls.MAIN + LY.YoutubeAPI.urls.PLAYLISTS + '?' + 'part=snippet,contentDetails&' + 'key=' + LY.YoutubeAPI.KEY + '&id=';
@@ -149,9 +104,8 @@ if(LY.courses === undefined){
 
         index: function() {
             var that =  this;
-            debugger
+
             LY.API.Youtube.loadCourses().done(function(courses){
-                debugger
                 var indexDirectory = new LY.Views.IndexDirectory({
                     collection: courses
                 });

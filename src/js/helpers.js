@@ -4,6 +4,10 @@
 
     window.LY = window.LY || {};
     window.LY.version = '0.0.1';
+    window.LY.Helpers = {};
+
+    var PATH_TO_STATIC_PAGE = 'static_page/',
+        PATH_TO_TPL = 'src/tpl/';
 
     $(function(){
         new LY.Router();
@@ -34,11 +38,7 @@
         return parent;
     };
 
-    LY.namespace('Helpers');
-
-    var PATH_TO_STATIC_PAGE = 'static_page/',
-        PATH_TO_TPL = 'src/tpl/';
-
+ 
     /**
     * [getTpl get template by id]
     * @param  {[string]} id [id of tag]
@@ -109,9 +109,10 @@
     };
 
     LY.Helpers.getPathToData = function(){
-        var pathIn = '/data/courses.json';
+        var helpers = this,
+            pathIn = '/data/courses.json';
 
-        return (LY.Helpers.getNameOfServer() === 'github') ? LY.Helpers.getUrlOrigin() + '/learnyourself' + pathIn : LY.Helpers.getUrlOrigin() + pathIn;
+        return (helpers.getNameOfServer() === 'github') ? helpers.getUrlOrigin() + '/learnyourself' + pathIn : helpers.getUrlOrigin() + pathIn;
     };
 
     /**
