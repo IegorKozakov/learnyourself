@@ -169,7 +169,9 @@
                 MAIN: 'https://www.googleapis.com/youtube/v3/',
                 PLAYLISTS: 'playlists',
                 PLAYLIST_ITEMS: 'playlistItems'
-            };
+            },
+            collection = {};
+
 
         function _removeWhiteSpace(str) {
             return str.replace(/ /g, '');
@@ -194,51 +196,75 @@
             return urls.MAIN + obj + '?'+ 'key=' + KEY + '&part='  + part + '&maxResults=' + maxRes;
         }
 
-        function _getRequestUrlPlaylists(part, palylistsId) {
-
-        }
-
-        function _loadPlaylists(courses) {
-            console.log(courses);
-        }
-
         return {
-            loadPlaylists: function() {
-                var getData = $.getJSON( LY.Helpers.getPathToData() ),
-                    loadPlaylists = getData.then(function( data ) {
-                        var playlistsId = '';
+            getCollection: function() {
+                return collection;
+            },
+            loadData: function() {
+                var getBasicData = $.getJSON( LY.Helpers.getPathToData() ),
+                    loadPlaylists = getBasicData.then(function( data ) {
+                        var playlistsId = '',
+                            params = {
+                                key: KEY,
+                                part: 'snippet'
+                            };
 
-                        _.each(data, function(el, i, list) {
-                            playlistsId += el.playlistId;
+                        collection = data;
+
+                        _.each(collection, function(item, i, list) {
+                            playlistsId += item.playlistId;
+                            item.id = i;
+
                             if (i !== (list.length - 1) ) {
                                 playlistsId += ',';
                             }
-                        })
+                        });
 
-                        return $.ajax( 'https://www.googleapis.com/youtube/v3/playlists', { data: { part: 'snippet', id: playlistsId, key: KEY } } );
+                        params.id = playlistsId;
+
+                        return $.ajax('https://www.googleapis.com/youtube/v3/playlists',{ data: params } );
                     }),
                     loadChannelsDetails = loadPlaylists.then( function( data ) {
-                        var channelsId = '';
-                        
-                        _.each(data.items, function(el, i, list) {
-                            channelsId += el.snippet.channelId;
+                        var channelsId = '',
+                            params = {
+                                key:KEY,
+                                part: 'statistics, snippet'
+                            };
+
+                        _.each(data.items, function(item, i, list) {
+                            channelsId += item.snippet.channelId;
+
                             if (i !== (list.length - 1) ) {
                                 channelsId += ',';
                             }
-                        })
 
-                        return $.ajax( 'https://www.googleapis.com/youtube/v3/channels', { data: { part: 'snippet', id: channelsId, key: KEY } } );
+                            _.each(collection, function(plItem, plIndex) {
+                                if( plItem.playlistId === item.id) {
+                                    plItem.title = item.snippet.title;
+                                    plItem.publishedAt = item.snippet.publishedAt;
+                                    plItem.description = item.snippet.description;
+
+                                    plItem.channel = {
+                                        id: item.snippet.channelId,
+                                        title: item.snippet.channelTitle,
+                                    }
+                                }
+                            });
+                        });
+
+                        params.id = channelsId;
+
+                        return $.ajax( 'https://www.googleapis.com/youtube/v3/channels', { data: params });
                     });
 
                     loadChannelsDetails.done(function( data ) {
-                        console.log(data);
-                    });
 
-               // $.when( $.getJSON( LY.Helpers.getPathToData() ) ).then( _loadPlaylists ).then( myFunc );
-               // $.when(LY.Helpers.getLocalDate()).done( function(a) {  LY.API.YoutubeT } );
-                // LY.Helpers.getLocalDate().done(function(response) {
-                //     console.log(response);
-                // })
+                        _.each(data.items, function(item, i) {
+
+                        });
+                        console.log(data);
+                        console.log(collection);
+                    });
             }
         }
     }());
