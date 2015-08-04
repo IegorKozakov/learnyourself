@@ -17,10 +17,10 @@
         },
         toggleStarred: function(e) {
             var $btn = $(e.currentTarget),
-                courseId = +$btn.val(),
+                courseId = $btn.val(),
                 action = $btn.data('flag'),
                 originalModel = LY.courses.original.get(courseId);
-
+                console.log(originalModel);
             if ( this.model.get('starred') ) {
                 this.model.set('starred', false);
                 originalModel.set('starred', false);
@@ -100,13 +100,11 @@
                 this.collection.reset(filtered);
 
             }
-            console.log(this.collection.toJSON());
         },
         renderFilteredList: function() {
             this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
         }
     });
-
 
     /**
      * View of CourseDetail details

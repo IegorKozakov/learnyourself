@@ -160,185 +160,60 @@
     });
 }(window, jQuery, Handlebars, _));
 ;
-(function(window, $, Handlebars, _){
-    LY.namespace('API.YoutubeT');
+(function(window, $, _){
+    LY.namespace('API.Youtube');
 
-    LY.API.YoutubeT = (function() {
+    LY.API.Youtube = (function() {
         var KEY = 'AIzaSyA3EWqvGw1-S-67J9kUwSYqK0ZZmY4beDo',
-            urls = {
-                MAIN: 'https://www.googleapis.com/youtube/v3/',
-                PLAYLISTS: 'playlists',
-                PLAYLIST_ITEMS: 'playlistItems'
-            },
             collection = {};
 
-
-        function _removeWhiteSpace(str) {
-            return str.replace(/ /g, '');
-        }
-
-        function _getCommonPartOfRequest(o, part, maxRes) {
-            var obj = '',
-                maxRes = maxRes || 50;
-
-            switch(o){
-                case 'playlists':
-                    obj = urls.PLAYLISTS;
-                    break;
-                case 'playlistItems':
-                    obj = urls.PLAYLIST_ITEMS;
-                    break;
-                default:
-                    return false
-                    break;
-            }
-
-            return urls.MAIN + obj + '?'+ 'key=' + KEY + '&part='  + part + '&maxResults=' + maxRes;
-        }
-
         return {
-            getCollection: function() {
-                return collection;
-            },
-            loadData: function() {
-                var getBasicData = $.getJSON( LY.Helpers.getPathToData() ),
-                    loadPlaylists = getBasicData.then(function( data ) {
-                        var playlistsId = '',
-                            params = {
-                                key: KEY,
-                                part: 'snippet'
-                            };
+            loadCoursesPreviewData: function() {
+                var defer = $.Deferred();
+
+                if( LY.courses === undefined ) {
+                    $.getJSON(LY.Helpers.getPathToData()).then(function(data) {
+                        var params = {
+                            key: KEY,
+                            part: 'snippet, contentDetails',
+                            id: _.pluck(data, 'id').join(',')
+                        };
 
                         collection = data;
 
-                        _.each(collection, function(item, i, list) {
-                            playlistsId += item.playlistId;
-                            item.id = i;
+                        return $.ajax('https://www.googleapis.com/youtube/v3/playlists', { data: params });
+                    }).then(function(data) {
+                        _.each(data.items, function(item, i) {
+                            _.each(collection, function(collectionItem) {
+                                if( collectionItem.id === item.id ) {
 
-                            if (i !== (list.length - 1) ) {
-                                playlistsId += ',';
-                            }
-                        });
+                                    collectionItem.title = item.snippet.title;
+                                    collectionItem.lessonsCount = item.contentDetails.itemCount;
+                                    collectionItem.publishedAt = item.snippet.publishedAt;
+                                    collectionItem.description = item.snippet.description;
 
-                        params.id = playlistsId;
-
-                        return $.ajax('https://www.googleapis.com/youtube/v3/playlists',{ data: params } );
-                    }),
-                    loadChannelsDetails = loadPlaylists.then( function( data ) {
-                        var channelsId = '',
-                            params = {
-                                key:KEY,
-                                part: 'statistics, snippet'
-                            };
-
-                        _.each(data.items, function(item, i, list) {
-                            channelsId += item.snippet.channelId;
-
-                            if (i !== (list.length - 1) ) {
-                                channelsId += ',';
-                            }
-
-                            _.each(collection, function(plItem, plIndex) {
-                                if( plItem.playlistId === item.id) {
-                                    plItem.title = item.snippet.title;
-                                    plItem.publishedAt = item.snippet.publishedAt;
-                                    plItem.description = item.snippet.description;
-
-                                    plItem.channel = {
+                                    collectionItem.channel = {
                                         id: item.snippet.channelId,
-                                        title: item.snippet.channelTitle,
+                                        title: item.snippet.channelTitle
                                     }
                                 }
-                            });
+                            })
                         });
 
-                        params.id = channelsId;
+                        LY.courses = new LY.Collections.Courses(collection);
+                        LY.courses.original = LY.courses.clone();
 
-                        return $.ajax( 'https://www.googleapis.com/youtube/v3/channels', { data: params });
-                    });
+                        defer.resolve(LY.courses);
+                    })
+                } else {
+                    defer.resolve(LY.courses);
+                }
 
-                    loadChannelsDetails.done(function( data ) {
-
-                        _.each(data.items, function(item, i) {
-
-                        });
-                        console.log(data);
-                        console.log(collection);
-                    });
+                return defer.promise();
             }
         }
     }());
-
-
-
-
-    LY.namespace('YoutubeAPI');
-    LY.namespace('YoutubeAPItest');
-
-    LY.YoutubeAPItest = (function() {
-        var KEY = 'AIzaSyA3EWqvGw1-S-67J9kUwSYqK0ZZmY4beDo',
-            urls = {
-                MAIN: 'https://www.googleapis.com/youtube/v3/',
-                PLAYLISTS: 'playlists',
-                PLAYLIST_ITEMS: 'playlistItems'
-            };
-
-        function removeWhiteSpace(str) {
-            return str.replace(/ /g, '');
-        }
-
-        function getCommonPartOfRequest(o, part, maxRes) {
-            var obj = '',
-                maxRes = maxRes || 50;
-
-            switch(o){
-                case 'playlists':
-                    obj = urls.PLAYLISTS;
-                    break;
-                case 'playlistItems':
-                    obj = urls.PLAYLIST_ITEMS;
-                    break;
-                default:
-                    return false
-                    break;
-            }
-
-            return urls.MAIN + obj + '?'+ 'key=' + KEY + '&part='  + part + '&maxResults=' + maxRes;
-        }
-
-        return {
-            getRequestUrlPlayLists: function(part, playlistsId, maxResults) {
-                var idPLs = removeWhiteSpace(playlistsId),
-                    partChecked = encodeURIComponent( removeWhiteSpace(part) );
-                    commonPartOfRequest = getCommonPartOfRequest('playlists', partChecked, maxResults);
-
-                return commonPartOfRequest + '&id=' + encodeURIComponent( removeWhiteSpace(idPLs) );
-            },
-            getRequestUrlPlayListItems: function(part, playlistId) {
-                var partChecked = encodeURIComponent( removeWhiteSpace(part) ),
-                    commonPartOfRequest = getCommonPartOfRequest('playlistItems', partChecked);
-
-                return commonPartOfRequest + '&playlistId=' + playlistId;
-            }
-        }
-    }());
-
-    LY.YoutubeAPI = {
-        KEY: 'AIzaSyA3EWqvGw1-S-67J9kUwSYqK0ZZmY4beDo',
-        urls: {
-            MAIN: 'https://www.googleapis.com/youtube/v3/',
-            PLAYLISTS: 'playlists',
-            PLAYLIST_ITEMS: 'playlistItems'
-        },
-        getPlaylistItems: function(playlistId) {
-            var requestUrl = this.urls.MAIN + this.urls.PLAYLIST_ITEMS + '?part=snippet&maxResults=50' + '&playlistId=' + playlistId + '&key=' + this.KEY;
-
-            $.getJSON(requestUrl).done(function(data) {
-                console.log(data);
-            })
-        }
-    };
-}(window, jQuery, Handlebars, _));
+}(window, jQuery, _));
 ;
 (function(window, $, _, Backbone){
     'use strict';
@@ -347,6 +222,7 @@
 
     LY.Models.Course = Backbone.Model.extend({
         defaults: {
+            'lang': 'en',
             'starred': false
         },
         initialize: function() {
@@ -392,10 +268,10 @@
         },
         toggleStarred: function(e) {
             var $btn = $(e.currentTarget),
-                courseId = +$btn.val(),
+                courseId = $btn.val(),
                 action = $btn.data('flag'),
                 originalModel = LY.courses.original.get(courseId);
-
+                console.log(originalModel);
             if ( this.model.get('starred') ) {
                 this.model.set('starred', false);
                 originalModel.set('starred', false);
@@ -475,13 +351,11 @@
                 this.collection.reset(filtered);
 
             }
-            console.log(this.collection.toJSON());
         },
         renderFilteredList: function() {
             this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
         }
     });
-
 
     /**
      * View of CourseDetail details
@@ -528,86 +402,9 @@
 
     LY.namespace('Router');
 
-    LY.API.Youtube = {
-        loadPlaylists: function() {
-            return $.ajax({
-                type: 'GET',
-                dataType: "json",
-                url: LY.Helpers.getPathToData()
-            });
-        },
-        loadPlaylistDetails: function(parts) {
-            var defer = $.Deferred();
-
-            function _getRequestForPlaylistYA (array) {
-                var request = LY.YoutubeAPI.urls.MAIN + LY.YoutubeAPI.urls.PLAYLISTS + '?' + 'part=snippet,contentDetails&' + 'key=' + LY.YoutubeAPI.KEY + '&id=';
-
-                _.each(array, function(el, i){
-                    request += el.playlistId;
-
-                    if(i !== (array.length - 1)) { request += ','}
-                });
-                return request;
-            }
-
-            LY.API.Youtube.loadPlaylists().done(function(response){
-                $.ajax({
-                        type: 'GET',
-                        dataType: "json",
-                        async: false,
-                        url: _getRequestForPlaylistYA(response),
-                        success: function(data) {
-                           defer.resolve(data);
-                        }
-                    });
-            });
-
-            return defer.promise();
-        },
-
-        loadCourses: function() {
-            var defer = $.Deferred();
-
-                if(LY.courses === undefined){
-                    LY.API.Youtube.loadPlaylistDetails(['snippet']).done(function(data){
-    
-                        var modelsProto = data.items;
-
-                        modelsProto.forEach(function(el, i){
-                            el.id = i;
-                        });
-
-
-                        LY.courses = new LY.Collections.Courses(modelsProto);
-                        LY.courses.original = LY.courses.clone();
-                        defer.resolve(LY.courses);
-                    });
-                }else{
-                    defer.resolve(LY.courses);
-                }
-                
-                return defer.promise();
-        }
-    };
-
     LY.Router = Backbone.Router.extend({
         $main: $('.j-main'),
         initialize: function() {
-
-
-            var that = this,
-                coursesList,
-                modelsProto;
-        },
-        _getRequestForPlaylistYA: function(array) {
-            var request = LY.YoutubeAPI.urls.MAIN + LY.YoutubeAPI.urls.PLAYLISTS + '?' + 'part=snippet,contentDetails&' + 'key=' + LY.YoutubeAPI.KEY + '&id=';
-
-            _.each(array, function(el, i){
-                request += el.playlistId;
-
-                if(i !== (array.length - 1)) { request += ','}
-            });
-            return request;
         },
         loadView : function(view) {
             this.view && this.view.remove();
@@ -629,13 +426,13 @@
         index: function() {
             var that =  this;
 
-            LY.API.Youtube.loadCourses().done(function(courses){
+            LY.API.Youtube.loadCoursesPreviewData().done(function(courses) {
                 var indexDirectory = new LY.Views.IndexDirectory({
                     collection: courses
                 });
+
                 that.updateView(indexDirectory);
             });
-            
         },
         course: function (idCourse) {
             this.updateView(new LY.Views.CourseDetail({ model: LY.courses.get(idCourse) }) );

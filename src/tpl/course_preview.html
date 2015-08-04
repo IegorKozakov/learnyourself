@@ -1,5 +1,5 @@
 <div class="course_review__inner">
-    <h2 class="course_review__title">{{snippet.title}}</h2>
+    <h2 class="course_review__title">{{title}}</h2>
 
     {{#if starred}}
         <button type="button" id="starred" name="starredBtn" value="{{id}}" data-flag="remove" class="course_review__star">Uninterest</button>
@@ -8,7 +8,7 @@
     {{/if}}
 
     <p class="course_review__desc">
-        <span>{{contentDetails.itemCount}}</span>&nbsp;{{declOfNum contentDetails.itemCount "lesson\lessons"}}&nbsp;by&nbsp;<span>{{snippet.channelTitle}}</span>
+        <span>{{lessonsCount}}</span>&nbsp;{{declOfNum lessonsCount "lesson\lessons"}}&nbsp;by&nbsp;<span>{{channel.title}}</span>
     </p>
 
     <div class="course_review__wrap_btn">
