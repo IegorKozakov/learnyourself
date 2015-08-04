@@ -7,7 +7,7 @@
             collection = {};
 
         return {
-            loadCoursesPreviewData: function() {
+            setCoursesPreviewData: function() {
                 var defer = $.Deferred();
 
                 if( LY.courses === undefined ) {
@@ -49,7 +49,28 @@
                 }
 
                 return defer.promise();
+            },
+            getChannel: function(channelId) {
+                var params = {
+                    key: KEY,
+                    id: channelId,
+                    maxResults: 50,
+                    part: 'statistics, snippet'
+                };
+                
+
+                return $.ajax('https://www.googleapis.com/youtube/v3/channels', { data: params });
+            },
+            getPlaylistItems: function(playlistsId) {
+                var params = {
+                    key: KEY,
+                    part: 'contentDetails, snippet',
+                    playlistId: playlistsId
+                };
+
+                return $.ajax('https://www.googleapis.com/youtube/v3/playlistItems', { data: params });
             }
+
         }
     }());
 }(window, jQuery, _));

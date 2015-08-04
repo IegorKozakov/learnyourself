@@ -20,7 +20,7 @@
                 courseId = $btn.val(),
                 action = $btn.data('flag'),
                 originalModel = LY.courses.original.get(courseId);
-                console.log(originalModel);
+
             if ( this.model.get('starred') ) {
                 this.model.set('starred', false);
                 originalModel.set('starred', false);
@@ -57,9 +57,35 @@
         tagName: 'aside',
         className: 'filters',
         tpl : LY.Helpers.getTpl('filters'),
+        initialize: function() {
+
+        },
         render: function() {
-            this.$el.html( this.tpl() );
+            this.$el.html( $( this.tpl() ).append( this.createSelect()) );
             return this;
+        },
+        getLangs: function() {
+            return _.uniq(this.collection.pluck('lang'));
+        },
+        createSelect: function() {
+            var activeFilter = sessionStorage.getItem('filterLang') || 'all',
+                $select = $('<select/>', {
+                    'name': 'lang',
+                    'id': 'filterBylang',
+                    'class': 'ct-select',
+                    'html': '<option value="all">All lang</option>'
+                });
+
+            _.each(this.getLangs(), function (item) {
+                $('<option/>', {
+                    'value': item,
+                    'text': item
+                }).appendTo($select);
+            });
+
+            $select.find('option[value=' + sessionStorage.getItem('filterLang') + ']').prop('selected', true);
+
+            return $select;
         }
     });
 
@@ -79,13 +105,21 @@
         render: function () {
             this.$el.html(this.tpl());
 
-            this.$('#filters').html(new LY.Views.Filters().render().el);
-            this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
+            this.$('#filters').html(new LY.Views.Filters({collection: this.collection.original}).render().el);
+
+            if( sessionStorage.getItem('filterLang') === 'all' || sessionStorage.getItem('filterLang') === null) {
+                this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
+            } else {
+                this.filter = sessionStorage.getItem('filterLang');
+                this.filterByType();
+            }
 
             return this;
         },
         setFilter: function(e) {
             this.filter = e.currentTarget.value;
+            sessionStorage.setItem('filterLang', this.filter);
+
             this.trigger("change:filterType");
         },
         filterByType: function() {
@@ -98,7 +132,6 @@
                     });
 
                 this.collection.reset(filtered);
-
             }
         },
         renderFilteredList: function() {

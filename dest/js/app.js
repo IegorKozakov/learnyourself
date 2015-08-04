@@ -168,7 +168,7 @@
             collection = {};
 
         return {
-            loadCoursesPreviewData: function() {
+            setCoursesPreviewData: function() {
                 var defer = $.Deferred();
 
                 if( LY.courses === undefined ) {
@@ -210,7 +210,28 @@
                 }
 
                 return defer.promise();
+            },
+            getChannel: function(channelId) {
+                var params = {
+                    key: KEY,
+                    id: channelId,
+                    maxResults: 50,
+                    part: 'statistics, snippet'
+                };
+                
+
+                return $.ajax('https://www.googleapis.com/youtube/v3/channels', { data: params });
+            },
+            getPlaylistItems: function(playlistsId) {
+                var params = {
+                    key: KEY,
+                    part: 'contentDetails, snippet',
+                    playlistId: playlistsId
+                };
+
+                return $.ajax('https://www.googleapis.com/youtube/v3/playlistItems', { data: params });
             }
+
         }
     }());
 }(window, jQuery, _));
@@ -271,7 +292,7 @@
                 courseId = $btn.val(),
                 action = $btn.data('flag'),
                 originalModel = LY.courses.original.get(courseId);
-                console.log(originalModel);
+
             if ( this.model.get('starred') ) {
                 this.model.set('starred', false);
                 originalModel.set('starred', false);
@@ -308,9 +329,35 @@
         tagName: 'aside',
         className: 'filters',
         tpl : LY.Helpers.getTpl('filters'),
+        initialize: function() {
+
+        },
         render: function() {
-            this.$el.html( this.tpl() );
+            this.$el.html( $( this.tpl() ).append( this.createSelect()) );
             return this;
+        },
+        getLangs: function() {
+            return _.uniq(this.collection.pluck('lang'));
+        },
+        createSelect: function() {
+            var activeFilter = sessionStorage.getItem('filterLang') || 'all',
+                $select = $('<select/>', {
+                    'name': 'lang',
+                    'id': 'filterBylang',
+                    'class': 'ct-select',
+                    'html': '<option value="all">All lang</option>'
+                });
+
+            _.each(this.getLangs(), function (item) {
+                $('<option/>', {
+                    'value': item,
+                    'text': item
+                }).appendTo($select);
+            });
+
+            $select.find('option[value=' + sessionStorage.getItem('filterLang') + ']').prop('selected', true);
+
+            return $select;
         }
     });
 
@@ -330,13 +377,21 @@
         render: function () {
             this.$el.html(this.tpl());
 
-            this.$('#filters').html(new LY.Views.Filters().render().el);
-            this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
+            this.$('#filters').html(new LY.Views.Filters({collection: this.collection.original}).render().el);
+
+            if( sessionStorage.getItem('filterLang') === 'all' || sessionStorage.getItem('filterLang') === null) {
+                this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
+            } else {
+                this.filter = sessionStorage.getItem('filterLang');
+                this.filterByType();
+            }
 
             return this;
         },
         setFilter: function(e) {
             this.filter = e.currentTarget.value;
+            sessionStorage.setItem('filterLang', this.filter);
+
             this.trigger("change:filterType");
         },
         filterByType: function() {
@@ -349,7 +404,6 @@
                     });
 
                 this.collection.reset(filtered);
-
             }
         },
         renderFilteredList: function() {
@@ -426,7 +480,7 @@
         index: function() {
             var that =  this;
 
-            LY.API.Youtube.loadCoursesPreviewData().done(function(courses) {
+            LY.API.Youtube.setCoursesPreviewData().done(function(courses) {
                 var indexDirectory = new LY.Views.IndexDirectory({
                     collection: courses
                 });
@@ -435,7 +489,25 @@
             });
         },
         course: function (idCourse) {
-            this.updateView(new LY.Views.CourseDetail({ model: LY.courses.get(idCourse) }) );
+
+            LY.API.Youtube.setCoursesPreviewData().then(function( coursesPreview ) {
+                var model = coursesPreview.get(idCourse),
+                    channelId = model.get('channel').id,
+                    playlistId = idCourse;
+
+                return $.when( 
+                    LY.API.Youtube.getChannel(channelId),
+                    LY.API.Youtube.getPlaylistItems(playlistId)
+                )
+            })
+            .then(function(channel, playlistItems) {
+
+                console.log(channel[0]);
+                console.log(playlistItems[0]);
+
+            });
+
+            //this.updateView(new LY.Views.CourseDetail({ model: LY.courses.get(idCourse) }) );
         },
         lesson: function(idCourse, idLesson) {
             var course = LY.courses.get(idCourse),
