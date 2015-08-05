@@ -489,10 +489,12 @@
             });
         },
         course: function (idCourse) {
+            var model;
 
             LY.API.Youtube.setCoursesPreviewData().then(function( coursesPreview ) {
-                var model = coursesPreview.get(idCourse),
-                    channelId = model.get('channel').id,
+                model = coursesPreview.get(idCourse);
+
+                var channelId = model.get('channel').id,
                     playlistId = idCourse;
 
                 return $.when( 
@@ -501,9 +503,17 @@
                 )
             })
             .then(function(channel, playlistItems) {
+                var channelInfo = {
+                    logo:            channel[0].items[0].snippet.thumbnails.high.url,
+                    description:     channel[0].items[0].snippet.description,
+                    viewCount:       channel[0].items[0].statistics.viewCount,
+                    subscriberCount: channel[0].items[0].statistics.subscriberCount
+                }
 
-                console.log(channel[0]);
-                console.log(playlistItems[0]);
+                model.set(channelInfo)
+                console.log(model);
+                //console.log(channel[0].items[0]);
+                //console.log(playlistItems[0]);
 
             });
 
