@@ -30,11 +30,9 @@
                                     collectionItem.lessonsCount = item.contentDetails.itemCount;
                                     collectionItem.publishedAt = item.snippet.publishedAt;
                                     collectionItem.description = item.snippet.description;
-
-                                    collectionItem.channel = {
-                                        id: item.snippet.channelId,
-                                        title: item.snippet.channelTitle
-                                    }
+                                    /* Channel Info */
+                                    collectionItem.channelId = item.snippet.channelId;
+                                    collectionItem.channelTitle = item.snippet.channelTitle;
                                 }
                             })
                         });
@@ -53,9 +51,9 @@
             getChannel: function(channelId) {
                 var params = {
                     key: KEY,
-                    id: channelId,
                     maxResults: 50,
-                    part: 'statistics, snippet'
+                    part: 'statistics, snippet',
+                    id: channelId
                 };
                 
 
@@ -64,6 +62,7 @@
             getPlaylistItems: function(playlistsId) {
                 var params = {
                     key: KEY,
+                    maxResults: 50,
                     part: 'contentDetails, snippet',
                     playlistId: playlistsId
                 };
