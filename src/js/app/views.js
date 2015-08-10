@@ -7,33 +7,34 @@
     LY.Views.Course = Backbone.View.extend({
         tagName: 'li',
         className: 'courses_preview__item',
-        tpl: LY.Helpers.getTpl('course_preview'),
+        tpl: LY.Helpers.getTpl('courses'),
         render: function() {
             this.$el.html( this.tpl( this.model.toJSON() ) );
             return this;
         },
         events: {
-            'click #starred': 'toggleStarred'
+            'click .j-course_review__star': 'toggleStarred'
+        },
+        setStarredCourse: function(courseId, flag) {
+            var originalModel = LY.courses.original.get(courseId);
+
+            this.model.set('starred', flag);
+            originalModel.set('starred', flag);
         },
         toggleStarred: function(e) {
-            var $btn = $(e.currentTarget),
+            var that = this,
+                $btn = $(e.currentTarget),
                 courseId = $btn.val(),
                 action = $btn.data('flag'),
                 originalModel = LY.courses.original.get(courseId);
 
-            if ( this.model.get('starred') ) {
-                this.model.set('starred', false);
-                originalModel.set('starred', false);
-            } else {
-                this.model.set('starred', true);
-                originalModel.set('starred', true);
-            }
+            (that.model.get('starred')) ? that.setStarredCourse(courseId, false) : that.setStarredCourse(courseId, true);
 
             if ( LY.Helpers.updateStarredInStorage(courseId, action) ) {
-                this.render();
+                that.render();
             } else {
                 /* TODO: make error for people */
-                console.log('Something bad! Reload page');
+                console.log('Something bad! Reload page!');
             }
         }
     });
@@ -57,9 +58,6 @@
         tagName: 'aside',
         className: 'filters',
         tpl : LY.Helpers.getTpl('filters'),
-        initialize: function() {
-
-        },
         render: function() {
             this.$el.html( $( this.tpl() ).append( this.createSelect()) );
             return this;
@@ -94,7 +92,7 @@
      */
     LY.Views.IndexDirectory = Backbone.View.extend({
         className: 'index',
-        tpl: LY.Helpers.getTpl('index_directory'),
+        tpl: LY.Helpers.getTpl('index'),
         events: {
             'change #filterBylang': 'setFilter'
         },
@@ -135,7 +133,9 @@
             }
         },
         renderFilteredList: function() {
-            this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
+            var coursesView = new LY.Views.Courses({collection: this.collection}).render().el;
+
+            this.$('#courses_preview').html(coursesView);
         }
     });
 

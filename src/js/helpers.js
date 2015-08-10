@@ -38,7 +38,7 @@
         return parent;
     };
 
- 
+
     /**
     * [getTpl get template by id]
     * @param  {[string]} id [id of tag]
