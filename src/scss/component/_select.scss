@@ -1,0 +1,16 @@
+.ct-select {
+    display: inline-block;
+    padding: 6px 8px;
+
+    font: $font;
+    color: #8a8c9a;
+
+    border: 1px solid #e6e8f2;
+    border-radius: 4px;
+    transition: $standart-animation;
+
+    &:hover, 
+    &:focus {
+        border-color: #8a8c9a;
+    }
+}

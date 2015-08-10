@@ -1,37 +1,27 @@
 <div class="course_details__inner">
     <h2 class="course_details__title">{{title}}</h2>
 
-    {{#if description}}
-        <h4 class="course_details__summary">{{description}}</h6>
-    {{/if}}
+    <h3 class="course_details__description">{{description}}</h3>
 
     <div class="course_details__desc">
-        <p>
-            <span>Об авторе:</span>
-            {{author.name}}
-
-            {{#if author.site}}
-                , {{author.site}}
-            {{/if}}
+        <div class="course_details__lessons">
+            <h4 class="course_details__lessons_title">Lessons:</h4>
             
-            {{#if author.email}}
-                , {{author.email}}
-            {{/if}}
+            <ul class="course_details__lessons_list">
+                {{#each lessons}}
+                    <li class="course_details__lessons_item">
+                        <a href="#!/course/{{../id}}/lesson/{{videoId}} " class="course_details__link">{{title}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
 
-            {{#if author.social.vk}}
-                , {{author.social.vk}}
-            {{/if}}
-
-            {{#if author.social.youtube}}
-                , {{author.social.youtube}}
-            {{/if}}
-        </p>
-        <p>
-            <span>Лекции:</span>
-            {{#each lessons}}
-                <a href="#!/course/{{../id}}/lesson/{{@index}} " class="course_details__link">{{title}}</a>,
-            {{/each}}
-        </p>
-        <p><span></span></p>
+        <div class="course_details__author">
+            <p>About author:</p>
+            <h3>{{channelTitle}}</h3>
+            <h3>{{channelDescription}}</h3>
+            <h3>SubscriberCount: {{channelSubscriberCount}}</h3>
+            <h3>channelViewCount: {{channelViewCount}}</h3>
+        </div>
     </div>
 </div>

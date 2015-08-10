@@ -7,11 +7,6 @@
     LY.Router = Backbone.Router.extend({
         $main: $('.j-main'),
         initialize: function() {
-            LY.courses = new LY.Collections.Courses();
-
-            /* setup set of defaults models */
-            LY.courses.fetch({ async: false });
-            LY.courses.original = LY.courses.clone();
         },
         loadView : function(view) {
             this.view && this.view.remove();
@@ -31,19 +26,48 @@
         },
 
         index: function() {
-            var indexDirectory = new LY.Views.IndexDirectory();
-            this.updateView(indexDirectory);
-            //var viewOfCoursesPreview = new LY.Views.CoursesPreview({collection: LY.courses})
-            //this.updateView(viewOfCoursesPreview);
+            var that =  this;
+
+            LY.API.Youtube.setCourses().done(function(courses) {
+                var indexDirectory = new LY.Views.IndexDirectory({
+                    collection: courses
+                });
+
+                that.updateView(indexDirectory);
+            });
         },
         course: function (idCourse) {
-            this.updateView(new LY.Views.CourseDetail({ model: LY.courses.get(idCourse) }) );
-        },
-        lesson: function(idCourse, idLesson) {
-            var course = LY.courses.get(idCourse),
-                lesson = course.get('lessons')[idLesson];
+            var that = this,
+                model;
 
-            this.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson(lesson)}))
+            LY.API.Youtube.setCourses().then(function(courses) {
+                model = courses.get(idCourse);
+
+                return $.when(
+                    LY.API.Youtube.setChannel(model, model.get('channelId')),
+                    LY.API.Youtube.setPlaylistItems(model, model.get('id'))
+                );
+            }).then(function() {
+                that.updateView(new LY.Views.CourseDetail({ model: model }));
+            });
+        },
+        lesson: function(playlistId, videoId) {
+            var that = this,
+                model,
+                lesson;
+
+            LY.API.Youtube.setCourses().then(function(courses) {
+                model = courses.get(playlistId);
+
+                return $.when(
+                    LY.API.Youtube.setChannel(model, model.get('channelId')),
+                    LY.API.Youtube.setPlaylistItems(model, model.get('id'))
+                );
+            }).then(function() {
+                lesson = _.find(model.get('lessons'), function(item) { return item.videoId === videoId });
+
+                that.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson(lesson)}))
+            });
         },
         about: function() {
             this.updateView(new LY.Views.aboutPage());

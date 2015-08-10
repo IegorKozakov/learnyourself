@@ -8,7 +8,7 @@
 
     <meta name="author" content="dimaspirit" />
     <meta name="keywords" content="learnyourself, screencast, dimaspirit" />
-    <meta name="description" content="Learnyourself - сервис для самообучения с помощью скринкастов с youtube" />
+    <meta name="description" content="Learnyourself - Service learning through open video tutorials with accompanying materials" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui" />
     <meta name="HandheldFriendly" content="true">
@@ -17,21 +17,24 @@
     <!-- Internet Explore -->
     <meta http-equiv="cleartype" content="on">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <link rel="stylesheet" href="dest/css/styles.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="dest/css/main.min.css">
 </head>
 <body>
     <div class="page">
         <header class="header">
             <div class="header__inner">
-                <a href="#/" class="header__home">Home</a>
+                <div class="header__additional_wrap header__additional_wrap-left">
+                    <a href="#/" class="header__link">Home</a>
+                </div>
+
+                <div class="header__additional_wrap header__additional_wrap-right">
+                    <a href="#!/about" class="header__link">About</a>
+                </div>
 
                 <h1 class="header__logo">
                     Learn<br>Yourself
-                    <span class="header__version">&#945;</span>
                 </h1>
-
-                <a href="#!/about" class="header__about">About</a>
             </div>
         </header>
 
@@ -40,13 +43,8 @@
 
             </div>
         </main>
-
-        <footer class="footer">
-            <div class="footer__inner">
-                <p>&#9400;&nbsp;<a href="https://twitter.com/dima4people" class="footer__link" target="_blank">dimaspirit</a>&nbsp;2015</p>
-            </div>
-        </footer>
     </div>
+
 
     <!-- libs -->
     <script src="dest/js/libs.min.js"></script>

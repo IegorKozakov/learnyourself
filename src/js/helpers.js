@@ -1,13 +1,13 @@
-/**
- * helpers.js
- *  - getTpl
- */
 ;
 (function(window, $, Handlebars, _){
     'use strict';
 
     window.LY = window.LY || {};
     window.LY.version = '0.0.1';
+    window.LY.Helpers = {};
+
+    var PATH_TO_STATIC_PAGE = 'static_page/',
+        PATH_TO_TPL = 'src/tpl/';
 
     $(function(){
         new LY.Router();
@@ -38,10 +38,6 @@
         return parent;
     };
 
-    var PATH_TO_STATIC_PAGE = 'static_page/',
-        PATH_TO_TPL = 'src/tpl/';
-
-    LY.namespace('Helpers');
 
     /**
     * [getTpl get template by id]
@@ -112,6 +108,13 @@
         return ( window.location.host.indexOf('github') !== -1 ) ? 'github' : 'others';
     };
 
+    LY.Helpers.getPathToData = function(){
+        var helpers = this,
+            pathIn = '/data/courses.json';
+
+        return (helpers.getNameOfServer() === 'github') ? helpers.getUrlOrigin() + '/learnyourself' + pathIn : helpers.getUrlOrigin() + pathIn;
+    };
+
     /**
      * [updateStarredInStorage update array of starred courses in localStorage]
      * @param  {[number]} courseId [id of course]
@@ -141,18 +144,18 @@
     };
 
     /**
-     * Handlebars Helpers
+     * HANDLEBARS HELPERS
      */
+
     /**
      * [Handlebars custom function helper - DECLARATION OF NUMBER]
-     * @param  {[number]} n [value]
-     * @param  {[string]} t [words separated by /]
-     * @return {[string]}   [transformed word]
+     * @param  {[number]} val   [value]
+     * @param  {[string]} t     [words separated by \]
+     * @return {[string]}       [transformed word]
      */
-    Handlebars.registerHelper('declOfNum', function(n, t) {
-        var cases = [2, 0, 1, 1, 1, 2],
-        titles = t.split('/');
+    Handlebars.registerHelper('declOfNum', function(val, t) {
+        var titles = t.split('\\');
 
-        return titles[ (n%100>4 && n%100<20) ? 2 : cases[(n%10<5) ? n%10:5] ];
+        return (val === 1) ? titles[0] : titles[1];
     });
 }(window, jQuery, Handlebars, _));
