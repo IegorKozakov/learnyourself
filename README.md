@@ -1,4 +1,5 @@
 # learnyourself
+
 *version of document: 0.1*
 
 #####Идея / Idea:
