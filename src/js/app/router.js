@@ -28,7 +28,7 @@
         index: function() {
             var that =  this;
 
-            LY.API.Youtube.setCourses().done(function(courses) {
+            LY.API.Youtube.loadCourses().done(function(courses) {
                 var indexDirectory = new LY.Views.IndexDirectory({
                     collection: courses
                 });
@@ -40,28 +40,28 @@
             var that = this,
                 model;
 
-            LY.API.Youtube.setCourses().then(function(courses) {
+            LY.API.Youtube.loadCourses().then(function(courses) {
                 model = courses.get(idCourse);
 
                 return $.when(
-                    LY.API.Youtube.setChannel(model, model.get('channelId')),
-                    LY.API.Youtube.setPlaylistItems(model, model.get('id'))
+                    LY.API.Youtube.loadChannel(model, model.get('channelId')),
+                    LY.API.Youtube.loadPlaylistItems(model, model.get('id'))
                 );
             }).then(function() {
                 that.updateView(new LY.Views.CourseDetail({ model: model }));
             });
         },
-        lesson: function(playlistId, videoId) {
+        lesson: function(courseId, videoId) {
             var that = this,
                 model,
                 lesson;
 
-            LY.API.Youtube.setCourses().then(function(courses) {
-                model = courses.get(playlistId);
+            LY.API.Youtube.loadCourses().then(function(courses) {
+                model = courses.get(courseId);
 
                 return $.when(
-                    LY.API.Youtube.setChannel(model, model.get('channelId')),
-                    LY.API.Youtube.setPlaylistItems(model, model.get('id'))
+                    LY.API.Youtube.loadChannel(model, model.get('channelId')),
+                    LY.API.Youtube.loadPlaylistItems(model, model.get('id'))
                 );
             }).then(function() {
                 lesson = _.find(model.get('lessons'), function(item) { return item.videoId === videoId });

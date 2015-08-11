@@ -1,9 +1,9 @@
 .main {
-    padding: 40px 0;
+    padding: 30px 0 40px 0;
 }
 
 .main__inner {
     width: $container-width;
-    max-width: $container-width;
+    max-width: $container-max-width;
     margin: 0 auto;
 }

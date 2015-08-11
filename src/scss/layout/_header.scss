@@ -2,7 +2,9 @@
     width: 100%;
     padding: 20px 0;
 
-    background: #292b33;
+    background: #fff;
+    border-bottom: 1px solid #e4e4e4;
+    box-shadow: 3px 0 3px 1px rgba(40, 41, 45, .2);
 
     font: $font;
 }
@@ -10,7 +12,7 @@
 .header__inner {
     position: relative;
     width: $container-width;
-    max-width: $container-width;
+    max-width: $container-max-width;
     margin: 0 auto;
 
     @extend %clearfix;
@@ -22,7 +24,7 @@
     font-size: (21em/16);
     font-weight: 500;
     line-height: .955;
-    color: #fff;
+    color: #28bd8b;
 }
 
 .header__additional_wrap {
@@ -41,12 +43,12 @@
 .header__link {
     position: relative;
     font-weight: 300;
-    color: #737580;
+    color: #5a5c64;
 
     transition: $standart-animation;
 
     &:hover,
     &:active {
-        color: #fff;
+        color: #1ba8ed;
     }
 }

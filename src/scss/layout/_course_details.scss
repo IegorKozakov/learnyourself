@@ -3,31 +3,48 @@
 }
 
 .course_details__title {
-    margin: 0 0 25px 0;
-
     font-size: (24em/16);
     font-weight: 500;
     line-height: 1.25;
+    color: #28292d;
 }
 
-.course_details__lessons {
-    margin: 0 0 25px 0;
+.course_details__description {
+    font-style: italic;
 }
-
-.course_details__lessons_title,
-.course_details__author_title {
-    margin: 0 0 15px 0;
-
-    font-size: (20em/16);
-    font-weight: 400;
-    line-height: 1.25;
-}
-
+    .course_details__title,
+    .course_details__description,
+    .course_details__lessons {
+        margin: 0 0 20px 0;
+    }
 
 .course_details__link {
-    margin: 0 0 15px 0;
+    display: inline-block;
+    margin: 0 0 5px 0;
 
-    font-size: (16em/16);
+    font-size: (18em/16);
     font-weight: 400;
     line-height: 1.5;
+    color: #1578a9;
+    transition: color .3s ease;
+
+    &:hover,
+    &:active {
+        color: #1ba8ed;
+    }
 }
+
+.course_details__author h3 {
+    margin-bottom: 5px;
+}
+
+.course_details__author_title,
+.course_details__author span {
+    font-size: (18em/16);
+    font-weight: 500;
+}
+
+.course_details__author_desc {
+    font-style: italic;
+}
+

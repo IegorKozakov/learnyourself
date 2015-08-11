@@ -171,7 +171,7 @@
                 playlistItems: 'https://www.googleapis.com/youtube/v3/playlistItems'
             }
 
-        function _prepareCollection(data, initialCollection) {
+        function _parseCourses(data, initialCollection) {
             var collection = [],
                 course = {};
 
@@ -198,7 +198,7 @@
             return collection;
         }
 
-        function _prepareChannelInfo(channel) {
+        function _parseChannelInfo(channel) {
             return {
                 channelLogo: channel.items[0].snippet.thumbnails.high.url,
                 channelDescription: channel.items[0].snippet.description,
@@ -207,7 +207,7 @@
             }
         }
 
-        function _prepareLessons(playlistItems) {
+        function _parseLessons(playlistItems) {
             var lessons = [];
 
             _.each(playlistItems.items, function(item) {
@@ -225,7 +225,7 @@
         }
 
         return {
-            setCourses: function() {
+            loadCourses: function() {
                 var defer = $.Deferred(),
                     initialCollection = [],
                     params = {
@@ -241,7 +241,7 @@
 
                         return $.ajax(URI.playlists , { data: params });
                     }).then(function(data) {
-                        var collection = _prepareCollection(data, initialCollection);
+                        var collection = _parseCourses(data, initialCollection);
 
                         LY.courses = new LY.Collections.Courses(collection);
                         LY.courses.original = LY.courses.clone();
@@ -254,7 +254,7 @@
 
                 return defer.promise();
             },
-            setChannel: function(model, channelId) {
+            loadChannel: function(model, channelId) {
                 var defer = $.Deferred(),
                     params = {
                         key: KEY,
@@ -265,7 +265,7 @@
 
                 if(model.get('channelDescription') === undefined) {
                     $.ajax(URI.channels, { data: params }).then(function(channel) {
-                        model.set(_prepareChannelInfo(channel));
+                        model.set(_parseChannelInfo(channel));
                         defer.resolve(LY.courses);
                     })
                 } else {
@@ -274,7 +274,7 @@
 
                 return defer.promise();
             },
-            setPlaylistItems: function(model, playlistsId) {
+            loadPlaylistItems: function(model, playlistsId) {
                 var defer = $.Deferred(),
                     params = {
                         key: KEY,
@@ -285,7 +285,7 @@
 
                 if(model.get('lessons') === undefined) {
                     $.ajax(URI.playlistItems, { data: params }).then(function(lessons) {
-                        model.set('lessons', _prepareLessons(lessons));
+                        model.set('lessons', _parseLessons(lessons));
                         defer.resolve(LY.courses);
                     });
                 } else {
@@ -542,7 +542,7 @@
         index: function() {
             var that =  this;
 
-            LY.API.Youtube.setCourses().done(function(courses) {
+            LY.API.Youtube.loadCourses().done(function(courses) {
                 var indexDirectory = new LY.Views.IndexDirectory({
                     collection: courses
                 });
@@ -554,28 +554,28 @@
             var that = this,
                 model;
 
-            LY.API.Youtube.setCourses().then(function(courses) {
+            LY.API.Youtube.loadCourses().then(function(courses) {
                 model = courses.get(idCourse);
 
                 return $.when(
-                    LY.API.Youtube.setChannel(model, model.get('channelId')),
-                    LY.API.Youtube.setPlaylistItems(model, model.get('id'))
+                    LY.API.Youtube.loadChannel(model, model.get('channelId')),
+                    LY.API.Youtube.loadPlaylistItems(model, model.get('id'))
                 );
             }).then(function() {
                 that.updateView(new LY.Views.CourseDetail({ model: model }));
             });
         },
-        lesson: function(playlistId, videoId) {
+        lesson: function(courseId, videoId) {
             var that = this,
                 model,
                 lesson;
 
-            LY.API.Youtube.setCourses().then(function(courses) {
-                model = courses.get(playlistId);
+            LY.API.Youtube.loadCourses().then(function(courses) {
+                model = courses.get(courseId);
 
                 return $.when(
-                    LY.API.Youtube.setChannel(model, model.get('channelId')),
-                    LY.API.Youtube.setPlaylistItems(model, model.get('id'))
+                    LY.API.Youtube.loadChannel(model, model.get('channelId')),
+                    LY.API.Youtube.loadPlaylistItems(model, model.get('id'))
                 );
             }).then(function() {
                 lesson = _.find(model.get('lessons'), function(item) { return item.videoId === videoId });

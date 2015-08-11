@@ -24,11 +24,11 @@
 
     font-size: (21em/16);
     font-weight: 500;
-    line-height: 1.25;
-    color: #292b33;
+    color: $title-color;
 }
 
 .lesson__desc {
     font-size: (16em/16);
-    line-height: 1.5;
+    font-style: italic;
+    line-height: 1.25;
 }

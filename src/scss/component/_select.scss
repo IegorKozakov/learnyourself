@@ -3,14 +3,15 @@
     padding: 6px 8px;
 
     font: $font;
-    color: #8a8c9a;
+    color: #4d4d52;
 
-    border: 1px solid #e6e8f2;
+    background: #fff;
+    border: 1px solid #d7d7d7;
     border-radius: 4px;
     transition: $standart-animation;
 
     &:hover, 
     &:focus {
-        border-color: #8a8c9a;
+        border-color: #4d4d52;
     }
 }
