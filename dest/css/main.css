@@ -176,13 +176,10 @@ select {
   .header__link:active {
     color: #1ba8ed; }
 
-.main {
-  padding: 30px 0 40px 0; }
-
 .main__inner {
   width: 90%;
   max-width: 960px;
-  margin: 0 auto; }
+  margin: 30px auto 40px; }
 
 .filters {
   margin: 0 auto 25px auto;
@@ -271,8 +268,10 @@ select {
   line-height: 1.25;
   color: #28292d; }
 
-.course_details__description {
-  font-style: italic; }
+.course_details__description,
+.course_details__author_desc {
+  font-style: italic;
+  word-wrap: break-word; }
 
 .course_details__title,
 .course_details__description,
@@ -296,11 +295,13 @@ select {
 
 .course_details__author_title,
 .course_details__author span {
-  font-size: 1.125em;
+  font-size: 1.125em; }
+
+.course_details__author_title {
   font-weight: 500; }
 
-.course_details__author_desc {
-  font-style: italic; }
+.course_details__author span {
+  font-weight: 400; }
 
 .lesson {
   font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
