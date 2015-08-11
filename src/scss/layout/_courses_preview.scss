@@ -48,6 +48,7 @@
     height: 30px;
 
     background: transparent url("../imgs/star/sprite.png") no-repeat 0 0;
+    background-size: ;
 
     border: none;
     outline: none;
@@ -56,9 +57,18 @@
         background-position: 0 -30px;
     }
     .course_review__star-active,
-    .course_review__star.course_review__star-active:hover {
+    .course_review__star.course_review__star-active:hover,
+    .course_review__star.course_review__star-active:focus {
         background-position: 0 -60px;
     }
+    @media only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min-device-pixel-ratio: 2) {
+        .course_review__star {
+            background-image: url("../imgs/star/sprite_x2.png");
+            background-size: 35px 90px;
+        }
+    }
+
 
 .course_review__desc {
     margin: 0 0 25px 0;

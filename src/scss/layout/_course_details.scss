@@ -9,8 +9,10 @@
     color: #28292d;
 }
 
-.course_details__description {
+.course_details__description,
+.course_details__author_desc {
     font-style: italic;
+    word-wrap: break-word;
 }
     .course_details__title,
     .course_details__description,
@@ -41,10 +43,11 @@
 .course_details__author_title,
 .course_details__author span {
     font-size: (18em/16);
-    font-weight: 500;
-}
 
-.course_details__author_desc {
-    font-style: italic;
 }
-
+    .course_details__author_title {
+        font-weight: 500;
+    }
+    .course_details__author span {
+        font-weight: 400;
+    }
