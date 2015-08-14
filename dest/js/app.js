@@ -608,20 +608,35 @@
         },
         lesson: function(courseId, videoId) {
             var that = this,
-                model,
-                lesson;
+                course;
 
             LY.API.Youtube.loadCourses().then(function(courses) {
-                model = courses.get(courseId);
+                course = courses.get(courseId);
 
                 return $.when(
-                    LY.API.Youtube.loadChannel(model, model.get('channelId')),
-                    LY.API.Youtube.loadPlaylistItems(model, model.get('id'))
+                    LY.API.Youtube.loadChannel(course, course.get('channelId')),
+                    LY.API.Youtube.loadPlaylistItems(course, course.get('id'))
                 );
             }).then(function() {
-                lesson = _.find(model.get('lessons'), function(item) { return item.videoId === videoId });
+                var lesson = _.find(course.get('lessons'), function(item) { return item.videoId === videoId });
 
-                that.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson(lesson)}))
+                if( lesson.position > 0 ) {
+                    var lessonPrev = _.find(course.get('lessons'), function(item) { return item.position === lesson.position - 1 });
+                    lesson.lessonPrev =  lessonPrev;
+                } 
+
+                if ( lesson.position < course.get('lessons').length - 1 ) {
+                    var lessonNext = _.find(course.get('lessons'), function(item) { return item.position === lesson.position + 1 });
+                    lesson.lessonNext = lessonNext;
+                }
+
+                /* add course id to lesson */
+                lesson.courseId = courseId;
+
+                console.log( lesson );
+
+
+                that.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson( lesson )}))
             });
         },
         about: function() {
