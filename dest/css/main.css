@@ -122,6 +122,30 @@ select {
   content: ''; }
 
 /* Component */
+.btn_star {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 35px;
+  height: 30px;
+  background: transparent url("../imgs/star/sprite.png") no-repeat 0 0;
+  border: none;
+  outline: none; }
+
+.btn_star:hover {
+  background-position: 0 -30px; }
+
+.btn_star-active,
+.btn_star.btn_star-active:hover,
+.btn_star.btn_star-active:focus {
+  background-position: 0 -60px; }
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  .btn_star {
+    background-image: url("../imgs/star/sprite_x2.png");
+    background-size: 35px 90px; } }
+
 .ct-select {
   display: inline-block;
   padding: 6px 8px;
@@ -197,19 +221,16 @@ select {
   display: inline-block;
   width: 100%;
   margin: 10px 0 0 0;
+  border-bottom: 1px solid #e4e4e4;
   font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
 
 .courses_preview__item:first-child {
-  margin-top: 0; }
+  margin-top: 0;
+  border-top: 1px solid #e4e4e4; }
 
 .course_review__inner {
   position: relative;
-  margin: 0 25px;
-  padding: 20px 0;
-  border-bottom: 1px solid #e4e4e4; }
-
-.courses_preview__item:first-child .course_review__inner {
-  border-top: 1px solid #e4e4e4; }
+  margin: 20px 25px 25px 25px; }
 
 .course_review__title {
   margin: 0 40px 20px 0;
@@ -217,30 +238,6 @@ select {
   font-weight: 500;
   line-height: 1.25;
   color: #28292d; }
-
-.course_review__star {
-  position: absolute;
-  top: 15px;
-  right: 0;
-  display: block;
-  width: 35px;
-  height: 30px;
-  background: transparent url("../imgs/star/sprite.png") no-repeat 0 0;
-  border: none;
-  outline: none; }
-
-.course_review__star:hover {
-  background-position: 0 -30px; }
-
-.course_review__star-active,
-.course_review__star.course_review__star-active:hover,
-.course_review__star.course_review__star-active:focus {
-  background-position: 0 -60px; }
-
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-  .course_review__star {
-    background-image: url("../imgs/star/sprite_x2.png");
-    background-size: 35px 90px; } }
 
 .course_review__desc {
   margin: 0 0 25px 0;
@@ -269,6 +266,8 @@ select {
   font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
 
 .course_details__title {
+  position: relative;
+  padding: 0 40px 0 0;
   font-size: 1.5em;
   font-weight: 500;
   line-height: 1.25;

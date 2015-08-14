@@ -71,6 +71,7 @@ gulp.task('build-js-app', function() {
     return gulp.src([
         path.js.src + 'helpers.js',
         path.js.src + 'youtubeAPI.js',
+        path.js.src + 'star.js',
         path.js.app + 'models.js',
         path.js.app + 'collections.js',
         path.js.app + 'views.js',

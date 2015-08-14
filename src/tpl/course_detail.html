@@ -1,5 +1,13 @@
 <div class="course_details__inner">
-    <h2 class="course_details__title">{{title}}</h2>
+    <h2 class="course_details__title">
+        {{title}}
+
+        {{#if starred}}
+            <button type="button" name="starredBtn" value="{{id}}" data-flag="remove" class="j-starred_course btn_star btn_star-active" title="Unstar"></button>
+        {{else}}
+            <button type="button" name="starredBtn" value="{{id}}" data-flag="add" class="j-starred_course btn_star" title="Star"></button>
+        {{/if}}
+    </h2>
 
     <h3 class="course_details__description">{{description}}</h3>
 

@@ -116,34 +116,6 @@
     };
 
     /**
-     * [updateStarredInStorage update array of starred courses in localStorage]
-     * @param  {[number]} courseId [id of course]
-     * @param  {[string]} flag     [name of action]
-     * @return {[boolean]}         [true if all is alright, false is error]
-     */
-    LY.Helpers.updateStarredInStorage = function(courseId, flag){
-        var updateStarred = [],
-            alreadyStarred = JSON.parse(localStorage.getItem('starred')) || [],
-            flag = $.trim(flag);
-
-        if( flag === 'add' ) {
-            if ( alreadyStarred.indexOf(courseId) !== -1 ) {
-                return false;
-            } else {
-                alreadyStarred.push(courseId);
-                updateStarred = alreadyStarred;
-            }
-        } else if( flag === 'remove' ) {
-             updateStarred = _.without(alreadyStarred, courseId);
-        }
-
-        updateStarred.sort(function(a,b){return a-b;})
-
-        localStorage.setItem('starred', JSON.stringify(updateStarred));
-        return true;
-    };
-
-    /**
      * HANDLEBARS HELPERS
      */
 
