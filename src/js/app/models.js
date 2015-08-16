@@ -19,6 +19,11 @@
         }
     });
 
-    LY.Models.Lesson = Backbone.Model.extend({});
+    LY.Models.Lesson = Backbone.Model.extend({
+        default: {
+            'lessonPrev': false,
+            'lessonNext': false
+        }
+    });
 
 }(window, jQuery, _, Backbone));

@@ -130,4 +130,12 @@
 
         return (val === 1) ? titles[0] : titles[1];
     });
+
+    Handlebars.registerHelper('linkToNeighborLesson', function(text, courseId, lessonId, className) {
+        text = Handlebars.Utils.escapeExpression(text);
+
+        var result = '<a href="#!/course/' + courseId + '/lesson/' + lessonId + '" class="lesson__neighbor_lesson ' + className + '" title="' + text + '"></a>';
+
+        return new Handlebars.SafeString(result);
+    });
 }(window, jQuery, Handlebars, _));

@@ -130,6 +130,14 @@
 
         return (val === 1) ? titles[0] : titles[1];
     });
+
+    Handlebars.registerHelper('linkToNeighborLesson', function(text, courseId, lessonId, className) {
+        text = Handlebars.Utils.escapeExpression(text);
+
+        var result = '<a href="#!/course/' + courseId + '/lesson/' + lessonId + '" class="lesson__neighbor_lesson ' + className + '" title="' + text + '"></a>';
+
+        return new Handlebars.SafeString(result);
+    });
 }(window, jQuery, Handlebars, _));
 ;
 (function(window, $, _){
@@ -360,7 +368,12 @@
         }
     });
 
-    LY.Models.Lesson = Backbone.Model.extend({});
+    LY.Models.Lesson = Backbone.Model.extend({
+        default: {
+            'lessonPrev': false,
+            'lessonNext': false
+        }
+    });
 
 }(window, jQuery, _, Backbone));
 ;
@@ -623,7 +636,7 @@
                 if( lesson.position > 0 ) {
                     var lessonPrev = _.find(course.get('lessons'), function(item) { return item.position === lesson.position - 1 });
                     lesson.lessonPrev =  lessonPrev;
-                } 
+                }
 
                 if ( lesson.position < course.get('lessons').length - 1 ) {
                     var lessonNext = _.find(course.get('lessons'), function(item) { return item.position === lesson.position + 1 });
@@ -632,10 +645,6 @@
 
                 /* add course id to lesson */
                 lesson.courseId = courseId;
-
-                console.log( lesson );
-
-
                 that.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson( lesson )}))
             });
         },

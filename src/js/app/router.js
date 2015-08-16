@@ -68,7 +68,7 @@
                 if( lesson.position > 0 ) {
                     var lessonPrev = _.find(course.get('lessons'), function(item) { return item.position === lesson.position - 1 });
                     lesson.lessonPrev =  lessonPrev;
-                } 
+                }
 
                 if ( lesson.position < course.get('lessons').length - 1 ) {
                     var lessonNext = _.find(course.get('lessons'), function(item) { return item.position === lesson.position + 1 });
@@ -77,10 +77,6 @@
 
                 /* add course id to lesson */
                 lesson.courseId = courseId;
-
-                console.log( lesson );
-
-
                 that.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson( lesson )}))
             });
         },
