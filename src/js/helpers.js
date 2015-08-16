@@ -115,47 +115,21 @@
         return (helpers.getNameOfServer() === 'github') ? helpers.getUrlOrigin() + '/learnyourself' + pathIn : helpers.getUrlOrigin() + pathIn;
     };
 
-    /**
-     * [updateStarredInStorage update array of starred courses in localStorage]
-     * @param  {[number]} courseId [id of course]
-     * @param  {[string]} flag     [name of action]
-     * @return {[boolean]}         [true if all is alright, false is error]
-     */
-    LY.Helpers.updateStarredInStorage = function(courseId, flag){
-        var updateStarred = [],
-            alreadyStarred = JSON.parse(localStorage.getItem('starred')) || [],
-            flag = $.trim(flag);
+    LY.Helpers.getNeighborsLessons = function(course, lessonId) {
+        var lesson = _.find(course.get('lessons'), function(item) { return item.videoId === lessonId });
 
-        if( flag === 'add' ) {
-            if ( alreadyStarred.indexOf(courseId) !== -1 ) {
-                return false;
-            } else {
-                alreadyStarred.push(courseId);
-                updateStarred = alreadyStarred;
-            }
-        } else if( flag === 'remove' ) {
-             updateStarred = _.without(alreadyStarred, courseId);
+        if( lesson.position > 0 ) {
+            var lessonPrev = _.find(course.get('lessons'), function(item) { return item.position === lesson.position - 1 });
+            lesson.lessonPrev =  lessonPrev;
         }
 
-        updateStarred.sort(function(a,b){return a-b;})
+        if ( lesson.position < course.get('lessons').length - 1 ) {
+            var lessonNext = _.find(course.get('lessons'), function(item) { return item.position === lesson.position + 1 });
+            lesson.lessonNext = lessonNext;
+        }
 
-        localStorage.setItem('starred', JSON.stringify(updateStarred));
-        return true;
-    };
+        lesson.courseId = course.get('id');
 
-    /**
-     * HANDLEBARS HELPERS
-     */
-
-    /**
-     * [Handlebars custom function helper - DECLARATION OF NUMBER]
-     * @param  {[number]} val   [value]
-     * @param  {[string]} t     [words separated by \]
-     * @return {[string]}       [transformed word]
-     */
-    Handlebars.registerHelper('declOfNum', function(val, t) {
-        var titles = t.split('\\');
-
-        return (val === 1) ? titles[0] : titles[1];
-    });
+        return lesson;
+    }
 }(window, jQuery, Handlebars, _));

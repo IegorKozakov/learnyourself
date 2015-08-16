@@ -1,9 +1,23 @@
 <div class="lesson__inner">
+    <p>
+        <a href="#!/course/{{courseId}}" title="Back to course details" class="lesson__link_to_course">
+            Back to course details
+        </a>
+    </p>
+
     <div class="lesson__video">
         <iframe src="https://www.youtube.com/embed/{{videoId}}" frameborder="0" allowfullscreen></iframe>
+
+        {{#if lessonPrev}}
+            {{linkToNeighborLesson lessonPrev.title courseId lessonPrev.videoId 'lesson__neighbor_lesson-back' 'back'}}
+        {{/if}}
+
+        {{#if lessonNext}}
+            {{linkToNeighborLesson lessonNext.title courseId lessonNext.videoId 'lesson__neighbor_lesson-forward' 'forward'}}
+        {{/if}}
     </div>
 
     <h2 class="lesson__title">{{title}}</h2>
-    
+
     <h4 class="lesson__desc">{{description}}</h6>
 </div>

@@ -13,28 +13,16 @@
             return this;
         },
         events: {
-            'click .j-course_review__star': 'toggleStarred'
-        },
-        setStarredCourse: function(courseId, flag) {
-            var originalModel = LY.courses.original.get(courseId);
-
-            this.model.set('starred', flag);
-            originalModel.set('starred', flag);
+            'click .j-starred_course': 'toggleStarred'
         },
         toggleStarred: function(e) {
             var that = this,
                 $btn = $(e.currentTarget),
                 courseId = $btn.val(),
-                action = $btn.data('flag'),
-                originalModel = LY.courses.original.get(courseId);
+                action = $btn.data('flag');
 
-            (that.model.get('starred')) ? that.setStarredCourse(courseId, false) : that.setStarredCourse(courseId, true);
-
-            if ( LY.Helpers.updateStarredInStorage(courseId, action) ) {
-                that.render();
-            } else {
-                /* TODO: make error for people */
-                console.log('Something bad! Reload page!');
+            if ( LY.Courses.Star.update(courseId, action, that) ) {
+                 that.render();
             }
         }
     });
@@ -145,10 +133,22 @@
     LY.Views.CourseDetail = Backbone.View.extend({
         className: 'course_details',
         tpl: LY.Helpers.getTpl('course_detail'),
-
         render: function() {
             this.$el.html( this.tpl( this.model.toJSON() ) );
             return this;
+        },
+        events: {
+            'click .j-starred_course': 'toggleStarred'
+        },
+        toggleStarred: function(e) {
+            var that = this,
+                $btn = $(e.currentTarget),
+                courseId = $btn.val(),
+                action = $btn.data('flag');
+
+            if ( LY.Courses.Star.update(courseId, action, that) ) {
+                 that.render();
+            }
         }
     });
 

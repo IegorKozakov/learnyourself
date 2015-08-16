@@ -115,40 +115,30 @@
         return (helpers.getNameOfServer() === 'github') ? helpers.getUrlOrigin() + '/learnyourself' + pathIn : helpers.getUrlOrigin() + pathIn;
     };
 
-    /**
-     * [updateStarredInStorage update array of starred courses in localStorage]
-     * @param  {[number]} courseId [id of course]
-     * @param  {[string]} flag     [name of action]
-     * @return {[boolean]}         [true if all is alright, false is error]
-     */
-    LY.Helpers.updateStarredInStorage = function(courseId, flag){
-        var updateStarred = [],
-            alreadyStarred = JSON.parse(localStorage.getItem('starred')) || [],
-            flag = $.trim(flag);
+    LY.Helpers.getNeighborsLessons = function(course, lessonId) {
+        var lesson = _.find(course.get('lessons'), function(item) { return item.videoId === lessonId });
 
-        if( flag === 'add' ) {
-            if ( alreadyStarred.indexOf(courseId) !== -1 ) {
-                return false;
-            } else {
-                alreadyStarred.push(courseId);
-                updateStarred = alreadyStarred;
-            }
-        } else if( flag === 'remove' ) {
-             updateStarred = _.without(alreadyStarred, courseId);
+        if( lesson.position > 0 ) {
+            var lessonPrev = _.find(course.get('lessons'), function(item) { return item.position === lesson.position - 1 });
+            lesson.lessonPrev =  lessonPrev;
         }
 
-        updateStarred.sort(function(a,b){return a-b;})
+        if ( lesson.position < course.get('lessons').length - 1 ) {
+            var lessonNext = _.find(course.get('lessons'), function(item) { return item.position === lesson.position + 1 });
+            lesson.lessonNext = lessonNext;
+        }
 
-        localStorage.setItem('starred', JSON.stringify(updateStarred));
-        return true;
-    };
+        lesson.courseId = course.get('id');
+
+        return lesson;
+    }
+}(window, jQuery, Handlebars, _));
+;
+(function(window, $, Handlebars, _){
+    'use strict';
 
     /**
-     * HANDLEBARS HELPERS
-     */
-
-    /**
-     * [Handlebars custom function helper - DECLARATION OF NUMBER]
+     * [DECLARATION OF NUMBER]
      * @param  {[number]} val   [value]
      * @param  {[string]} t     [words separated by \]
      * @return {[string]}       [transformed word]
@@ -157,6 +147,22 @@
         var titles = t.split('\\');
 
         return (val === 1) ? titles[0] : titles[1];
+    });
+
+    /**
+     * [linkToNeighborLesson]
+     * @param  {[string]} text       [title]
+     * @param  {[string]} courseId   [course id]
+     * @param  {[string]} lessonId   [lesson id]
+     * @param  {[string]} className  [name of additional class]
+     * @return {[string]}            [Tag a. Link to neighbor lesson]
+     */
+    Handlebars.registerHelper('linkToNeighborLesson', function(text, courseId, lessonId, className) {
+        text = Handlebars.Utils.escapeExpression(text);
+
+        var result = '<a href="#!/course/' + courseId + '/lesson/' + lessonId + '" class="lesson__neighbor_lesson ' + className + '" title="' + text + '"></a>';
+
+        return new Handlebars.SafeString(result);
     });
 }(window, jQuery, Handlebars, _));
 ;
@@ -293,10 +299,98 @@
                 }
 
                 return defer.promise();
+            },
+            fetchCourseChannelPlaylists: function(courseId) {
+                var that = this,
+                    defer = $.Deferred(),
+                    course;
+
+                that.loadCourses().then(function(courses) {
+                    course = courses.get(courseId);
+
+                    $.when(
+                        LY.API.Youtube.loadChannel(course, course.get('channelId')),
+                        LY.API.Youtube.loadPlaylistItems(course, course.get('id'))
+                    ).then(function() {
+                        defer.resolve(course);
+                    })
+                });
+
+                return defer.promise();
             }
         }
     }());
 }(window, jQuery, _));
+;
+(function(window, $, _, Backbone){
+    LY.namespace('Courses.Star');
+
+    LY.Courses.Star = (function() {
+        var name = 'coursesStarred';
+
+        function _getCoursesStarred() {
+            var courses = localStorage.getItem(name),
+                answ;
+
+            if ( _.isString(courses) && !_.isEmpty(courses) ) {
+                answ = JSON.parse(courses);
+            } else {
+                answ = false;
+            }
+
+            return answ;
+        }
+
+        function _updateStorage(courses) {
+            localStorage.setItem(name, JSON.stringify(courses) );
+        }
+
+        function _setCourseStarred(id, action, view) {
+            var originalModel = LY.courses.original.get(id);
+
+            view.model.set('starred', action);
+            originalModel.set('starred', action);
+        }
+
+        return {
+            getCoursesStarred: _getCoursesStarred,
+            isEmpty: function() {
+                var courses = _getCoursesStarred();
+
+                return ( courses === null ) ? true : false ;
+            },
+            isCourseStarredById: function(id) {
+                var courses = _getCoursesStarred();
+
+                if ( courses ) {
+                    return ( courses.indexOf(id) !== -1 ) ? true : false;
+                } else {
+                    return false;
+                }
+            },
+            update: function(id, action, view) {
+                var courses = _getCoursesStarred() || [],
+                    updatedCourses = [];
+
+                if( action === 'add' ) {
+                    updatedCourses = courses.push(id);
+                    updatedCourses = courses;
+                } else if ( action === 'remove' ) {
+                    updatedCourses = _.without(courses, id);
+                }
+                _updateStorage(updatedCourses);
+
+                if (view.model.get('starred')) {
+                    _setCourseStarred(id, false, view)
+                } else {
+                    _setCourseStarred(id, true, view);
+                }
+
+                return true;
+            }
+        }
+    })();
+}(window, jQuery, _, Backbone));
 ;
 (function(window, $, _, Backbone){
     'use strict';
@@ -309,17 +403,21 @@
             'starred': false
         },
         initialize: function() {
-            var starredCourses = JSON.parse(localStorage.getItem('starred'));
+            /* Check is this course is starred */
+            if( LY.Courses.Star.isEmpty() ) { return false }
 
-            if(!starredCourses) { return false }
-
-            if( starredCourses.indexOf(this.get('id')) !== -1) {
+            if( LY.Courses.Star.isCourseStarredById( this.get('id') )) {
                 this.set('starred', true);
             }
         }
     });
 
-    LY.Models.Lesson = Backbone.Model.extend({});
+    LY.Models.Lesson = Backbone.Model.extend({
+        default: {
+            'lessonPrev': false,
+            'lessonNext': false
+        }
+    });
 
 }(window, jQuery, _, Backbone));
 ;
@@ -347,28 +445,16 @@
             return this;
         },
         events: {
-            'click .j-course_review__star': 'toggleStarred'
-        },
-        setStarredCourse: function(courseId, flag) {
-            var originalModel = LY.courses.original.get(courseId);
-
-            this.model.set('starred', flag);
-            originalModel.set('starred', flag);
+            'click .j-starred_course': 'toggleStarred'
         },
         toggleStarred: function(e) {
             var that = this,
                 $btn = $(e.currentTarget),
                 courseId = $btn.val(),
-                action = $btn.data('flag'),
-                originalModel = LY.courses.original.get(courseId);
+                action = $btn.data('flag');
 
-            (that.model.get('starred')) ? that.setStarredCourse(courseId, false) : that.setStarredCourse(courseId, true);
-
-            if ( LY.Helpers.updateStarredInStorage(courseId, action) ) {
-                that.render();
-            } else {
-                /* TODO: make error for people */
-                console.log('Something bad! Reload page!');
+            if ( LY.Courses.Star.update(courseId, action, that) ) {
+                 that.render();
             }
         }
     });
@@ -479,10 +565,22 @@
     LY.Views.CourseDetail = Backbone.View.extend({
         className: 'course_details',
         tpl: LY.Helpers.getTpl('course_detail'),
-
         render: function() {
             this.$el.html( this.tpl( this.model.toJSON() ) );
             return this;
+        },
+        events: {
+            'click .j-starred_course': 'toggleStarred'
+        },
+        toggleStarred: function(e) {
+            var that = this,
+                $btn = $(e.currentTarget),
+                courseId = $btn.val(),
+                action = $btn.data('flag');
+
+            if ( LY.Courses.Star.update(courseId, action, that) ) {
+                 that.render();
+            }
         }
     });
 
@@ -550,37 +648,20 @@
                 that.updateView(indexDirectory);
             });
         },
-        course: function (idCourse) {
-            var that = this,
-                model;
+        course: function (courseId) {
+            var that = this;
 
-            LY.API.Youtube.loadCourses().then(function(courses) {
-                model = courses.get(idCourse);
-
-                return $.when(
-                    LY.API.Youtube.loadChannel(model, model.get('channelId')),
-                    LY.API.Youtube.loadPlaylistItems(model, model.get('id'))
-                );
-            }).then(function() {
-                that.updateView(new LY.Views.CourseDetail({ model: model }));
+            LY.API.Youtube.fetchCourseChannelPlaylists(courseId).then(function(course) {
+                that.updateView( new LY.Views.CourseDetail({ model: course }) );
             });
         },
         lesson: function(courseId, videoId) {
-            var that = this,
-                model,
-                lesson;
+            var that = this;
 
-            LY.API.Youtube.loadCourses().then(function(courses) {
-                model = courses.get(courseId);
+            LY.API.Youtube.fetchCourseChannelPlaylists(courseId).then(function(course) {
+                var lesson = LY.Helpers.getNeighborsLessons(course, videoId);
 
-                return $.when(
-                    LY.API.Youtube.loadChannel(model, model.get('channelId')),
-                    LY.API.Youtube.loadPlaylistItems(model, model.get('id'))
-                );
-            }).then(function() {
-                lesson = _.find(model.get('lessons'), function(item) { return item.videoId === videoId });
-
-                that.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson(lesson)}))
+                that.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson( lesson )}))
             });
         },
         about: function() {

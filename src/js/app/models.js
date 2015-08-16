@@ -10,16 +10,20 @@
             'starred': false
         },
         initialize: function() {
-            var starredCourses = JSON.parse(localStorage.getItem('starred'));
+            /* Check is this course is starred */
+            if( LY.Courses.Star.isEmpty() ) { return false }
 
-            if(!starredCourses) { return false }
-
-            if( starredCourses.indexOf(this.get('id')) !== -1) {
+            if( LY.Courses.Star.isCourseStarredById( this.get('id') )) {
                 this.set('starred', true);
             }
         }
     });
 
-    LY.Models.Lesson = Backbone.Model.extend({});
+    LY.Models.Lesson = Backbone.Model.extend({
+        default: {
+            'lessonPrev': false,
+            'lessonNext': false
+        }
+    });
 
 }(window, jQuery, _, Backbone));
