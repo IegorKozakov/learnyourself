@@ -70,6 +70,7 @@ gulp.task('build-js-libs', function() {
 gulp.task('build-js-app', function() {
     return gulp.src([
         path.js.src + 'helpers.js',
+        path.js.src + 'handlebars_helpers.js',
         path.js.src + 'youtubeAPI.js',
         path.js.src + 'star.js',
         path.js.app + 'models.js',
