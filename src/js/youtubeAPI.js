@@ -132,6 +132,24 @@
                 }
 
                 return defer.promise();
+            },
+            fetchCourseChannelPlaylists: function(courseId) {
+                var that = this,
+                    defer = $.Deferred(),
+                    course;
+
+                that.loadCourses().then(function(courses) {
+                    course = courses.get(courseId);
+
+                    $.when(
+                        LY.API.Youtube.loadChannel(course, course.get('channelId')),
+                        LY.API.Youtube.loadPlaylistItems(course, course.get('id'))
+                    ).then(function() {
+                        defer.resolve(course);
+                    })
+                });
+
+                return defer.promise();
             }
         }
     }());

@@ -36,47 +36,19 @@
                 that.updateView(indexDirectory);
             });
         },
-        course: function (idCourse) {
-            var that = this,
-                model;
+        course: function (courseId) {
+            var that = this;
 
-            LY.API.Youtube.loadCourses().then(function(courses) {
-                model = courses.get(idCourse);
-
-                return $.when(
-                    LY.API.Youtube.loadChannel(model, model.get('channelId')),
-                    LY.API.Youtube.loadPlaylistItems(model, model.get('id'))
-                );
-            }).then(function() {
-                that.updateView(new LY.Views.CourseDetail({ model: model }));
+            LY.API.Youtube.fetchCourseChannelPlaylists(courseId).then(function(course) {
+                that.updateView( new LY.Views.CourseDetail({ model: course }) );
             });
         },
         lesson: function(courseId, videoId) {
-            var that = this,
-                course;
+            var that = this;
 
-            LY.API.Youtube.loadCourses().then(function(courses) {
-                course = courses.get(courseId);
+            LY.API.Youtube.fetchCourseChannelPlaylists(courseId).then(function(course) {
+                var lesson = LY.Helpers.getNeighborsLessons(course, videoId);
 
-                return $.when(
-                    LY.API.Youtube.loadChannel(course, course.get('channelId')),
-                    LY.API.Youtube.loadPlaylistItems(course, course.get('id'))
-                );
-            }).then(function() {
-                var lesson = _.find(course.get('lessons'), function(item) { return item.videoId === videoId });
-
-                if( lesson.position > 0 ) {
-                    var lessonPrev = _.find(course.get('lessons'), function(item) { return item.position === lesson.position - 1 });
-                    lesson.lessonPrev =  lessonPrev;
-                }
-
-                if ( lesson.position < course.get('lessons').length - 1 ) {
-                    var lessonNext = _.find(course.get('lessons'), function(item) { return item.position === lesson.position + 1 });
-                    lesson.lessonNext = lessonNext;
-                }
-
-                /* add course id to lesson */
-                lesson.courseId = courseId;
                 that.updateView(new LY.Views.Lesson({model: new LY.Models.Lesson( lesson )}))
             });
         },

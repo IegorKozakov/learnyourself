@@ -115,27 +115,21 @@
         return (helpers.getNameOfServer() === 'github') ? helpers.getUrlOrigin() + '/learnyourself' + pathIn : helpers.getUrlOrigin() + pathIn;
     };
 
-    /**
-     * HANDLEBARS HELPERS
-     */
+    LY.Helpers.getNeighborsLessons = function(course, lessonId) {
+        var lesson = _.find(course.get('lessons'), function(item) { return item.videoId === lessonId });
 
-    /**
-     * [Handlebars custom function helper - DECLARATION OF NUMBER]
-     * @param  {[number]} val   [value]
-     * @param  {[string]} t     [words separated by \]
-     * @return {[string]}       [transformed word]
-     */
-    Handlebars.registerHelper('declOfNum', function(val, t) {
-        var titles = t.split('\\');
+        if( lesson.position > 0 ) {
+            var lessonPrev = _.find(course.get('lessons'), function(item) { return item.position === lesson.position - 1 });
+            lesson.lessonPrev =  lessonPrev;
+        }
 
-        return (val === 1) ? titles[0] : titles[1];
-    });
+        if ( lesson.position < course.get('lessons').length - 1 ) {
+            var lessonNext = _.find(course.get('lessons'), function(item) { return item.position === lesson.position + 1 });
+            lesson.lessonNext = lessonNext;
+        }
 
-    Handlebars.registerHelper('linkToNeighborLesson', function(text, courseId, lessonId, className) {
-        text = Handlebars.Utils.escapeExpression(text);
+        lesson.courseId = course.get('id');
 
-        var result = '<a href="#!/course/' + courseId + '/lesson/' + lessonId + '" class="lesson__neighbor_lesson ' + className + '" title="' + text + '"></a>';
-
-        return new Handlebars.SafeString(result);
-    });
+        return lesson;
+    }
 }(window, jQuery, Handlebars, _));
