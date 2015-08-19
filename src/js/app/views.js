@@ -95,6 +95,7 @@
      */
     LY.Views.IndexDirectory = Backbone.View.extend({
         className: 'index',
+
         tpl: LY.Helpers.getTpl('index'),
         events: {
             'input #search': 'searchByQuery',
@@ -121,20 +122,23 @@
             this.trigger("change:filterType");
         },
         filterByType: function() {
-            /* OMG */
-            if(this.filter === 'all' || this.filter === undefined) {
-                this.collection.reset( this.collection.original.toJSON() );
-            } else {
-                var filter = this.filter,
-                    filtered = _.filter(this.collection.original.models, function (item) {
-                        return item.get('lang') === filter;
-                    });
+            var that = this,
+                filters = that.collection.filters,
+                collectionFiltered = [];
 
-                this.collection.reset(filtered);
+            /* delete empty query */
+            for (var filter in filters) {
+                if(filters[filter] === '' || filters[filter] === 'all') {
+                    delete filters[filter];
+                }
             }
+
+            collectionFiltered = _.where(that.collection.original.toJSON() , filters);
+
+            this.collection.reset(collectionFiltered);
         },
         renderFilteredList: function() {
-            var coursesView = new LY.Views.Courses({collection: this.collection}).render().el;
+            var coursesView = new LY.Views.Courses({ collection: this.collection }).render().el;
 
             this.$('#courses_preview').html(coursesView);
         },
@@ -160,7 +164,7 @@
             that.searchQuery = query;
 
             if(that.searchQuery === '') {
-                that.collection.reset( that.collection.original.models );
+                that.filterByType();
             } else {
                 filteredCollection = that._getFilteredCollectionByQuery(that.searchQuery);
 
