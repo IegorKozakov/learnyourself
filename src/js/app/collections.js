@@ -8,6 +8,12 @@
         model: LY.Models.Course,
         comparator: function(i) {
             return !i.get('starred');
+        },
+        initialize: function() {
+            /* set default searchQuery */
+            this.searchQuery = '';
+            /* set defaults filters */
+            this.filters = {};
         }
     });
 }(window, jQuery, _, Backbone));

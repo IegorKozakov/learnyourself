@@ -12,7 +12,7 @@
         initialize: function() {
             /* Check is this course is starred */
             if( LY.Courses.Star.isEmpty() ) { return false }
-
+            /* found starred course by id and set status is starred */
             if( LY.Courses.Star.isCourseStarredById( this.get('id') )) {
                 this.set('starred', true);
             }

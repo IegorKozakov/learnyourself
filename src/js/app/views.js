@@ -133,6 +133,12 @@
 
             return title.indexOf(query) !== -1 || description.indexOf(query) !== -1 || channelTitle.indexOf(query) !== -1;
         },
+        _getFilteredCollectionByQuery: function(query, isOriginalCollection) {
+            var that = this,
+                collection = (isOriginalCollection) ? that.collection.original.models : that.collection.models;
+
+            return _.filter(collection, function (item) { return that._compareWithQuery(item, query) });
+        },
         searchByQuery: function(e) {
             var that = this,
                 query = ( e.currentTarget.value ).toLocaleLowerCase(),
@@ -144,14 +150,10 @@
             if(that.searchQuery === '') {
                 that.collection.reset( that.collection.original.models );
             } else {
-                filteredCollection = _.filter(that.collection.models, function (item) {
-                    return that._compareWithQuery(item, query) ;
-                });
+                filteredCollection = that._getFilteredCollectionByQuery(that.searchQuery);
 
-                if(filteredCollection.length === 0){
-                    filteredCollection = _.filter(that.collection.original.models, function (item) {
-                        return that._compareWithQuery(item, query);
-                    });
+                if(!filteredCollection.length){
+                    filteredCollection = that._getFilteredCollectionByQuery(that.searchQuery, true);
                 }
 
                 that.collection.reset(filteredCollection);
