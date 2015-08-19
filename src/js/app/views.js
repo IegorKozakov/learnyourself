@@ -96,7 +96,9 @@
      */
     LY.Views.IndexDirectory = Backbone.View.extend({
         className: 'index',
-
+        maps: {
+            course: '#courses_preview'
+        },
         tpl: LY.Helpers.getTpl('index'),
         events: {
             'input #search': 'searchByQuery',
@@ -108,17 +110,19 @@
         },
         render: function () {
             this.$el.html(this.tpl());
+
+            /* render courses */
+            this.$(this.maps.course).html( new LY.Views.Courses({collection: this.collection}).render().el );
+
             /* filters */
             this.$('#filters').html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
             this.filterByType();
+
             /* init search */
             if ( sessionStorage.getItem('searchQuery') ) {
                 this.$('#search').val(sessionStorage.getItem('searchQuery'))
                 this.searchByQuery();
             }
-
-            /* render courses */
-            this.$('#courses_preview').html( new LY.Views.Courses({collection: this.collection}).render().el );
 
             return this;
         },
@@ -151,7 +155,7 @@
         renderFilteredList: function() {
             var coursesView = new LY.Views.Courses({ collection: this.collection }).render().el;
 
-            this.$('#courses_preview').html(coursesView);
+            this.$(this.maps.course).html(coursesView);
         },
         _compareWithQuery: function (course, query) {
             var title = course.get('title').toLocaleLowerCase(),
