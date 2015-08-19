@@ -46,32 +46,47 @@
         tagName: 'aside',
         className: 'filters',
         render: function() {
-            this.$el.html( this.createSelect() );
-            return this;
-        },
-        getLangs: function() {
-            return _.uniq(this.collection.pluck('lang'));
-        },
-        createSelect: function() {
-            var activeFilter = sessionStorage.getItem('filterLang') || 'all',
-                $select = $('<select/>', {
-                    'name': 'lang',
-                    'id': 'filterBylang',
-                    'class': 'ct-select',
-                    'html': '<option value="all">All lang</option>'
-                });
+            var that = this;
 
-            _.each(this.getLangs(), function (item) {
+            that.$el.html( that._createSelects() );
+            return that;
+        },
+        _getUniqValue: function(attr) {
+            return _.uniq(this.collection.pluck(attr));
+        },
+        _createSelect: function(filter, filters) {
+            var that = this;
+            /* create select */
+            var $select = $('<select/>', {
+                'name': filter,
+                'id': 'filterBy' + filter,
+                'class': 'ct-select j-filters',
+                'html': '<option value="all">All</option>'
+            });
+            /* create options */
+            _.each(that._getUniqValue(filter), function (i) {
                 $('<option/>', {
-                    'value': item,
-                    'text': item
+                    'value': i,
+                    'text': i
                 }).appendTo($select);
             });
-
-            $select.find('option[value=' + sessionStorage.getItem('filterLang') + ']')
+            /* made selected */
+            $select.find('option[value=' + sessionStorage.getItem('filter_' + filter) + ']')
                 .prop('selected', true);
 
             return $select;
+        },
+        _createSelects: function() {
+            var that = this,
+                $selects = $('<div/>', {
+                    class: 'filters__wrap'
+                });
+
+            for (var filter in that.collection.filters) {
+                $selects.append( that._createSelect(filter, that.collection.filters) );
+            };
+
+            return $selects;
         }
     });
 
@@ -82,8 +97,8 @@
         className: 'index',
         tpl: LY.Helpers.getTpl('index'),
         events: {
-            'change #filterBylang': 'setFilter',
-            'input #search': 'searchByQuery'
+            'input #search': 'searchByQuery',
+            'change .j-filters': 'setFilter'
         },
         initialize: function() {
             this.on("change:filterType", this.filterByType, this);
@@ -91,25 +106,22 @@
         },
         render: function () {
             this.$el.html(this.tpl());
-
-            this.$('#filters').html( new LY.Views.Filters({collection: this.collection.original}).render().el );
-
-            if( sessionStorage.getItem('filterLang') === 'all' || sessionStorage.getItem('filterLang') === null) {
-                this.$('#courses_preview').html( new LY.Views.Courses({collection: this.collection}).render().el );
-            } else {
-                this.filter = sessionStorage.getItem('filterLang');
-                this.filterByType();
-            }
+            /* render filters */
+            this.$('#filters').html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
+            /* render courses */
+            this.$('#courses_preview').html( new LY.Views.Courses({collection: this.collection}).render().el );
 
             return this;
         },
         setFilter: function(e) {
-            this.filter = e.currentTarget.value;
-            sessionStorage.setItem('filterLang', this.filter);
+            var $select = $(e.currentTarget);
+
+            this.collection.filters[$select.attr('name')] = $select.val();
 
             this.trigger("change:filterType");
         },
         filterByType: function() {
+            /* OMG */
             if(this.filter === 'all' || this.filter === undefined) {
                 this.collection.reset( this.collection.original.toJSON() );
             } else {

@@ -13,7 +13,10 @@
             /* set default searchQuery */
             this.searchQuery = '';
             /* set defaults filters */
-            this.filters = {};
+            this.filters = {
+                lang: 'all',
+                channelTitle: 'all'
+            };
         }
     });
 }(window, jQuery, _, Backbone));
