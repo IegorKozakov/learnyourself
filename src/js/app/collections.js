@@ -11,11 +11,11 @@
         },
         initialize: function() {
             /* set default searchQuery */
-            this.searchQuery = '';
+            this.searchQuery = sessionStorage.getItem('filter_lang') || '';
             /* set defaults filters */
             this.filters = {
-                lang: 'all',
-                channelTitle: 'all'
+                lang: sessionStorage.getItem('filter_lang') || 'all',
+                channelTitle: sessionStorage.getItem('filter_channelTitle') || 'all'
             };
         }
     });

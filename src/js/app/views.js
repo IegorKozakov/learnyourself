@@ -79,7 +79,8 @@
         _createSelects: function() {
             var that = this,
                 $selects = $('<div/>', {
-                    class: 'filters__wrap'
+                    class: 'filters__wrap',
+                    title: 'filters'
                 });
 
             for (var filter in that.collection.filters) {
@@ -107,17 +108,27 @@
         },
         render: function () {
             this.$el.html(this.tpl());
-            /* render filters */
+            /* filters */
             this.$('#filters').html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
+            this.filterByType();
+            /* init search */
+            if ( sessionStorage.getItem('searchQuery') ) {
+                this.$('#search').val(sessionStorage.getItem('searchQuery'))
+                this.searchByQuery();
+            }
+
             /* render courses */
             this.$('#courses_preview').html( new LY.Views.Courses({collection: this.collection}).render().el );
 
             return this;
         },
         setFilter: function(e) {
-            var $select = $(e.currentTarget);
+            var $select = $(e.currentTarget),
+                filterName = $select.attr('name'),
+                filterVal = $select.val();
 
-            this.collection.filters[$select.attr('name')] = $select.val();
+            this.collection.filters[filterName] =filterVal;
+            sessionStorage.setItem('filter_' + filterName, filterVal)
 
             this.trigger("change:filterType");
         },
@@ -157,11 +168,12 @@
         },
         searchByQuery: function(e) {
             var that = this,
-                query = ( e.currentTarget.value ).toLocaleLowerCase(),
+                query = e ? ( e.currentTarget.value ).toLocaleLowerCase() : sessionStorage.getItem('searchQuery'),
                 filteredCollection = [];
 
-            /* set searchQuery in collection */
+            /* set searchQuery */
             that.searchQuery = query;
+            sessionStorage.setItem('searchQuery', query);
 
             if(that.searchQuery === '') {
                 that.filterByType();
