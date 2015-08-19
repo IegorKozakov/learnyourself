@@ -45,9 +45,8 @@
     LY.Views.Filters = Backbone.View.extend({
         tagName: 'aside',
         className: 'filters',
-        tpl : LY.Helpers.getTpl('filters'),
         render: function() {
-            this.$el.html( $( this.tpl() ).append( this.createSelect()) );
+            this.$el.html( this.createSelect() );
             return this;
         },
         getLangs: function() {
@@ -69,7 +68,8 @@
                 }).appendTo($select);
             });
 
-            $select.find('option[value=' + sessionStorage.getItem('filterLang') + ']').prop('selected', true);
+            $select.find('option[value=' + sessionStorage.getItem('filterLang') + ']')
+                .prop('selected', true);
 
             return $select;
         }
@@ -82,7 +82,8 @@
         className: 'index',
         tpl: LY.Helpers.getTpl('index'),
         events: {
-            'change #filterBylang': 'setFilter'
+            'change #filterBylang': 'setFilter',
+            'input #search': 'madeSearch'
         },
         initialize: function() {
             this.on("change:filterType", this.filterByType, this);
@@ -109,7 +110,8 @@
             this.trigger("change:filterType");
         },
         filterByType: function() {
-            if(this.filter === 'all') {
+            console.log(this.filter);
+            if(this.filter === 'all' || this.filter === undefined) {
                 this.collection.reset(this.collection.original.toJSON());
             } else {
                 var filter = this.filter,
@@ -124,6 +126,27 @@
             var coursesView = new LY.Views.Courses({collection: this.collection}).render().el;
 
             this.$('#courses_preview').html(coursesView);
+        },
+        _compareWithQuery: function (course, query) {
+            var title = course.get('title').toLocaleLowerCase(),
+                description = course.get('description').toLocaleLowerCase(),
+                channelTitle = course.get('channelTitle').toLocaleLowerCase();
+
+            return title.indexOf(query) !== -1 || description.indexOf(query) !== -1 || channelTitle.indexOf(query) !== -1;
+        },
+        madeSearch: function(e) {
+            var that = this,
+                query = ( e.currentTarget.value ).toLocaleLowerCase();
+
+            if(query === '') {
+                 that.filterByType();
+             } else {
+                var collectionByQuery = _.filter(that.collection.models, function (item) {
+                    return that._compareWithQuery(item, query) ;
+                });
+
+                this.collection.reset(collectionByQuery);
+             }
         }
     });
 

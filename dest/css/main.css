@@ -208,7 +208,7 @@ select {
 
 .filters {
   margin: 0 auto 25px auto;
-  padding: 15px 25px;
+  padding: 15px 0;
   font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
 
 .filters__label {
