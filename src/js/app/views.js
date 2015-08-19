@@ -83,7 +83,7 @@
         tpl: LY.Helpers.getTpl('index'),
         events: {
             'change #filterBylang': 'setFilter',
-            'input #search': 'madeSearch'
+            'input #search': 'searchByQuery'
         },
         initialize: function() {
             this.on("change:filterType", this.filterByType, this);
@@ -92,10 +92,10 @@
         render: function () {
             this.$el.html(this.tpl());
 
-            this.$('#filters').html(new LY.Views.Filters({collection: this.collection.original}).render().el);
+            this.$('#filters').html( new LY.Views.Filters({collection: this.collection.original}).render().el );
 
             if( sessionStorage.getItem('filterLang') === 'all' || sessionStorage.getItem('filterLang') === null) {
-                this.$('#courses_preview').html(new LY.Views.Courses({collection: this.collection}).render().el);
+                this.$('#courses_preview').html( new LY.Views.Courses({collection: this.collection}).render().el );
             } else {
                 this.filter = sessionStorage.getItem('filterLang');
                 this.filterByType();
@@ -110,9 +110,8 @@
             this.trigger("change:filterType");
         },
         filterByType: function() {
-            console.log(this.filter);
             if(this.filter === 'all' || this.filter === undefined) {
-                this.collection.reset(this.collection.original.toJSON());
+                this.collection.reset( this.collection.original.toJSON() );
             } else {
                 var filter = this.filter,
                     filtered = _.filter(this.collection.original.models, function (item) {
@@ -134,19 +133,29 @@
 
             return title.indexOf(query) !== -1 || description.indexOf(query) !== -1 || channelTitle.indexOf(query) !== -1;
         },
-        madeSearch: function(e) {
+        searchByQuery: function(e) {
             var that = this,
-                query = ( e.currentTarget.value ).toLocaleLowerCase();
+                query = ( e.currentTarget.value ).toLocaleLowerCase(),
+                filteredCollection = [];
 
-            if(query === '') {
-                 that.filterByType();
-             } else {
-                var collectionByQuery = _.filter(that.collection.models, function (item) {
+            /* set searchQuery in collection */
+            that.searchQuery = query;
+
+            if(that.searchQuery === '') {
+                that.collection.reset( that.collection.original.models );
+            } else {
+                filteredCollection = _.filter(that.collection.models, function (item) {
                     return that._compareWithQuery(item, query) ;
                 });
 
-                this.collection.reset(collectionByQuery);
-             }
+                if(filteredCollection.length === 0){
+                    filteredCollection = _.filter(that.collection.original.models, function (item) {
+                        return that._compareWithQuery(item, query);
+                    });
+                }
+
+                that.collection.reset(filteredCollection);
+            }
         }
     });
 
