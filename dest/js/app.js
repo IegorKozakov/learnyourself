@@ -487,8 +487,7 @@
     });
 
     LY.Views.Filters = Backbone.View.extend({
-        tagName: 'aside',
-        className: 'filters',
+        className: 'index__filters',
         render: function() {
             var that = this;
 

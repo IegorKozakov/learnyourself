@@ -116,10 +116,19 @@ select {
   outline: none; }
 
 /* Utils */
-.header__inner:after, .course_review__wrap_btn:after {
-  display: block;
-  clear: both;
-  content: ''; }
+.header__inner:after {
+  *zoom: 1; }
+  .header__inner:after:before, .header__inner:after:after {
+    content: " ";
+    display: table; }
+  .header__inner:after:after {
+    clear: both; }
+
+.header__inner, .index__action {
+  position: relative;
+  width: 90%;
+  max-width: 960px;
+  margin: 0 auto; }
 
 /* Component */
 .btn_star {
@@ -146,6 +155,9 @@ select {
     background-image: url("../imgs/star/sprite_x2.png");
     background-size: 35px 90px; } }
 
+.ct-inp {
+  display: inline-block; }
+
 .ct-select {
   display: inline-block;
   padding: 6px 8px;
@@ -160,27 +172,34 @@ select {
   .ct-select:focus {
     border-color: #4d4d52; }
 
-/* Layout */
+/* Layouts */
 .header {
   width: 100%;
   padding: 20px 0;
-  background: #fff;
-  border-bottom: 1px solid #e4e4e4;
-  box-shadow: 3px 0 3px 1px rgba(40, 41, 45, 0.2);
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0159aa+0,015ab0+5,015abd+11,015fc6+16,0268c7+20,0674c3+37,1499af+73,21b99c+89,27c893+100 */
+  background: #0159aa;
+  /* Old browsers */
+  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAxNTlhYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjMDE1YWIwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTElIiBzdG9wLWNvbG9yPSIjMDE1YWJkIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTYlIiBzdG9wLWNvbG9yPSIjMDE1ZmM2IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMjAlIiBzdG9wLWNvbG9yPSIjMDI2OGM3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMzclIiBzdG9wLWNvbG9yPSIjMDY3NGMzIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNzMlIiBzdG9wLWNvbG9yPSIjMTQ5OWFmIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iODklIiBzdG9wLWNvbG9yPSIjMjFiOTljIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzI3Yzg5MyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+  background: -moz-linear-gradient(left, #0159aa 0%, #015ab0 5%, #015abd 11%, #015fc6 16%, #0268c7 20%, #0674c3 37%, #1499af 73%, #21b99c 89%, #27c893 100%);
+  /* FF3.6+ */
+  background: -webkit-linear-gradient(left, #0159aa 0%, #015ab0 5%, #015abd 11%, #015fc6 16%, #0268c7 20%, #0674c3 37%, #1499af 73%, #21b99c 89%, #27c893 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -ms-linear-gradient(left, #0159aa 0%, #015ab0 5%, #015abd 11%, #015fc6 16%, #0268c7 20%, #0674c3 37%, #1499af 73%, #21b99c 89%, #27c893 100%);
+  /* IE10+ */
+  background: linear-gradient(to right, #0159aa 0%, #015ab0 5%, #015abd 11%, #015fc6 16%, #0268c7 20%, #0674c3 37%, #1499af 73%, #21b99c 89%, #27c893 100%);
+  /* W3C */
+  filter: none;
+  /* IE6-8 */
+  box-shadow: 0px 0 4px 2px rgba(45, 46, 50, 0.6);
   font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
-
-.header__inner {
-  position: relative;
-  width: 90%;
-  max-width: 960px;
-  margin: 0 auto; }
 
 .header__logo {
   text-align: center;
   font-size: 1.3125em;
   font-weight: 500;
   line-height: .955;
-  color: #28bd8b; }
+  color: #fff; }
 
 .header__additional_wrap, .header__additional_wrap-left, .header__additional_wrap-right {
   position: absolute;
@@ -194,22 +213,33 @@ select {
 
 .header__link {
   position: relative;
-  font-weight: 300;
-  color: #5a5c64;
-  transition: all 0.3s ease; }
-  .header__link:hover,
+  padding: 6px 10px;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out; }
+  .header__link:hover {
+    border-color: #cdcfd9; }
   .header__link:active {
-    color: #1ba8ed; }
+    border-color: #fff;
+    background-color: #fff;
+    color: #0268c7; }
 
 .main__inner {
-  width: 90%;
-  max-width: 960px;
+  position: relative;
   margin: 30px auto 40px; }
 
-.filters {
-  margin: 0 auto 25px auto;
-  padding: 15px 0;
+/* index page */
+.index__action {
+  padding: 0 0 30px 0;
   font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
+
+.index__filters {
+  margin-bottom: 10px; }
 
 .filters__label {
   margin: 0 15px 0 0;
@@ -238,7 +268,7 @@ select {
   font-size: 1.375em;
   font-weight: 500;
   line-height: 1.25;
-  color: #28292d; }
+  color: #2d2e32; }
 
 .course_review__desc {
   margin: 0 0 25px 0;
@@ -246,7 +276,7 @@ select {
 
 .course_review__desc span {
   font-weight: 500;
-  color: #28292d; }
+  color: #2d2e32; }
 
 .course_review__link {
   float: right;
@@ -351,7 +381,7 @@ select {
   margin: 0 0 20px 0;
   font-size: 1.3125em;
   font-weight: 500;
-  color: #28292d; }
+  color: #1ba8ed; }
 
 .lesson__desc {
   font-size: 1em;
