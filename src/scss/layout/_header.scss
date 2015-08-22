@@ -18,9 +18,7 @@
 }
 
 .header__inner {
-    @extend %u-container;
-
-    @extend %u-cf;
+    @include container($with-max: false);
 }
 
 .header__logo {
@@ -46,6 +44,7 @@
     }
 
 .header__link {
+    display: block;
     position: relative;
     padding: 6px 10px;
 
@@ -54,14 +53,12 @@
     border: 1px solid transparent;
     border-radius: 3px;
 
-    @include transition(all .2s ease-out);
+    @include transition(all .3s ease-out);
 
     &:hover {
         border-color: #cdcfd9;
     }
     &:active {
         border-color: #fff;
-        background-color: #fff;
-        color: #0268c7;
     }
 }

@@ -448,6 +448,7 @@
 
     LY.namespace('Views');
 
+
     LY.Views.Course = Backbone.View.extend({
         tagName: 'li',
         className: 'courses_preview__item',
@@ -534,9 +535,6 @@
         }
     });
 
-    /**
-     * View of index page
-     */
     LY.Views.IndexDirectory = Backbone.View.extend({
         className: 'index',
         maps: {
@@ -636,6 +634,7 @@
         }
     });
 
+
     /**
      * View of CourseDetail details
      */
@@ -661,6 +660,7 @@
         }
     });
 
+
     /**
      * View of Lesson details
      */
@@ -674,10 +674,12 @@
         }
     });
 
+
     /**
      * View of about page
      */
     LY.Views.aboutPage = Backbone.View.extend({
+        className: 'about_page',
         tpl: 'about',
         render: function(){
             var content = LY.Helpers.getStaticPage('about');

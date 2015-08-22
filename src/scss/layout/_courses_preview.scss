@@ -1,9 +1,11 @@
 .courses_preview {
-
+    @include container;
 }
 
 .courses_preview__list {
-    font-size: 0;
+    @include bp-large { 
+        font-size: 0;
+    }
 }
 
 .courses_preview__item {
@@ -14,59 +16,69 @@
     border-bottom: 1px solid #e4e4e4;
 
     font: $font;
-}
-    .courses_preview__item:first-child {
+
+    &:nth-child(1) {
         margin-top: 0;
         border-top: 1px solid #e4e4e4;
     }
 
+     @include bp-large {
+        width: 50%;
+
+        &:first-child(2) {
+            margin-top: 0;
+            border-top: 1px solid #e4e4e4;
+        }
+     }
+}
+
 .course_review__inner {
     position: relative;
 
-    margin: 20px 25px 25px 25px;
+    margin: 25px 25px 30px 25px;
 }
 
 .course_review__title {
     margin: 0 40px 20px 0;
 
-    font-size: (22em/16);
+    font-size: (24em/16);
     font-weight: 500;
     line-height: 1.25;
-    color: #2d2e32;
+    color: $title-color;
 }
 
 .course_review__desc {
-    margin: 0 0 25px 0;
-    color: #969698;
+    margin: 0 0 20px 0;
+    color: #767881;
 }
 
 .course_review__desc span {
     font-weight: 500;
-    color: #2d2e32;
+    color: $title-color;
 }
 
 .course_review__wrap_btn {
-    @extend %clearfix;
+     @extend %clearfix;
 }
 
 .course_review__link {
     float: right;
 
-    font-size: (16em/16);
+    font-size: (18em/16);
     font-weight: 400;
-    color: #1ba8ed;
+    color: #0268c7;
 
     display: inline-block;
     padding: 11px 18px;
 
     background-color: transparent;
-    border: 1px solid #1ba8ed;
+    border: 1px solid #0268c7;
     border-radius: 4px;
 
-    transition: background-color, color .3s ease;
+    @include transition(all .3s ease-out);
 
     &:hover {
-        background-color: #1ba8ed;
+        background-color: #0268c7;
         color: #fff;
     }
 }

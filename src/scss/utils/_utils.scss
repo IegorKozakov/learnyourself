@@ -1,21 +1,21 @@
-%u-cf:after {
-    *zoom: 1;
-    &:before, &:after {
-        content: " ";
-        display: table;
-    }
-    &:after {
-        clear: both;
-    }
+%clearfix {
+  *zoom: 1;
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
 }
 
-%u-container {
+@mixin container($with-max: true) {
     position: relative;
     width: $container-width;
-    max-width: $container-max-width;
     margin: 0 auto;
-}
 
+    @if $with-max { max-width: $container-max-width; }
+}
 
 @mixin transition($args) {
   -webkit-transition: $args;
@@ -25,3 +25,11 @@
   transition: $args;
 }
 
+/**
+ * 
+ */ 
+@mixin bp-large {
+  @media only screen and (min-width: 720px) {
+    @content;
+  }
+}
