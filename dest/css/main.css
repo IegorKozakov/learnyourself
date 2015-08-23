@@ -162,6 +162,7 @@ select {
   border-radius: 20px; }
 
 .ct-select, .ct-search {
+  height: 33px;
   padding: 5px 20px;
   -webkit-transition: border-color 0.3s ease-out;
   -moz-transition: border-color 0.3s ease-out;

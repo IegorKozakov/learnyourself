@@ -10,14 +10,16 @@
 }
 
 %elementRounded {
-    border: 1px solid #cdcfd9; 
+    border: 1px solid #cdcfd9;
     border-radius: 20px;
 }
 
 %ct-inp_rounded {
     @extend %resetElement;
 
+    height: 33px;
     padding: 5px 20px;
+    line-height: 33px;
 
     @extend %elementRounded;
 
