@@ -16,3 +16,5 @@ The materials used are placed on other services and access to them is regulated 
 Для удаления Вашего материала с данного сервиса вы можете закрыть доступ для сторонних сервисов на сервисе где выше указанные материалы размещены, а так же сообщить администратору для окончательного удаления Ваших материалов.
 
 To remove your material with this service, you can block access to third-party services in the service where the above mentioned materials are available, as well as to inform the administrator to remove your materials.
+
+[Read about process](https://github.com/dimaspirit/learnyourself/wiki/Process)
