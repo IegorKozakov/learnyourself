@@ -500,6 +500,7 @@
         },
         _createSelect: function(filter, filters) {
             var that = this;
+
             /* create select */
             var $select = $('<select/>', {
                 'name': filter,
@@ -507,6 +508,7 @@
                 'class': 'ct-select j-filters',
                 'html': '<option value="all">All</option>'
             });
+
             /* create options */
             _.each(that._getUniqValue(filter), function (i) {
                 $('<option/>', {
@@ -514,9 +516,12 @@
                     'text': i
                 }).appendTo($select);
             });
+
             /* made selected */
-            $select.find('option[value=' + sessionStorage.getItem('filter_' + filter) + ']')
-                .prop('selected', true);
+            if (sessionStorage.getItem('filter_' + filter)) {
+                $select.find('option[value="' + sessionStorage.getItem('filter_' + filter) + '"]')
+                    .prop('selected', true);
+            }
 
             return $select;
         },
