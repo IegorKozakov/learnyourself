@@ -33,7 +33,13 @@
     @include bp-large {
         width: 50%;
         float: right;
-        
     }
 }
 
+.index .ct-search {
+    width: 100%;
+
+    @include bp-large {
+        width: 50%;
+    }
+}

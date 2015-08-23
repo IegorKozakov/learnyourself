@@ -6,7 +6,7 @@
 
 
     LY.Views.Course = Backbone.View.extend({
-        tagName: 'li',
+        tagName: 'article',
         className: 'courses_preview__item',
         tpl: LY.Helpers.getTpl('courses'),
         render: function() {
@@ -29,13 +29,13 @@
     });
 
     LY.Views.Courses = Backbone.View.extend({
-        tagName: 'ul',
+        tagName: 'div',
         className: 'courses_preview__list',
         render: function(){
             this.$el.empty();
 
-            this.collection.each(function(i) {
-                var item = new LY.Views.Course({model: i});
+            this.collection.each(function(course, i, listCourses) {
+                var item = new LY.Views.Course({model: course});
                 this.$el.append(item.render().el);
             }, this);
 
@@ -109,7 +109,7 @@
             this.$el.html(this.tpl());
 
             /* render courses */
-            this.$(this.maps.course).html( new LY.Views.Courses({collection: this.collection}).render().el );
+            this.$(this.maps.course).html( new LY.Views.Courses({collection: this.collection}) );
 
             /* filters */
             this.$('#filters').html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
