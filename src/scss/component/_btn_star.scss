@@ -7,7 +7,8 @@
     width: 35px;
     height: 30px;
 
-    background: transparent url("../imgs/star/sprite.png") no-repeat 0 0;
+    background: transparent url("../imgs/star/sprite_x2.png") no-repeat 0 0;
+    background-size: 35px 90px;
 
     border: none;
     outline: none;
@@ -19,12 +20,4 @@
     .btn_star.btn_star-active:hover,
     .btn_star.btn_star-active:focus {
         background-position: 0 -60px;
-    }
-
-    @media only screen and (-webkit-min-device-pixel-ratio: 2),
-    only screen and (min-device-pixel-ratio: 2) {
-        .btn_star {
-            background-image: url("../imgs/star/sprite_x2.png");
-            background-size: 35px 90px;
-        }
     }

@@ -1,5 +1,35 @@
-%clearfix:after {
-    display:block;
-    clear:both;
-    content:'';
+%clearfix {
+  *zoom: 1;
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin container($with-max: true) {
+    position: relative;
+    width: $container-width;
+    margin: 0 auto;
+
+    @if $with-max { max-width: $container-max-width; }
+}
+
+@mixin transition($args) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+/**
+ *
+ */
+@mixin bp-large {
+  @media only screen and (min-width: 780px) {
+    @content;
+  }
 }

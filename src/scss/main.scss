@@ -9,15 +9,16 @@
 
 /* Component */
 @import "component/_btn_star.scss";
-@import "component/_select.scss";
+@import "component/_form_elems.scss";
 
 
-/* Layout */
+/* Layouts */
 @import "layout/_header.scss";
 @import "layout/_main.scss";
 @import "layout/footer.scss";
 
-@import "layout/_filters.scss";
+/* index page */
+@import "layout/_index.scss";
 @import "layout/_courses_preview.scss";
 
 @import "layout/_course_details.scss";

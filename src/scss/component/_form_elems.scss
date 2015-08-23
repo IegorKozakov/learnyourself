@@ -1,0 +1,40 @@
+%resetElement {
+    display: inline-block;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
+
+    font: $font;
+    color: #767881;
+}
+
+%elementRounded {
+    border: 1px solid #cdcfd9; 
+    border-radius: 20px;
+}
+
+%ct-inp_rounded {
+    @extend %resetElement;
+
+    padding: 5px 20px;
+
+    @extend %elementRounded;
+
+    @include transition(border-color .3s ease-out);
+
+    &:hover,
+    &:focus {
+        border-color: #767881;
+    }
+}
+
+/* SELECT */
+.ct-select {
+    @extend %ct-inp_rounded;
+}
+
+/* SEARCH */
+.ct-search {
+    @extend %ct-inp_rounded;
+}

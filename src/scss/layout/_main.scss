@@ -1,5 +1,10 @@
-.main__inner {
-    width: $container-width;
-    max-width: $container-max-width;
+.main {
+    position: relative;
     margin: 30px auto 40px;
+}
+
+.about__inner,
+.course_details__inner,
+.lesson__inner {
+     @include container;
 }
