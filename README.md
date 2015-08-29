@@ -17,5 +17,8 @@ The materials used are placed on other services and access to them is regulated 
 
 To remove your material with this service, you can block access to third-party services in the service where the above mentioned materials are available, as well as to inform the administrator to remove your materials.
 
+####Helpful information:
+
 [Read about process](https://github.com/dimaspirit/learnyourself/wiki/Process)
+
 [Read 'How to add course'](https://github.com/dimaspirit/learnyourself/wiki/How-to-add-course)
