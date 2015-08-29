@@ -3,9 +3,9 @@
 *version of document: 0.1*
 
 #####Идея / Idea:
-Сервис для обучения посредством открытых видео-туториалов с сопутствующими материалами.
+Сервис помогающий построить процесс обучения, основанное на открытых видеоматериалах, размещённых на сервисе Youtube.
 
-Service learning through open video tutorials with accompanying materials.
+Service helps build a learning process based on open video materials, placed on the service Youtube.
 
 #####Соглашение / Agreement:
 Используемые материалы размещены на иных сервисах и доступ к ним регулируется посредством соглашения предоствления доступа сторонними сервисами.
