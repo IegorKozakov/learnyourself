@@ -13,10 +13,18 @@
             /* set default searchQuery */
             this.searchQuery = sessionStorage.getItem('filter_lang') || '';
             /* set defaults filters */
-            this.filters = {
-                lang: sessionStorage.getItem('filter_lang') || 'all',
-                channelTitle: sessionStorage.getItem('filter_channelTitle') || 'all'
-            };
+            this.filters = [
+                {
+                    name: 'lang',
+                    title: 'Языки',
+                    value: sessionStorage.getItem('filter_lang') || 'all'
+                },
+                {
+                    name: 'channelTitle',
+                    title: 'Каналы',
+                    value: sessionStorage.getItem('filter_channelTitle') || 'all'
+                }
+            ];
         }
     });
 }(window, jQuery, _, Backbone));

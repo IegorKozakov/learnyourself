@@ -19,34 +19,28 @@
 
 .header__inner {
     @include container($with-max: false);
+    @extend %clearfix;
 }
 
 .header__logo {
-    text-align: center;
+    display: inline-block;
+}
 
+.header__logo_link {
     font-size: (21em/16);
     font-weight: 500;
     line-height: .955;
     color: #fff;
 }
 
-.header__additional_wrap {
-    position: absolute;
-    bottom: 0;
+.header__col_right {
+    float: right;
 }
-    .header__additional_wrap-left {
-        @extend .header__additional_wrap;
-        left: 0;
-    }
-    .header__additional_wrap-right {
-        @extend .header__additional_wrap;
-        right: 0;
-    }
 
 .header__link {
     display: block;
     position: relative;
-    padding: 6px 10px;
+    padding: 10px;
 
     color: #fff;
 

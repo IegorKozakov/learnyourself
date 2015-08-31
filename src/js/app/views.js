@@ -4,7 +4,6 @@
 
     LY.namespace('Views');
 
-
     LY.Views.Course = Backbone.View.extend({
         tagName: 'article',
         className: 'courses_preview__item',
@@ -59,14 +58,18 @@
 
             /* create select */
             var $select = $('<select/>', {
-                'name': filter,
-                'id': 'filterBy' + filter,
-                'class': 'ct-select j-filters',
+                'name': filter.name,
+                'id': 'filterBy' + filter.name,
+                'class': 'ct-select ct-select-label j-filters',
                 'html': '<option value="all">All</option>'
-            });
+            }),
+                $selectWrap = $('<div/>', {
+                    'class': 'ct-select_wrap',
+                    'title': filter.title
+                });
 
             /* create options */
-            _.each(that._getUniqValue(filter), function (i) {
+            _.each(that._getUniqValue(filter.name), function (i) {
                 $('<option/>', {
                     'value': i,
                     'text': i
@@ -74,12 +77,14 @@
             });
 
             /* made selected */
-            if (sessionStorage.getItem('filter_' + filter)) {
-                $select.find('option[value="' + sessionStorage.getItem('filter_' + filter) + '"]')
+            if (sessionStorage.getItem('filter_' + filter.name)) {
+                $select.find('option[value="' + sessionStorage.getItem('filter_' + filter.name) + '"]')
                     .prop('selected', true);
             }
 
-            return $select;
+            $selectWrap.append($select);
+
+            return $selectWrap;
         },
         _createSelects: function() {
             var that = this,
@@ -88,9 +93,9 @@
                     title: 'filters'
                 });
 
-            for (var filter in that.collection.filters) {
-                $selects.append( that._createSelect(filter, that.collection.filters) );
-            };
+            _.each(that.collection.filters, function(filter, i, filters) {
+                $selects.append( that._createSelect(filter, filters) );
+            })
 
             return $selects;
         }
@@ -133,25 +138,31 @@
                 filterName = $select.attr('name'),
                 filterVal = $select.val();
 
-            this.collection.filters[filterName] =filterVal;
+            _.each(this.collection.filters, function(filter){
+                if(filter.name === filterName) {
+                    filter.value = filterVal
+                    return;
+                }
+            });
             sessionStorage.setItem('filter_' + filterName, filterVal)
 
             this.trigger("change:filterType");
         },
         filterByType: function() {
             var that = this,
-                filters = that.collection.filters,
+                filtersParams = {},
                 collectionFiltered = [];
 
             /* delete empty query */
-            for (var filter in filters) {
-                if(filters[filter] === '' || filters[filter] === 'all') {
-                    delete filters[filter];
+            _.each(that.collection.filters, function(filter, i, filters){
+                if( !(filter.value === 'all') ) {
+                    filtersParams[filter.name] = filter.value;
                 }
-            }
+            });
 
-            collectionFiltered = _.where(that.collection.original.toJSON() , filters);
-
+            /* get courses */
+            collectionFiltered = _.where(that.collection.original.toJSON() , filtersParams);
+            /* reset collection */
             this.collection.reset(collectionFiltered);
         },
         renderFilteredList: function() {
@@ -169,7 +180,7 @@
         _getFilteredCollectionByQuery: function(query, isOriginalCollection) {
             var that = this,
                 collection = (isOriginalCollection) ? that.collection.original.models : that.collection.models;
-
+            console.log(collection);
             return _.filter(collection, function (item) { return that._compareWithQuery(item, query) });
         },
         searchByQuery: function(e) {

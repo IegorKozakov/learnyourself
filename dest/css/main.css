@@ -116,12 +116,12 @@ select {
   outline: none; }
 
 /* Utils */
-.index__action, .course_review__wrap_btn {
+.header__inner, .index__action, .course_review__wrap_btn {
   *zoom: 1; }
-  .index__action:before, .course_review__wrap_btn:before, .index__action:after, .course_review__wrap_btn:after {
+  .header__inner:before, .index__action:before, .course_review__wrap_btn:before, .header__inner:after, .index__action:after, .course_review__wrap_btn:after {
     content: " ";
     display: table; }
-  .index__action:after, .course_review__wrap_btn:after {
+  .header__inner:after, .index__action:after, .course_review__wrap_btn:after {
     clear: both; }
 
 /**
@@ -150,6 +150,7 @@ select {
 
 .ct-select, .ct-search {
   display: inline-block;
+  position: relative;
   background: transparent;
   border: none;
   box-shadow: none;
@@ -175,6 +176,9 @@ select {
     border-color: #767881; }
 
 /* SELECT */
+.ct-select {
+  line-height: 33px; }
+
 /* SEARCH */
 /* Layouts */
 .header {
@@ -204,26 +208,21 @@ select {
   margin: 0 auto; }
 
 .header__logo {
-  text-align: center;
+  display: inline-block; }
+
+.header__logo_link {
   font-size: 1.3125em;
   font-weight: 500;
   line-height: .955;
   color: #fff; }
 
-.header__additional_wrap, .header__additional_wrap-left, .header__additional_wrap-right {
-  position: absolute;
-  bottom: 0; }
-
-.header__additional_wrap-left {
-  left: 0; }
-
-.header__additional_wrap-right {
-  right: 0; }
+.header__col_right {
+  float: right; }
 
 .header__link {
   display: block;
   position: relative;
-  padding: 6px 10px;
+  padding: 10px;
   color: #fff;
   border: 1px solid transparent;
   border-radius: 3px;
@@ -255,7 +254,8 @@ select {
   width: 90%;
   margin: 0 auto;
   max-width: 960px;
-  padding: 0 0 25px 0;
+  margin-bottom: 25px;
+  padding: 15px 0 0 0;
   font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
 
 /**

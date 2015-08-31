@@ -1,5 +1,6 @@
 %resetElement {
     display: inline-block;
+    position: relative;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -19,7 +20,6 @@
 
     height: 33px;
     padding: 5px 20px;
-    line-height: 33px;
 
     @extend %elementRounded;
 
@@ -34,6 +34,7 @@
 /* SELECT */
 .ct-select {
     @extend %ct-inp_rounded;
+    line-height: 33px;
 }
 
 /* SEARCH */
