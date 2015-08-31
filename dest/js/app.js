@@ -505,39 +505,6 @@
         _getUniqValue: function(attr) {
             return _.uniq(this.collection.pluck(attr));
         },
-        _createSelect: function(filter, filters) {
-            var that = this;
-
-            /* create select */
-            var $select = $('<select/>', {
-                'name': filter.name,
-                'id': 'filterBy' + filter.name,
-                'class': 'ct-select ct-select-label j-filters',
-                'html': '<option value="all">All</option>'
-            }),
-                $selectWrap = $('<div/>', {
-                    'class': 'ct-select_wrap',
-                    'title': filter.title
-                });
-
-            /* create options */
-            _.each(that._getUniqValue(filter.name), function (i) {
-                $('<option/>', {
-                    'value': i,
-                    'text': i
-                }).appendTo($select);
-            });
-
-            /* made selected */
-            if (sessionStorage.getItem('filter_' + filter.name)) {
-                $select.find('option[value="' + sessionStorage.getItem('filter_' + filter.name) + '"]')
-                    .prop('selected', true);
-            }
-
-            $selectWrap.append($select);
-
-            return $selectWrap;
-        },
         _createSelects: function() {
             var that = this,
                 $selects = $('<div/>', {
@@ -546,7 +513,7 @@
                 });
 
             _.each(that.collection.filters, function(filter, i, filters) {
-                $selects.append( that._createSelect(filter, filters) );
+                $selects.append( LY.Helpers.Select.create(filter) );
             })
 
             return $selects;
@@ -657,7 +624,6 @@
             }
         }
     });
-
 
     /**
      * View of CourseDetail details
@@ -775,3 +741,75 @@
         }
     });
 }(window, jQuery, _, Backbone));
+;
+(function($){
+    'use strict';
+
+    LY.namespace('Helpers.Select');
+
+    LY.Helpers.Select = (function() {
+        var defaults = {
+            defaultValue: '<option value="all">All</option>'
+        };
+
+        function _getOthersOptions(filterName) {
+            return _.uniq(LY.courses.pluck(filterName));
+        }
+
+        function _createOptions(args) {
+            var $options = '';
+
+            _.each( _getOthersOptions(args.name), function (i) {
+                $options += '<option value="' + i + '">' + i + '</option>'
+            });
+
+            return $options;
+        }
+
+        function _selectedOption($select,sumOfOptions, name, settings) {
+            if (sumOfOptions < 2) {
+                $select.prop( "disabled", true ).
+                    find('option:nth-child(1)')
+                    .prop('selected', true);
+            } else {
+                $select.prepend(settings.defaultValue);
+
+                if (sessionStorage.getItem('filter_' + name)) {
+                    $select.find('option[value="' + sessionStorage.getItem('filter_' + name) + '"]').prop('selected', true);
+                }
+            }
+            
+        }
+        
+        /**
+         * @param  {[object]} name: "", title: "", value: ""
+         * @return {[type]} jquery-wrap of select
+         */
+        function _createSelect(args, opts) {
+            var settings = _.extend(defaults, opts),
+                $select = $('<select/>', {
+                    'name': args.name,
+                    'id': 'filterBy' + args.name,
+                    'class': 'ct-select ct-select-label j-filters'
+                }),
+                optionsHTML = '';
+
+            optionsHTML = _createOptions(args);
+
+            $select.append( optionsHTML );
+
+            _selectedOption($select, $(optionsHTML).length, args.name, settings);
+
+            return $('<div/>', {
+                'class': 'ct-select_wrap',
+                'title': args.title
+            }).append( $select );
+        }
+
+        return {
+            create: _createSelect
+        }
+
+        console.log(settings);
+    })();
+})(jQuery);

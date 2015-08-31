@@ -20,6 +20,7 @@ var path = {
     bower: 'bower_components/',
     js : {
         app: 'src/js/app/',
+        features: 'src/js/features/',
         src: 'src/js/',
         dest: 'dest/js'
     }
@@ -76,7 +77,8 @@ gulp.task('build-js-app', function() {
         path.js.app + 'models.js',
         path.js.app + 'collections.js',
         path.js.app + 'views.js',
-        path.js.app + 'router.js'
+        path.js.app + 'router.js',
+        path.js.features + '*.js'
     ])
     .pipe(concat('app.js'))
     .pipe(gulp.dest(path.js.dest))
@@ -108,7 +110,7 @@ gulp.task('watch', function() {
     livereload.listen({ start: true });
 
     gulp.watch(path.sass + '**/*.scss', ['build-css']);
-    gulp.watch([path.js.app + '*.js', path.js.src + '*.js'] , ['build-js-app']);
+    gulp.watch([path.js.app + '*.js', path.js.src + '*.js', path.js.features + '*.js'] , ['build-js-app']);
     gulp.watch(['index.html', 'static_page/**/*.html'], ['html']);
     gulp.watch(['src/tpl/**/*.html'], ['tpl']);
 });

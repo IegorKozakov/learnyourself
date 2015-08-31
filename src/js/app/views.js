@@ -53,39 +53,6 @@
         _getUniqValue: function(attr) {
             return _.uniq(this.collection.pluck(attr));
         },
-        _createSelect: function(filter, filters) {
-            var that = this;
-
-            /* create select */
-            var $select = $('<select/>', {
-                'name': filter.name,
-                'id': 'filterBy' + filter.name,
-                'class': 'ct-select ct-select-label j-filters',
-                'html': '<option value="all">All</option>'
-            }),
-                $selectWrap = $('<div/>', {
-                    'class': 'ct-select_wrap',
-                    'title': filter.title
-                });
-
-            /* create options */
-            _.each(that._getUniqValue(filter.name), function (i) {
-                $('<option/>', {
-                    'value': i,
-                    'text': i
-                }).appendTo($select);
-            });
-
-            /* made selected */
-            if (sessionStorage.getItem('filter_' + filter.name)) {
-                $select.find('option[value="' + sessionStorage.getItem('filter_' + filter.name) + '"]')
-                    .prop('selected', true);
-            }
-
-            $selectWrap.append($select);
-
-            return $selectWrap;
-        },
         _createSelects: function() {
             var that = this,
                 $selects = $('<div/>', {
@@ -94,7 +61,7 @@
                 });
 
             _.each(that.collection.filters, function(filter, i, filters) {
-                $selects.append( that._createSelect(filter, filters) );
+                $selects.append( LY.Helpers.Select.create(filter) );
             })
 
             return $selects;
@@ -205,7 +172,6 @@
             }
         }
     });
-
 
     /**
      * View of CourseDetail details
