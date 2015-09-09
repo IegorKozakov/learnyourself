@@ -50,21 +50,8 @@
             that.$el.html( that._createSelects() );
             return that;
         },
-        _getUniqValue: function(attr) {
-            return _.uniq(this.collection.pluck(attr));
-        },
         _createSelects: function() {
-            var that = this,
-                $selects = $('<div/>', {
-                    class: 'filters__wrap',
-                    title: 'filters'
-                });
-
-            _.each(that.collection.filters, function(filter, i, filters) {
-                $selects.append( LY.Helpers.Select.create(filter) );
-            })
-
-            return $selects;
+            return LY.Helpers.Select.createList();
         }
     });
 
@@ -174,7 +161,7 @@
     });
 
     /**
-     * View of CourseDetail details
+     * View of CourseDetail page
      */
     LY.Views.CourseDetail = Backbone.View.extend({
         className: 'course_details',
@@ -198,9 +185,8 @@
         }
     });
 
-
     /**
-     * View of Lesson details
+     * View of Lesson page
      */
     LY.Views.Lesson = Backbone.View.extend({
         className: 'lesson',
@@ -211,7 +197,6 @@
             return this;
         }
     });
-
 
     /**
      * View of about page

@@ -63,8 +63,22 @@
             }).append( $select );
         }
 
+        function _createListOfSelects() {
+            var $selectsWrap = $('<div/>', {
+                    class: 'filters__wrap',
+                    title: 'filters'
+                });
+
+            _.each(LY.courses.filters, function(filter, i, filters) {
+                $selectsWrap.append( _createSelect(filter) );
+            });
+
+            return $selectsWrap;
+        }
+
         return {
-            create: _createSelect
+            create: _createSelect,
+            createList: _createListOfSelects
         }
 
         console.log(settings);

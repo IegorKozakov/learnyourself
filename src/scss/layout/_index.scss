@@ -15,23 +15,31 @@
     padding-bottom: 15px;
 
     @include bp-large {
+        padding-bottom: 0;
         width: 50%;
         float: left;
-        padding-bottom: 0;
     }
 }
 
-.index .ct-select {
-    max-width: 50%;
+.filters .ct-select_wrap {
     margin: 0 20px 5px 0;
 }
+
+.filters .ct-select_wrap::before {
+    content: attr(title);
+
+    position: absolute;
+    left: 15px;
+    bottom: 100%;
+
+    font-size: 14px;
+    color: #cdcfd9;
+} 
 
 /**
  * SEARCH
  */
 .index .search__wrap {
-    text-align: right;
-
     @include bp-large {
         width: 50%;
         float: right;
@@ -40,6 +48,7 @@
 
 .index .ct-search {
     width: 100%;
+    float: right;
 
     @include bp-large {
         width: 50%;
