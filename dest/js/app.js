@@ -586,7 +586,7 @@
         _getFilteredCollectionByQuery: function(query, isOriginalCollection) {
             var that = this,
                 collection = (isOriginalCollection) ? that.collection.original.models : that.collection.models;
-            console.log(collection);
+          
             return _.filter(collection, function (item) { return that._compareWithQuery(item, query) });
         },
         searchByQuery: function(e) {
@@ -595,16 +595,18 @@
                 filteredCollection = [];
 
             /* set searchQuery */
-            that.searchQuery = query;
+            that.collection.searchQuery = query;
             sessionStorage.setItem('searchQuery', query);
 
-            if(that.searchQuery === '') {
+            if(query === '') {
                 that.filterByType();
+                that._getFilteredCollectionByQuery(query,true);
             } else {
-                filteredCollection = that._getFilteredCollectionByQuery(that.searchQuery);
+                filteredCollection = that._getFilteredCollectionByQuery(query);
+                console.log(filteredCollection);
 
                 if(!filteredCollection.length){
-                    filteredCollection = that._getFilteredCollectionByQuery(that.searchQuery, true);
+                    filteredCollection = that._getFilteredCollectionByQuery(query);
                 }
 
                 that.collection.reset(filteredCollection);
@@ -734,7 +736,7 @@
 
     LY.Helpers.Select = (function() {
         var defaults = {
-            defaultValue: '<option value="all">All</option>'
+            defaultValue: '<option value="all">Все</option>'
         };
 
         function _getOthersOptions(filterName) {

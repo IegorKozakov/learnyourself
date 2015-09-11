@@ -6,7 +6,7 @@
 
     LY.Helpers.Select = (function() {
         var defaults = {
-            defaultValue: '<option value="all">All</option>'
+            defaultValue: '<option value="all">Все</option>'
         };
 
         function _getOthersOptions(filterName) {
