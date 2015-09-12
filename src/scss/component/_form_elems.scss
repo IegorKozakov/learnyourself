@@ -65,16 +65,27 @@
     }
 }
 
-.ct-select option {
-    width: 99%;
-}
-
 /* SEARCH */
-.search__wrap {
-    @extend %clearfix;
+.ct-search {
+    position: relative;
+
+    &:before {
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+        right: 15px;
+
+        line-height: 1;
+        font-size: 20px;
+        color: #a7a9ae;
+
+        background-color: #fff;
+        z-index: 99;
+    }
 }
 
-.ct-search {
+.ct-search_inp {
+    width: 100%;
     @extend %resetElement;
     @extend %elementRounded;
 

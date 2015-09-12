@@ -11,7 +11,7 @@
 /**
  * FILTERS
  */
-.index .filters {
+.index__action_f {
     padding-bottom: 15px;
 
     @include bp-large {
@@ -39,18 +39,18 @@
 /**
  * SEARCH
  */
-.index .search__wrap {
+.index__action_s {
     @include bp-large {
         width: 50%;
         float: right;
     }
 }
 
-.index .ct-search {
+.index__action_s .ct-search {
     width: 100%;
     float: right;
 
     @include bp-large {
-        width: 50%;
+        width: 75%;
     }
 }

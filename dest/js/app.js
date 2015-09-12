@@ -143,10 +143,11 @@
      * @param  {[string]} t     [words separated by \]
      * @return {[string]}       [transformed word]
      */
-    Handlebars.registerHelper('declOfNum', function(val, t) {
-        var titles = t.split('\\');
+    Handlebars.registerHelper('declOfNum', function(number, t) {
+        var cases = [2, 0, 1, 1, 1, 2],
+            titles = t.split('\\');
 
-        return (val === 1) ? titles[0] : titles[1];
+        return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ]; 
     });
 
     /**
