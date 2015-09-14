@@ -7,9 +7,13 @@
         {{title}}
 
         {{#if starred}}
-            <button type="button" name="starredBtn" value="{{id}}" data-flag="remove" class="j-starred_course btn_star btn_star-active" title="Unstar"></button>
+            <button type="button" name="starredBtn" value="{{id}}" data-flag="remove" class="j-starred_course btn_star btn_star-active" title="Unstar">
+                <i class="icon-star1"></i>
+            </button>
         {{else}}
-            <button type="button" name="starredBtn" value="{{id}}" data-flag="add" class="j-starred_course btn_star" title="Star"></button>
+            <button type="button" name="starredBtn" value="{{id}}" data-flag="add" class="j-starred_course btn_star" title="Star">
+                <i class="icon-star1"></i>
+            </button>
         {{/if}}
     </h2>
 

@@ -2,9 +2,13 @@
     <h2 class="course_review__title">{{title}}</h2>
 
     {{#if starred}}
-        <button type="button" name="starredBtn" value="{{id}}" data-flag="remove" class="j-starred_course btn_star btn_star-active icon-star1" title="Unstar"></button>
+        <button type="button" name="starredBtn" value="{{id}}" data-flag="remove" class="j-starred_course btn_star btn_star-active" title="Unstar">
+            <i class="icon-star1"></i>
+        </button>
     {{else}}
-        <button type="button" name="starredBtn" value="{{id}}" data-flag="add" class="j-starred_course btn_star icon-star1" title="Star"></button>
+        <button type="button" name="starredBtn" value="{{id}}" data-flag="add" class="j-starred_course btn_star" title="Star">
+            <i class="icon-star1"></i>
+        </button>
     {{/if}}
 
     <p class="course_review__desc">

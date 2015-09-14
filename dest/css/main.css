@@ -1255,29 +1255,6 @@ select {
  *
  */
 /* Component */
-.btn_star {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  width: 35px;
-  height: 30px;
-  color: #d4d5de;
-  background: transparent;
-  border: none;
-  outline: none; }
-  .btn_star:before {
-    line-height: 1;
-    font-size: 24px; }
-
-.btn_star:hover {
-  color: #888a92; }
-
-.btn_star-active,
-.btn_star.btn_star-active:hover,
-.btn_star.btn_star-active:focus {
-  color: #f2ce3d; }
-
 .ct-select, .ct-search_inp {
   display: block;
   position: relative;
@@ -1412,6 +1389,44 @@ select {
   width: 90%;
   margin: 0 auto;
   max-width: 1120px; }
+
+/** icons */
+.btn_star {
+  display: block;
+  width: 40px;
+  height: 30px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: none;
+  outline: none; }
+
+.icon-star1 {
+  font-family: fpslineicons;
+  font-style: normal;
+  font-weight: 400;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 24px;
+  color: #d4d5de; }
+  .icon-star1:before {
+    line-height: 1;
+    font-size: 24px; }
+
+.btn_star:hover .icon-star1:before {
+  color: #888a92; }
+
+.btn_star-active .icon-star1:before,
+.btn_star-active:hover .icon-star1:before,
+.btn_star-active:focus .icon-star1:before {
+  color: #f2ce3d; }
 
 .breadcrumps {
   margin: 0 0 25px 0; }
