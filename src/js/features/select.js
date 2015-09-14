@@ -9,11 +9,11 @@
             defaultValue: '<option value="all">Все</option>'
         };
 
-        function _getOthersOptions(filterName) {
+        function _getOthersOptions( filterName ) {
             return _.uniq(LY.courses.pluck(filterName));
         }
 
-        function _createOptions(args) {
+        function _createOptions( args ) {
             var $options = '';
 
             _.each( _getOthersOptions(args.name), function (i) {
@@ -23,7 +23,7 @@
             return $options;
         }
 
-        function _selectedOption($select,sumOfOptions, name, settings) {
+        function _selectedOption( $select, sumOfOptions, name, settings ) {
             if (sumOfOptions < 2) {
                 $select.prop( "disabled", true ).
                     find('option:nth-child(1)')
@@ -35,14 +35,9 @@
                     $select.find('option[value="' + sessionStorage.getItem('filter_' + name) + '"]').prop('selected', true);
                 }
             }
-            
         }
         
-        /**
-         * @param  {[object]} name: "", title: "", value: ""
-         * @return {[type]} jquery-wrap of select
-         */
-        function _createSelect(args, opts) {
+        function _createSelect( args, opts ) {
             var settings = _.extend(defaults, opts),
                 $select = $('<select/>', {
                     'name': args.name,
@@ -79,8 +74,6 @@
         return {
             create: _createSelect,
             createList: _createListOfSelects
-        }
-
-        console.log(settings);
+        };
     })();
 })(jQuery);

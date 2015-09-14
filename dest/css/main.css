@@ -1243,14 +1243,20 @@ select {
 
 /* '' */
 /* Utils */
-.header__inner, .index__action, .course_review__wrap_btn {
+/**
+ * Variables
+ */
+.header__inner, .index__action, .course_review__wrap_btn, .course_details__desc {
   *zoom: 1; }
-  .header__inner:before, .index__action:before, .course_review__wrap_btn:before, .header__inner:after, .index__action:after, .course_review__wrap_btn:after {
+  .header__inner:before, .index__action:before, .course_review__wrap_btn:before, .course_details__desc:before, .header__inner:after, .index__action:after, .course_review__wrap_btn:after, .course_details__desc:after {
     content: " ";
     display: table; }
-  .header__inner:after, .index__action:after, .course_review__wrap_btn:after {
+  .header__inner:after, .index__action:after, .course_review__wrap_btn:after, .course_details__desc:after {
     clear: both; }
 
+/**
+ * Mixins
+ */
 /**
  *
  */
@@ -1435,6 +1441,7 @@ select {
   display: inline-block;
   position: relative;
   padding: 0 0 0 15px;
+  margin: 0 20px 0 0;
   font-size: 16px;
   font-weight: 300;
   color: #767881; }
@@ -1455,7 +1462,6 @@ select {
   .breadcrumps__item:hover:before {
     left: -8px; }
 
-/* index page */
 .index__action {
   position: relative;
   width: 90%;
@@ -1598,6 +1604,9 @@ select {
 .course_details__lessons {
   margin: 0 0 20px 0; }
 
+.course_details__lessons_list {
+  padding-left: 10px; }
+
 .course_details__link {
   display: inline-block;
   margin: 0 0 5px 0;
@@ -1611,7 +1620,8 @@ select {
     color: #1ba8ed; }
 
 .course_details__author h3 {
-  margin-bottom: 5px; }
+  margin-bottom: 5px;
+  padding-left: 10px; }
 
 .course_details__author_title,
 .course_details__author span {
@@ -1622,6 +1632,30 @@ select {
 
 .course_details__author span {
   font-weight: 400; }
+
+.course_details__desc h2 {
+  margin: 0 0 15px 0;
+  padding-left: 10px;
+  font-size: 16px;
+  line-height: 25px;
+  font-weight: 300;
+  color: #767881;
+  border-bottom: 1px solid #cdcfd9; }
+
+@media only screen and (min-width: 780px) {
+  .course_details__lessons,
+  .course_details__author {
+    width: 50%;
+    float: left; } }
+
+@media only screen and (min-width: 780px) {
+  .course_details__lessons {
+    width: 58.33333333333333%; } }
+
+@media only screen and (min-width: 780px) {
+  .course_details__author {
+    width: 41.66666666666667%;
+    padding-left: 2%; } }
 
 .lesson {
   font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }

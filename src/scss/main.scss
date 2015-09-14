@@ -2,7 +2,6 @@
 
 /* Base */
 @import "base/_reset.scss";
-@import "base/_variables.scss";
 @import "base/_icons.scss";
 
 /* Utils */
@@ -13,10 +12,10 @@
 
 /* Layouts */
 @import "layout/_header.scss";
-@import "layout/_main.scss";
 @import "layout/footer.scss";
 
-/* index page */
+@import "_main.scss";
+
 @import "layout/_index.scss";
 @import "layout/_courses_preview.scss";
 

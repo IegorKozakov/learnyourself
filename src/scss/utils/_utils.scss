@@ -1,3 +1,18 @@
+/**
+ * Variables
+ */
+$container-width: 90%;
+$container-max-width: 1120px;
+
+$font: 300 16px/1.15 'Fira Sans', "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+
+$standart-animation: all .3s ease;
+
+$brand-color: #27c993;
+
+$accent-color: #0268c7;
+$title-color: #2d2e32;
+
 %clearfix {
   *zoom: 1;
   &:before, &:after {
@@ -9,6 +24,9 @@
   }
 }
 
+/**
+ * Mixins
+ */
 @mixin container($with-max: true) {
     position: relative;
     width: $container-width;

@@ -58,11 +58,12 @@
     LY.Views.IndexDirectory = Backbone.View.extend({
         className: 'index',
         maps: {
-            course: '#courses_preview'
+            courses: '#courses_preview',
+            filters: '.j-filters'
         },
         tpl: LY.Helpers.getTpl('index'),
         events: {
-            'input #search': 'searchByQuery',
+            'input .j-search': 'searchByQuery',
             'change .j-filters': 'setFilter'
         },
         initialize: function() {
@@ -70,66 +71,44 @@
             this.collection.on("reset", this.renderFilteredList, this);
         },
         render: function () {
-            this.$el.html(this.tpl());
+            this.$el.html( this.tpl() );
 
             /* render courses */
-            this.$(this.maps.course).html( new LY.Views.Courses({collection: this.collection}) );
+            this.$( this.maps.courses ).html( new LY.Views.Courses({collection: this.collection}) );
 
             /* filters */
-            this.$('#filters').html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
+            this.$( this.maps.filters ).html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
             this.filterByType();
 
             /* init search */
             if ( sessionStorage.getItem('searchQuery') ) {
-                this.$('#search').val(sessionStorage.getItem('searchQuery'))
+                this.$('.j-search').val( sessionStorage.getItem('searchQuery') );
                 this.searchByQuery();
             }
 
             return this;
         },
         setFilter: function(e) {
-            var $select = $(e.currentTarget),
-                filterName = $select.attr('name'),
-                filterVal = $select.val();
+            var $select = $(e.currentTarget);
 
-            _.each(this.collection.filters, function(filter){
-                if(filter.name === filterName) {
-                    filter.value = filterVal
-                    return;
-                }
-            });
-            sessionStorage.setItem('filter_' + filterName, filterVal)
+            LY.Helpers.Filters.setFilters( $select.attr('name'), $select.val() );
 
             this.trigger("change:filterType");
         },
         filterByType: function() {
-            var that = this,
-                filtersParams = {},
-                collectionFiltered = [];
-
-            /* delete empty query */
-            _.each(that.collection.filters, function(filter, i, filters){
-                if( !(filter.value === 'all') ) {
-                    filtersParams[filter.name] = filter.value;
-                }
-            });
-
-            /* get courses */
-            collectionFiltered = _.where(that.collection.original.toJSON() , filtersParams);
-            /* reset collection */
-            this.collection.reset(collectionFiltered);
+            this.collection.reset( LY.Helpers.Filters.getFiltersCollection() );
         },
         renderFilteredList: function() {
             var coursesView = new LY.Views.Courses({ collection: this.collection }).render().el;
 
-            this.$(this.maps.course).html(coursesView);
+            this.$( this.maps.courses ).html(coursesView);
         },
         _compareWithQuery: function (course, query) {
             var title = course.get('title').toLocaleLowerCase(),
                 description = course.get('description').toLocaleLowerCase(),
                 channelTitle = course.get('channelTitle').toLocaleLowerCase();
 
-            return title.indexOf(query) !== -1 || description.indexOf(query) !== -1 || channelTitle.indexOf(query) !== -1;
+            return title.indexOf(query) !== -1 || channelTitle.indexOf(query) !== -1;
         },
         _getFilteredCollectionByQuery: function(query, isOriginalCollection) {
             var that = this,
@@ -151,7 +130,6 @@
                 that._getFilteredCollectionByQuery(query,true);
             } else {
                 filteredCollection = that._getFilteredCollectionByQuery(query);
-                console.log(filteredCollection);
 
                 if(!filteredCollection.length){
                     filteredCollection = that._getFilteredCollectionByQuery(query);

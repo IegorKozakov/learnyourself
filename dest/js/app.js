@@ -165,6 +165,10 @@
 
         return new Handlebars.SafeString(result);
     });
+
+    Handlebars.registerHelper("inc", function(value, options) {
+        return parseInt(value) + 1;
+    });
 }(window, jQuery, Handlebars, _));
 ;
 (function(window, $, _){
@@ -511,11 +515,12 @@
     LY.Views.IndexDirectory = Backbone.View.extend({
         className: 'index',
         maps: {
-            course: '#courses_preview'
+            courses: '#courses_preview',
+            filters: '.j-filters'
         },
         tpl: LY.Helpers.getTpl('index'),
         events: {
-            'input #search': 'searchByQuery',
+            'input .j-search': 'searchByQuery',
             'change .j-filters': 'setFilter'
         },
         initialize: function() {
@@ -523,66 +528,44 @@
             this.collection.on("reset", this.renderFilteredList, this);
         },
         render: function () {
-            this.$el.html(this.tpl());
+            this.$el.html( this.tpl() );
 
             /* render courses */
-            this.$(this.maps.course).html( new LY.Views.Courses({collection: this.collection}) );
+            this.$( this.maps.courses ).html( new LY.Views.Courses({collection: this.collection}) );
 
             /* filters */
-            this.$('#filters').html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
+            this.$( this.maps.filters ).html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
             this.filterByType();
 
             /* init search */
             if ( sessionStorage.getItem('searchQuery') ) {
-                this.$('#search').val(sessionStorage.getItem('searchQuery'))
+                this.$('.j-search').val( sessionStorage.getItem('searchQuery') );
                 this.searchByQuery();
             }
 
             return this;
         },
         setFilter: function(e) {
-            var $select = $(e.currentTarget),
-                filterName = $select.attr('name'),
-                filterVal = $select.val();
+            var $select = $(e.currentTarget);
 
-            _.each(this.collection.filters, function(filter){
-                if(filter.name === filterName) {
-                    filter.value = filterVal
-                    return;
-                }
-            });
-            sessionStorage.setItem('filter_' + filterName, filterVal)
+            LY.Helpers.Filters.setFilters( $select.attr('name'), $select.val() );
 
             this.trigger("change:filterType");
         },
         filterByType: function() {
-            var that = this,
-                filtersParams = {},
-                collectionFiltered = [];
-
-            /* delete empty query */
-            _.each(that.collection.filters, function(filter, i, filters){
-                if( !(filter.value === 'all') ) {
-                    filtersParams[filter.name] = filter.value;
-                }
-            });
-
-            /* get courses */
-            collectionFiltered = _.where(that.collection.original.toJSON() , filtersParams);
-            /* reset collection */
-            this.collection.reset(collectionFiltered);
+            this.collection.reset( LY.Helpers.Filters.getFiltersCollection() );
         },
         renderFilteredList: function() {
             var coursesView = new LY.Views.Courses({ collection: this.collection }).render().el;
 
-            this.$(this.maps.course).html(coursesView);
+            this.$( this.maps.courses ).html(coursesView);
         },
         _compareWithQuery: function (course, query) {
             var title = course.get('title').toLocaleLowerCase(),
                 description = course.get('description').toLocaleLowerCase(),
                 channelTitle = course.get('channelTitle').toLocaleLowerCase();
 
-            return title.indexOf(query) !== -1 || description.indexOf(query) !== -1 || channelTitle.indexOf(query) !== -1;
+            return title.indexOf(query) !== -1 || channelTitle.indexOf(query) !== -1;
         },
         _getFilteredCollectionByQuery: function(query, isOriginalCollection) {
             var that = this,
@@ -604,7 +587,6 @@
                 that._getFilteredCollectionByQuery(query,true);
             } else {
                 filteredCollection = that._getFilteredCollectionByQuery(query);
-                console.log(filteredCollection);
 
                 if(!filteredCollection.length){
                     filteredCollection = that._getFilteredCollectionByQuery(query);
@@ -674,9 +656,7 @@
     LY.namespace('Router');
 
     LY.Router = Backbone.Router.extend({
-        $main: $('.j-main'),
-        initialize: function() {
-        },
+        $mainContainer: $('.j-main'),
         loadView : function(view) {
             this.view && this.view.remove();
             this.view = view;
@@ -684,7 +664,7 @@
         },
         updateView: function(view) {
             this.loadView(view);
-            this.$main.append(view.render().el);
+            this.$mainContainer.append(view.render().el);
         },
         routes: {
             '' : 'index',
@@ -693,7 +673,6 @@
             '!/course/:idCourse/lesson/:idLesson' : 'lesson',
             '*query' : 'default'
         },
-
         index: function() {
             var that =  this;
 
@@ -730,6 +709,56 @@
     });
 }(window, jQuery, _, Backbone));
 ;
+(function($, _){
+    'use strict';
+
+    LY.namespace('Helpers.Filters');
+
+    LY.Helpers.Filters = (function() {
+        function _getFilters() {
+            var filters = {};
+
+             _.each( LY.courses.filters, function(filter, i){
+                if( !(filter.value === 'all') ) {
+                    filters[filter.name] = filter.value;
+                }
+            });
+
+            return filters;
+        }
+
+        function _getFiltersCollection() {
+            var filters = _getFilters();
+
+            return _.where( LY.courses.original.toJSON(), filters);
+        }
+
+        function _setFilters(filterName, filterVal) {
+            _.each( LY.courses.filters, function(filter){
+                if(filter.name === filterName) {
+                    filter.value = filterVal; 
+                    return;
+                }
+            });
+
+            sessionStorage.setItem('filter_' + filterName, filterVal);
+        }
+
+        return {
+            setFilters: _setFilters,
+            getFiltersCollection: _getFiltersCollection
+        };
+    })();
+})(jQuery, _);
+;
+(function($){
+    'use strict';
+
+    LY.namespace('Helpers.Search');
+
+    LY.Helpers.Search = (function() {})();
+})(jQuery);
+;
 (function($){
     'use strict';
 
@@ -740,11 +769,11 @@
             defaultValue: '<option value="all">Все</option>'
         };
 
-        function _getOthersOptions(filterName) {
+        function _getOthersOptions( filterName ) {
             return _.uniq(LY.courses.pluck(filterName));
         }
 
-        function _createOptions(args) {
+        function _createOptions( args ) {
             var $options = '';
 
             _.each( _getOthersOptions(args.name), function (i) {
@@ -754,7 +783,7 @@
             return $options;
         }
 
-        function _selectedOption($select,sumOfOptions, name, settings) {
+        function _selectedOption( $select, sumOfOptions, name, settings ) {
             if (sumOfOptions < 2) {
                 $select.prop( "disabled", true ).
                     find('option:nth-child(1)')
@@ -766,14 +795,9 @@
                     $select.find('option[value="' + sessionStorage.getItem('filter_' + name) + '"]').prop('selected', true);
                 }
             }
-            
         }
         
-        /**
-         * @param  {[object]} name: "", title: "", value: ""
-         * @return {[type]} jquery-wrap of select
-         */
-        function _createSelect(args, opts) {
+        function _createSelect( args, opts ) {
             var settings = _.extend(defaults, opts),
                 $select = $('<select/>', {
                     'name': args.name,
@@ -810,8 +834,6 @@
         return {
             create: _createSelect,
             createList: _createListOfSelects
-        }
-
-        console.log(settings);
+        };
     })();
 })(jQuery);
