@@ -1,0 +1,48 @@
+.index__action {
+    @extend %clearfix;
+    @include container;
+
+    margin-bottom: 25px;
+
+    @include bp-large {
+        display: table;
+    }
+}
+
+.index__action_s,
+.index__action_f {
+     @include bp-large {
+        display: table-cell;
+        width: 50%;
+        vertical-align: bottom;
+    }
+}
+
+.index__action_f {
+    padding-bottom: 15px;
+
+    @include bp-large {
+        padding-bottom: 0;
+    }
+}
+
+.index__action_s {
+    @extend %clearfix;
+
+    @include bp-large {
+        padding-bottom: 5px;
+    }
+}
+
+.index__action .ct-select_wrap {
+    margin: 0 20px 5px 0;
+}
+
+.index__action_s .ct-search {
+    width: 100%;
+    float: right;
+
+    @include bp-large {
+        width: 75%;
+    }
+}

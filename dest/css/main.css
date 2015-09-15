@@ -131,6 +131,8 @@ select {
     src: url("../font/fpslineicons.svg?98281823#fpslineicons") format("svg"); } }
 
 .icon,
+.ct-select_wrap:after,
+.ct-search:before,
 .breadcrumps__item:before,
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
@@ -1244,111 +1246,30 @@ select {
 /* '' */
 /* Utils */
 /**
- * Variables
+ * VARIABLES
  */
-.header__inner, .index__action, .course_review__wrap_btn, .course_details__desc {
+/* colors */
+/**
+ * HELPERS
+ */
+.header__inner, .index__action, .index__action_s, .course_review__wrap_btn, .course_details__desc {
   *zoom: 1; }
-  .header__inner:before, .index__action:before, .course_review__wrap_btn:before, .course_details__desc:before, .header__inner:after, .index__action:after, .course_review__wrap_btn:after, .course_details__desc:after {
+  .header__inner:before, .index__action:before, .index__action_s:before, .course_review__wrap_btn:before, .course_details__desc:before, .header__inner:after, .index__action:after, .index__action_s:after, .course_review__wrap_btn:after, .course_details__desc:after {
     content: " ";
     display: table; }
-  .header__inner:after, .index__action:after, .course_review__wrap_btn:after, .course_details__desc:after {
+  .header__inner:after, .index__action:after, .index__action_s:after, .course_review__wrap_btn:after, .course_details__desc:after {
     clear: both; }
 
 /**
- * Mixins
- */
-/**
- *
+ * MIXINS
  */
 /* Component */
-.ct-select, .ct-search_inp {
-  display: block;
-  position: relative;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  outline: none;
-  font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-  color: #767881; }
-
-.ct-select, .ct-search_inp {
-  border: 1px solid #cdcfd9;
-  border-radius: 20px; }
-
-/* SELECT */
-.ct-select_wrap {
-  display: inline-block;
-  position: relative; }
-  .ct-select_wrap:after {
-    content: " ";
-    position: absolute;
-    top: 1px;
-    right: 1px;
-    width: 35px;
-    height: 31px;
-    background: #fff url(../imgs/arrow_bottom.png) center no-repeat;
-    background-size: 10px 5px;
-    border-radius: 0 20px 20px 0; }
-
-.ct-select {
-  height: 33px;
-  padding: 5px 35px 5px 15px;
-  -webkit-transition: border-color 0.3s ease-out;
-  -moz-transition: border-color 0.3s ease-out;
-  -ms-transition: border-color 0.3s ease-out;
-  -o-transition: border-color 0.3s ease-out;
-  transition: border-color 0.3s ease-out;
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none; }
-  .ct-select:hover,
-  .ct-select:focus {
-    border-color: #767881; }
-  .ct-select:disabled {
-    color: #cdcfd9; }
-  .ct-select:disabled:hover {
-    border-color: #cdcfd9; }
-
-/* SEARCH */
-.ct-search {
-  position: relative; }
-  .ct-search:before {
-    position: absolute;
-    top: 50%;
-    margin-top: -10px;
-    right: 15px;
-    line-height: 1;
-    font-size: 20px;
-    color: #a7a9ae;
-    background-color: #fff;
-    z-index: 99; }
-
-.ct-search_inp {
-  width: 100%;
-  height: 33px;
-  padding: 5px 15px; }
-
-/* Layouts */
 .header {
   width: 100%;
   padding: 20px 0;
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0159aa+0,015ab0+5,015abd+11,015fc6+16,0268c7+20,0674c3+37,1499af+73,21b99c+89,27c893+100 */
-  background: #0159aa;
-  /* Old browsers */
-  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAxNTlhYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjMDE1YWIwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTElIiBzdG9wLWNvbG9yPSIjMDE1YWJkIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTYlIiBzdG9wLWNvbG9yPSIjMDE1ZmM2IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMjAlIiBzdG9wLWNvbG9yPSIjMDI2OGM3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMzclIiBzdG9wLWNvbG9yPSIjMDY3NGMzIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNzMlIiBzdG9wLWNvbG9yPSIjMTQ5OWFmIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iODklIiBzdG9wLWNvbG9yPSIjMjFiOTljIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzI3Yzg5MyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
-  background: -moz-linear-gradient(left, #0159aa 0%, #015ab0 5%, #015abd 11%, #015fc6 16%, #0268c7 20%, #0674c3 37%, #1499af 73%, #21b99c 89%, #27c893 100%);
-  /* FF3.6+ */
-  background: -webkit-linear-gradient(left, #0159aa 0%, #015ab0 5%, #015abd 11%, #015fc6 16%, #0268c7 20%, #0674c3 37%, #1499af 73%, #21b99c 89%, #27c893 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -ms-linear-gradient(left, #0159aa 0%, #015ab0 5%, #015abd 11%, #015fc6 16%, #0268c7 20%, #0674c3 37%, #1499af 73%, #21b99c 89%, #27c893 100%);
-  /* IE10+ */
   background: linear-gradient(to right, #0159aa 0%, #015ab0 5%, #015abd 11%, #015fc6 16%, #0268c7 20%, #0674c3 37%, #1499af 73%, #21b99c 89%, #27c893 100%);
-  /* W3C */
-  filter: none;
-  /* IE6-8 */
   box-shadow: 0px 0 4px 2px rgba(45, 46, 50, 0.6);
-  font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
+  font: 300 16px/1 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
 
 .header__inner {
   position: relative;
@@ -1356,7 +1277,8 @@ select {
   margin: 0 auto; }
 
 .header__logo {
-  display: inline-block; }
+  display: inline-block;
+  text-align: center; }
 
 .header__logo_link {
   font-size: 1.3125em;
@@ -1373,20 +1295,91 @@ select {
   padding: 10px;
   color: #fff;
   border: 1px solid transparent;
-  border-radius: 3px;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -ms-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out; }
+  border-radius: 4px;
+  transition: border-color 0.4s ease-out 0s; }
   .header__link:hover {
     border-color: #cdcfd9; }
   .header__link:active {
     border-color: #fff; }
 
+.ct-select, .ct-search_inp {
+  display: block;
+  position: relative;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  color: #767881; }
+
+.ct-select, .ct-search_inp {
+  border: 1px solid #cdcfd9;
+  border-radius: 20px; }
+
+/**
+ * SELECT
+ */
+.ct-select_wrap {
+  display: inline-block;
+  position: relative;
+  padding-top: 15px; }
+  .ct-select_wrap:before {
+    content: attr(title);
+    position: absolute;
+    top: 0;
+    left: 15px;
+    font-size: 14px;
+    color: #767881; }
+  .ct-select_wrap:after {
+    content: '\e8af';
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    font-size: 24px;
+    color: #cdcfd9;
+    z-index: 1; }
+
+.ct-select {
+  height: 33px;
+  padding: 5px 45px 5px 15px;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  z-index: 10;
+  transition: border-color 0.4s ease-out 0s; }
+  .ct-select:hover,
+  .ct-select:focus {
+    border-color: #767881; }
+  .ct-select:disabled {
+    color: #cdcfd9; }
+  .ct-select:disabled:hover {
+    border-color: #cdcfd9; }
+
+/**
+ * SEARCH
+ */
+.ct-search {
+  position: relative; }
+  .ct-search:before {
+    content: '\e804';
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 15px;
+    line-height: 1;
+    font-size: 20px;
+    color: #cdcfd9;
+    z-index: 1; }
+
+.ct-search_inp {
+  width: 100%;
+  height: 33px;
+  padding: 5px 45px 5px 15px;
+  z-index: 10; }
+
 .main {
   position: relative;
-  margin: 30px auto 40px; }
+  margin: 30px auto 40px;
+  font: 300 16px/1 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
 
 .about__inner,
 .course_details__inner,
@@ -1394,7 +1387,7 @@ select {
   position: relative;
   width: 90%;
   margin: 0 auto;
-  max-width: 1120px; }
+  max-width: 1280px; }
 
 /** icons */
 .btn_star {
@@ -1454,52 +1447,40 @@ select {
     font-size: 21px;
     line-height: 1;
     color: #d4d5de;
-    -webkit-transition: left 0.3s ease;
-    -moz-transition: left 0.3s ease;
-    -ms-transition: left 0.3s ease;
-    -o-transition: left 0.3s ease;
     transition: left 0.3s ease; }
   .breadcrumps__item:hover:before {
     left: -8px; }
 
+/* Layouts */
 .index__action {
   position: relative;
   width: 90%;
   margin: 0 auto;
-  max-width: 1120px;
-  margin-bottom: 25px;
-  padding: 15px 0 0 0;
-  font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
+  max-width: 1280px;
+  margin-bottom: 25px; }
+  @media only screen and (min-width: 780px) {
+    .index__action {
+      display: table; } }
 
-/**
- * FILTERS
- */
+@media only screen and (min-width: 780px) {
+  .index__action_s,
+  .index__action_f {
+    display: table-cell;
+    width: 50%;
+    vertical-align: bottom; } }
+
 .index__action_f {
   padding-bottom: 15px; }
   @media only screen and (min-width: 780px) {
     .index__action_f {
-      padding-bottom: 0;
-      width: 50%;
-      float: left; } }
+      padding-bottom: 0; } }
 
-.filters .ct-select_wrap {
-  margin: 0 20px 5px 0; }
-
-.filters .ct-select_wrap::before {
-  content: attr(title);
-  position: absolute;
-  left: 15px;
-  bottom: 100%;
-  font-size: 14px;
-  color: #cdcfd9; }
-
-/**
- * SEARCH
- */
 @media only screen and (min-width: 780px) {
   .index__action_s {
-    width: 50%;
-    float: right; } }
+    padding-bottom: 5px; } }
+
+.index__action .ct-select_wrap {
+  margin: 0 20px 5px 0; }
 
 .index__action_s .ct-search {
   width: 100%;
@@ -1512,7 +1493,7 @@ select {
   position: relative;
   width: 90%;
   margin: 0 auto;
-  max-width: 1120px; }
+  max-width: 1280px; }
 
 .courses_preview__list {
   font-size: 0; }
@@ -1533,8 +1514,7 @@ select {
   position: relative;
   display: inline-block;
   width: 100%;
-  vertical-align: top;
-  font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
+  vertical-align: top; }
   @media only screen and (min-width: 780px) {
     .courses_preview__item {
       width: 50%;
@@ -1553,16 +1533,14 @@ select {
   margin: 0 40px 10px 0;
   font-size: 1.5em;
   font-weight: 500;
-  line-height: 1.25;
-  color: #2d2e32; }
+  line-height: 1.25; }
 
 .course_review__desc {
   margin: 0 0 20px 0;
   color: #767881; }
 
 .course_review__desc span {
-  font-weight: 500;
-  color: #2d2e32; }
+  font-weight: 500; }
 
 .course_review__link {
   float: right;
@@ -1574,25 +1552,17 @@ select {
   background-color: transparent;
   border: 1px solid #0268c7;
   border-radius: 4px;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -ms-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out; }
   .course_review__link:hover {
     background-color: #0268c7;
     color: #fff; }
-
-.course_details {
-  font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
 
 .course_details__title {
   position: relative;
   padding: 0 40px 0 0;
   font-size: 1.5em;
   font-weight: 500;
-  line-height: 1.25;
-  color: #2d2e32; }
+  line-height: 1.25; }
 
 .course_details__description,
 .course_details__author_desc {
@@ -1656,9 +1626,6 @@ select {
   .course_details__author {
     width: 41.66666666666667%;
     padding-left: 2%; } }
-
-.lesson {
-  font: 300 16px/1.15 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
 
 .lesson__link_to_course {
   display: inline-block;

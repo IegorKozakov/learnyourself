@@ -28,8 +28,6 @@
     width: 100%;
     vertical-align: top;
 
-    font: $font;
-
     &:before {
         @extend %borderPreview;
     }
@@ -59,7 +57,7 @@
     font-size: (24em/16);
     font-weight: 500;
     line-height: 1.25;
-    color: $title-color;
+
 }
 
 .course_review__desc {
@@ -69,7 +67,7 @@
 
 .course_review__desc span {
     font-weight: 500;
-    color: $title-color;
+
 }
 
 .course_review__wrap_btn {
@@ -91,7 +89,7 @@
     border: 1px solid #0268c7;
     border-radius: 4px;
 
-    @include transition(all .3s ease-out);
+    transition: all .3s ease-out;
 
     &:hover {
         background-color: #0268c7;

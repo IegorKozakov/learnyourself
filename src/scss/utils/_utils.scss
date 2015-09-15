@@ -1,18 +1,29 @@
 /**
- * Variables
+ * VARIABLES
  */
 $container-width: 90%;
-$container-max-width: 1120px;
+$container-max-width: 1280px;
 
-$font: 300 16px/1.15 'Fira Sans', "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+$font: 300 16px/1 'Fira Sans', "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+$font-stack: 'Fira Sans', "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+$font-size: 16px;
 
-$standart-animation: all .3s ease;
+/* colors */
+$brand: #0268c7;
+$brand-dark: #00529f;
 
-$brand-color: #27c993;
+$brand-green: #27c993;
+$brand-yellow: #f0c61f;
 
-$accent-color: #0268c7;
-$title-color: #2d2e32;
+$black: #2d2e32;
+$black-light: #767881;
+$black-lightest: #cdcfd9;
 
+$height-elems: 33px;
+
+/**
+ * HELPERS
+ */
 %clearfix {
   *zoom: 1;
   &:before, &:after {
@@ -25,29 +36,24 @@ $title-color: #2d2e32;
 }
 
 /**
- * Mixins
+ * MIXINS
  */
-@mixin container($with-max: true) {
+@mixin container( $with-max: true ) {
     position: relative;
     width: $container-width;
     margin: 0 auto;
 
-    @if $with-max { max-width: $container-max-width; }
+    @if $with-max { 
+        max-width: $container-max-width;
+    }
 }
 
-@mixin transition($args) {
-  -webkit-transition: $args;
-  -moz-transition: $args;
-  -ms-transition: $args;
-  -o-transition: $args;
-  transition: $args;
-}
-
-/**
- *
- */
 @mixin bp-large {
-  @media only screen and (min-width: 780px) {
-    @content;
-  }
+    @media only screen and (min-width: 780px) {
+        @content;
+    }
+}
+
+@mixin transition( $property: all, $duration: .4s, $timing: ease-out, $delay: 0s) {
+    transition: $property $duration $timing $delay;
 }

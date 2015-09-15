@@ -39,8 +39,8 @@ gulp.task('build-css', ['sass'], function() {
     return gulp.src(path.css + 'main.css')
         .pipe(autoprefixer({
             browsers: [
-                'last 2 version',
-                'ie 9'
+                'last 5 version',
+                'IE > 9'
             ],
             cascade: false
         }))

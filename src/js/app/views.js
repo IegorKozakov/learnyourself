@@ -43,7 +43,7 @@
     });
 
     LY.Views.Filters = Backbone.View.extend({
-        className: 'index__filters',
+        className: 'ct-select_list',
         render: function() {
             var that = this;
 

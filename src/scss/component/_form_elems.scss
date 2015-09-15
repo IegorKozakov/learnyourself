@@ -6,34 +6,46 @@
     box-shadow: none;
     outline: none;
 
-    font: $font;
-    color: #767881;
+    color: $black-light;
 }
 
 %elementRounded {
-    border: 1px solid #cdcfd9;
+    border: 1px solid $black-lightest;
     border-radius: 20px;
 }
 
-/* SELECT */
+/**
+ * SELECT
+ */
 .ct-select_wrap {
     display: inline-block;
     position: relative;
+    padding-top: 15px;
 
-    &:after {
-        content: " ";
+    &:before {
+        content: attr(title);
 
         position: absolute;
-        top: 1px;
-        right: 1px;
-    
-        width: 35px;
-        height: 31px;
-        
-        background: #fff url(../imgs/arrow_bottom.png) center no-repeat;
-        background-size: 10px 5px;
-    
-        border-radius: 0 20px 20px 0;
+        top: 0;
+        left: 15px;
+
+        font-size: 14px;
+        color: $black-light;
+    }
+
+    &:after {
+        content: '\e8af';
+
+        position: absolute;
+        top: 20px;
+        right: 15px;
+
+        @extend .icon;
+
+        font-size: 24px;
+        color: $black-lightest;
+
+        z-index: 1;
     }
 }
 
@@ -41,35 +53,42 @@
     @extend %resetElement;
     @extend %elementRounded;
 
-
-    height: 33px;
-    padding: 5px 35px 5px 15px;
-
-    @include transition(border-color .3s ease-out);
+    height: $height-elems;
+    padding: 5px 45px 5px 15px;
 
     appearance:none;
     -moz-appearance:none;
     -webkit-appearance:none;
 
+    z-index: 10;
+
+    @include transition( $property: border-color );
+
     &:hover,
     &:focus {
-        border-color: #767881;
+        border-color: $black-light;
     }
 
     &:disabled {
-        color: #cdcfd9;
+        color: $black-lightest;
     }
 
     &:disabled:hover {
-        border-color: #cdcfd9;
+        border-color: $black-lightest;
     }
 }
 
-/* SEARCH */
+/**
+ * SEARCH
+ */
 .ct-search {
     position: relative;
 
     &:before {
+        content: '\e804';
+
+        @extend .icon;
+
         position: absolute;
         top: 50%;
         margin-top: -10px;
@@ -77,18 +96,20 @@
 
         line-height: 1;
         font-size: 20px;
-        color: #a7a9ae;
+        color:$black-lightest;
 
-        background-color: #fff;
-        z-index: 99;
+        z-index: 1;
     }
 }
 
 .ct-search_inp {
     width: 100%;
+
     @extend %resetElement;
     @extend %elementRounded;
 
-    height: 33px;
-    padding: 5px 15px;
+    height: $height-elems;
+    padding: 5px 45px 5px 15px;
+
+    z-index: 10;
 }

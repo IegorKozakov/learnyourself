@@ -1,23 +1,23 @@
 @import url(http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,300italic,400italic,500italic&subset=cyrillic,latin);
 
 /* Base */
-@import "base/_reset.scss";
-@import "base/_icons.scss";
+@import 
+    "base/_reset.scss",
+    "base/_icons.scss";
 
 /* Utils */
 @import "utils/_utils.scss";
 
 /* Component */
-@import "component/_form_elems.scss";
-
-/* Layouts */
-@import "layout/_header.scss";
-@import "layout/footer.scss";
+@import 
+    "component/_header.scss",
+    "component/_form_elems.scss";
 
 @import "_main.scss";
 
-@import "layout/_index.scss";
-@import "layout/_courses_preview.scss";
-
-@import "layout/_course_details.scss";
-@import "layout/_lesson.scss";
+/* Layouts */
+@import 
+    "pages/_index.scss",
+    "pages/_courses_preview.scss",
+    "pages/_course_details.scss",
+    "pages/_lesson.scss";

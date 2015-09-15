@@ -10,7 +10,7 @@
         };
 
         function _getOthersOptions( filterName ) {
-            return _.uniq(LY.courses.pluck(filterName));
+            return _.uniq( LY.courses.pluck(filterName) );
         }
 
         function _createOptions( args ) {
@@ -25,8 +25,8 @@
 
         function _selectedOption( $select, sumOfOptions, name, settings ) {
             if (sumOfOptions < 2) {
-                $select.prop( "disabled", true ).
-                    find('option:nth-child(1)')
+                $select.prop('disabled', true )
+                    .find('option:nth-child(1)')
                     .prop('selected', true);
             } else {
                 $select.prepend(settings.defaultValue);
@@ -59,16 +59,13 @@
         }
 
         function _createListOfSelects() {
-            var $selectsWrap = $('<div/>', {
-                    class: 'filters__wrap',
-                    title: 'filters'
-                });
+            var selectsWrap = $( document.createDocumentFragment() );
 
             _.each(LY.courses.filters, function(filter, i, filters) {
-                $selectsWrap.append( _createSelect(filter) );
+                selectsWrap.append( _createSelect(filter) );
             });
 
-            return $selectsWrap;
+            return selectsWrap;
         }
 
         return {

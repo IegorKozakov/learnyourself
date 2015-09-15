@@ -1,0 +1,50 @@
+.header {
+    width: 100%;
+    padding: 20px 0;
+
+    background: linear-gradient(to right,  #0159aa 0%,#015ab0 5%,#015abd 11%,#015fc6 16%,#0268c7 20%,#0674c3 37%,#1499af 73%,#21b99c 89%,#27c893 100%);
+    box-shadow: 0px 0 4px 2px rgba(45, 46, 50, .6);
+
+    font: $font;
+}
+
+.header__inner {
+    @include container( $with-max: false );
+    @extend %clearfix;
+}
+
+.header__logo {
+    display: inline-block;
+    text-align: center;
+}
+
+.header__logo_link {
+    font-size: (21em/16);
+    font-weight: 500;
+    line-height: .955;
+    color: #fff;
+}
+
+.header__col_right {
+    float: right;
+}
+
+.header__link {
+    display: block;
+    position: relative;
+    padding: 10px;
+
+    color: #fff;
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    @include transition( $property: border-color );
+
+    &:hover {
+        border-color: $black-lightest;
+    }
+    &:active {
+        border-color: #fff;
+    }
+}
