@@ -5,9 +5,7 @@
     LY.namespace('Router');
 
     LY.Router = Backbone.Router.extend({
-        $main: $('.j-main'),
-        initialize: function() {
-        },
+        $mainContainer: $('.j-main'),
         loadView : function(view) {
             this.view && this.view.remove();
             this.view = view;
@@ -15,7 +13,7 @@
         },
         updateView: function(view) {
             this.loadView(view);
-            this.$main.append(view.render().el);
+            this.$mainContainer.append(view.render().el);
         },
         routes: {
             '' : 'index',
@@ -24,7 +22,6 @@
             '!/course/:idCourse/lesson/:idLesson' : 'lesson',
             '*query' : 'default'
         },
-
         index: function() {
             var that =  this;
 

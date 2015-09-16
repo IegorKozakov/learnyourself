@@ -2,16 +2,18 @@
     <h2 class="course_review__title">{{title}}</h2>
 
     {{#if starred}}
-        <button type="button" name="starredBtn" value="{{id}}" data-flag="remove" class="j-starred_course btn_star btn_star-active" title="Unstar"></button>
+        <button type="button" name="starredBtn" value="{{id}}" data-flag="remove" class="j-starred_course btn_star btn_star-active" title="Unstar">
+        </button>
     {{else}}
-        <button type="button" name="starredBtn" value="{{id}}" data-flag="add" class="j-starred_course btn_star" title="Star"></button>
+        <button type="button" name="starredBtn" value="{{id}}" data-flag="add" class="j-starred_course btn_star" title="Star">
+        </button>
     {{/if}}
 
     <p class="course_review__desc">
-        <span>{{lessonCount}}</span>&nbsp;{{declOfNum lessonCount "lesson\lessons"}}&nbsp;by&nbsp;<span>{{channelTitle}}</span>
+        <span>{{lessonCount}}</span>&nbsp;{{declOfNum lessonCount "урок\урока\уроков"}}&nbsp;by&nbsp;<span>{{channelTitle}}</span>
     </p>
 
     <div class="course_review__wrap_btn">
-        <a href="#!/course/{{id}}" class="course_review__link">More about course</a>
+        <a href="#!/course/{{id}}" class="course_review__link">Перейти к курсу</a>
     </div>
 </div>

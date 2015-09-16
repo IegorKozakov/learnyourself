@@ -1,0 +1,35 @@
+.breadcrumps__item {
+    display: inline-block;
+    position: relative;
+
+    padding: 0 0 0 15px;
+    margin: 0 20px 8px 0;
+
+    font: $font;
+    color: $black-light;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &:before {
+        content: '\e8ae';
+
+        @extend .icon;
+
+        position: absolute;
+        top: 50%;
+        margin-top: -10.5px;
+        left: -5px;
+
+        font-size: 21px;
+        line-height: 1;
+        color: #d4d5de;
+
+        @include transition( $property: left );
+    }
+
+    &:hover:before {
+        left: -8px;
+    }
+}

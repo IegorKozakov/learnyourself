@@ -1,0 +1,19 @@
+.main {
+    position: relative;
+    margin: 30px auto 40px;
+
+    font: $font;
+}
+
+.about__inner {
+     @include container;
+}
+
+/**
+ * BREADCRUMPS
+ */
+.course_details .breadcrumps,
+.lesson .breadcrumps {
+    @include container;
+    margin-bottom: 20px;
+}

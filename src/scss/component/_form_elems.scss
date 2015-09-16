@@ -1,40 +1,171 @@
 %resetElement {
-    display: inline-block;
+    display: block;
+    position: relative;
     background: transparent;
     border: none;
     box-shadow: none;
     outline: none;
 
-    font: $font;
-    color: #767881;
+    color: $black-light;
 }
 
 %elementRounded {
-    border: 1px solid #cdcfd9; 
+    border: 1px solid $black-lightest;
     border-radius: 20px;
 }
 
-%ct-inp_rounded {
-    @extend %resetElement;
+/**
+ * SELECT
+ */
+.ct-select_wrap {
+    display: inline-block;
+    position: relative;
+    padding-top: 15px;
 
-    padding: 5px 20px;
+    &:before {
+        content: attr(title);
 
-    @extend %elementRounded;
+        position: absolute;
+        top: 0;
+        left: 15px;
 
-    @include transition(border-color .3s ease-out);
+        font-size: 14px;
+        color: $black-light;
+    }
 
-    &:hover,
-    &:focus {
-        border-color: #767881;
+    &:after {
+        content: '\e8af';
+
+        position: absolute;
+        top: 20px;
+        right: 15px;
+
+        @extend .icon;
+
+        font-size: 24px;
+        color: $black-lightest;
+
+        z-index: 1;
     }
 }
 
-/* SELECT */
 .ct-select {
-    @extend %ct-inp_rounded;
+    @extend %resetElement;
+    @extend %elementRounded;
+
+    height: $height-elems;
+    padding: 5px 45px 5px 15px;
+
+    font-family: $font-stack;
+    font-size: $font-size;
+    font-weight: 300;
+
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+
+    z-index: 10;
+
+    @include transition( $property: border-color );
+
+    &:hover,
+    &:focus {
+        border-color: $black-light;
+    }
+
+    &:disabled {
+        color: $black-lightest;
+    }
+
+    &:disabled:hover {
+        border-color: $black-lightest;
+    }
 }
 
-/* SEARCH */
+/**
+ * SEARCH
+ */
 .ct-search {
-    @extend %ct-inp_rounded;
+    position: relative;
+
+
+    &:before {
+        content: '\e804';
+
+        @extend .icon;
+
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+        right: 15px;
+
+        line-height: 1;
+        font-size: 20px;
+        color:$black-lightest;
+
+        z-index: 1;
+    }
+}
+
+.ct-search_inp {
+    width: 100%;
+
+    @extend %resetElement;
+    @extend %elementRounded;
+
+    height: $height-elems;
+    padding: 5px 45px 5px 15px;
+
+    font-family: $font-stack;
+    font-size: $font-size;
+    font-weight: 300;
+    color: $black-light;
+    text-overflow: ellipsis;
+
+    z-index: 10;
+
+    @include transition( $property: border-color );
+
+    &:hover,
+    &:focus {
+        border-color: $black-light;
+    }
+}
+
+/**
+ * btn star
+ */
+.btn_star {
+    display: block;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    background: transparent;
+    border: none;
+    outline: none;
+
+     &:before {
+        content: '\e8d8';
+
+        @extend .icon;
+
+        margin-right: 0;
+        font-size: 25px;
+        color: $black-lightest;
+
+        @include transition( $property: color );
+    }
+
+    &:hover:before,
+    &.btn_star-active:active:before {
+        color: $black-light;
+    }
+
+    &:active:before,
+    &.btn_star-active:before,
+    &.btn_star-active:hover:before {
+        color: $brand-yellow;
+    }
 }

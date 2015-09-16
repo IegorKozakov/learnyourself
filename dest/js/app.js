@@ -143,10 +143,11 @@
      * @param  {[string]} t     [words separated by \]
      * @return {[string]}       [transformed word]
      */
-    Handlebars.registerHelper('declOfNum', function(val, t) {
-        var titles = t.split('\\');
+    Handlebars.registerHelper('declOfNum', function(number, t) {
+        var cases = [2, 0, 1, 1, 1, 2],
+            titles = t.split('\\');
 
-        return (val === 1) ? titles[0] : titles[1];
+        return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ]; 
     });
 
     /**
@@ -163,6 +164,10 @@
         var result = '<a href="#!/course/' + courseId + '/lesson/' + lessonId + '" class="lesson__neighbor_lesson ' + className + '" title="' + text + '"></a>';
 
         return new Handlebars.SafeString(result);
+    });
+
+    Handlebars.registerHelper("inc", function(value, options) {
+        return parseInt(value) + 1;
     });
 }(window, jQuery, Handlebars, _));
 ;
@@ -435,10 +440,18 @@
             /* set default searchQuery */
             this.searchQuery = sessionStorage.getItem('filter_lang') || '';
             /* set defaults filters */
-            this.filters = {
-                lang: sessionStorage.getItem('filter_lang') || 'all',
-                channelTitle: sessionStorage.getItem('filter_channelTitle') || 'all'
-            };
+            this.filters = [
+                {
+                    name: 'lang',
+                    title: 'Языки',
+                    value: sessionStorage.getItem('filter_lang') || 'all'
+                },
+                {
+                    name: 'channelTitle',
+                    title: 'Каналы',
+                    value: sessionStorage.getItem('filter_channelTitle') || 'all'
+                }
+            ];
         }
     });
 }(window, jQuery, _, Backbone));
@@ -447,7 +460,6 @@
     'use strict';
 
     LY.namespace('Views');
-
 
     LY.Views.Course = Backbone.View.extend({
         tagName: 'article',
@@ -488,66 +500,27 @@
     });
 
     LY.Views.Filters = Backbone.View.extend({
-        className: 'index__filters',
+        className: 'ct-select_list',
         render: function() {
             var that = this;
 
             that.$el.html( that._createSelects() );
             return that;
         },
-        _getUniqValue: function(attr) {
-            return _.uniq(this.collection.pluck(attr));
-        },
-        _createSelect: function(filter, filters) {
-            var that = this;
-
-            /* create select */
-            var $select = $('<select/>', {
-                'name': filter,
-                'id': 'filterBy' + filter,
-                'class': 'ct-select j-filters',
-                'html': '<option value="all">All</option>'
-            });
-
-            /* create options */
-            _.each(that._getUniqValue(filter), function (i) {
-                $('<option/>', {
-                    'value': i,
-                    'text': i
-                }).appendTo($select);
-            });
-
-            /* made selected */
-            if (sessionStorage.getItem('filter_' + filter)) {
-                $select.find('option[value="' + sessionStorage.getItem('filter_' + filter) + '"]')
-                    .prop('selected', true);
-            }
-
-            return $select;
-        },
         _createSelects: function() {
-            var that = this,
-                $selects = $('<div/>', {
-                    class: 'filters__wrap',
-                    title: 'filters'
-                });
-
-            for (var filter in that.collection.filters) {
-                $selects.append( that._createSelect(filter, that.collection.filters) );
-            };
-
-            return $selects;
+            return LY.Helpers.Select.createList();
         }
     });
 
     LY.Views.IndexDirectory = Backbone.View.extend({
         className: 'index',
         maps: {
-            course: '#courses_preview'
+            courses: '#courses_preview',
+            filters: '.j-filters'
         },
         tpl: LY.Helpers.getTpl('index'),
         events: {
-            'input #search': 'searchByQuery',
+            'input .j-search': 'searchByQuery',
             'change .j-filters': 'setFilter'
         },
         initialize: function() {
@@ -555,65 +528,49 @@
             this.collection.on("reset", this.renderFilteredList, this);
         },
         render: function () {
-            this.$el.html(this.tpl());
+            this.$el.html( this.tpl() );
 
             /* render courses */
-            this.$(this.maps.course).html( new LY.Views.Courses({collection: this.collection}) );
+            this.$( this.maps.courses ).html( new LY.Views.Courses({collection: this.collection}) );
 
             /* filters */
-            this.$('#filters').html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
+            this.$( this.maps.filters ).html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
             this.filterByType();
 
             /* init search */
             if ( sessionStorage.getItem('searchQuery') ) {
-                this.$('#search').val(sessionStorage.getItem('searchQuery'))
+                this.$('.j-search').val( sessionStorage.getItem('searchQuery') );
                 this.searchByQuery();
             }
 
             return this;
         },
         setFilter: function(e) {
-            var $select = $(e.currentTarget),
-                filterName = $select.attr('name'),
-                filterVal = $select.val();
+            var $select = $(e.currentTarget);
 
-            this.collection.filters[filterName] =filterVal;
-            sessionStorage.setItem('filter_' + filterName, filterVal)
+            LY.Helpers.Filters.setFilters( $select.attr('name'), $select.val() );
 
             this.trigger("change:filterType");
         },
         filterByType: function() {
-            var that = this,
-                filters = that.collection.filters,
-                collectionFiltered = [];
-
-            /* delete empty query */
-            for (var filter in filters) {
-                if(filters[filter] === '' || filters[filter] === 'all') {
-                    delete filters[filter];
-                }
-            }
-
-            collectionFiltered = _.where(that.collection.original.toJSON() , filters);
-
-            this.collection.reset(collectionFiltered);
+            this.collection.reset( LY.Helpers.Filters.getFiltersCollection() );
         },
         renderFilteredList: function() {
             var coursesView = new LY.Views.Courses({ collection: this.collection }).render().el;
 
-            this.$(this.maps.course).html(coursesView);
+            this.$( this.maps.courses ).html(coursesView);
         },
         _compareWithQuery: function (course, query) {
             var title = course.get('title').toLocaleLowerCase(),
                 description = course.get('description').toLocaleLowerCase(),
                 channelTitle = course.get('channelTitle').toLocaleLowerCase();
 
-            return title.indexOf(query) !== -1 || description.indexOf(query) !== -1 || channelTitle.indexOf(query) !== -1;
+            return title.indexOf(query) !== -1 || channelTitle.indexOf(query) !== -1;
         },
         _getFilteredCollectionByQuery: function(query, isOriginalCollection) {
             var that = this,
                 collection = (isOriginalCollection) ? that.collection.original.models : that.collection.models;
-
+          
             return _.filter(collection, function (item) { return that._compareWithQuery(item, query) });
         },
         searchByQuery: function(e) {
@@ -622,16 +579,17 @@
                 filteredCollection = [];
 
             /* set searchQuery */
-            that.searchQuery = query;
+            that.collection.searchQuery = query;
             sessionStorage.setItem('searchQuery', query);
 
-            if(that.searchQuery === '') {
+            if(query === '') {
                 that.filterByType();
+                that._getFilteredCollectionByQuery(query,true);
             } else {
-                filteredCollection = that._getFilteredCollectionByQuery(that.searchQuery);
+                filteredCollection = that._getFilteredCollectionByQuery(query);
 
                 if(!filteredCollection.length){
-                    filteredCollection = that._getFilteredCollectionByQuery(that.searchQuery, true);
+                    filteredCollection = that._getFilteredCollectionByQuery(query);
                 }
 
                 that.collection.reset(filteredCollection);
@@ -639,9 +597,8 @@
         }
     });
 
-
     /**
-     * View of CourseDetail details
+     * View of CourseDetail page
      */
     LY.Views.CourseDetail = Backbone.View.extend({
         className: 'course_details',
@@ -665,9 +622,8 @@
         }
     });
 
-
     /**
-     * View of Lesson details
+     * View of Lesson page
      */
     LY.Views.Lesson = Backbone.View.extend({
         className: 'lesson',
@@ -678,7 +634,6 @@
             return this;
         }
     });
-
 
     /**
      * View of about page
@@ -701,9 +656,7 @@
     LY.namespace('Router');
 
     LY.Router = Backbone.Router.extend({
-        $main: $('.j-main'),
-        initialize: function() {
-        },
+        $mainContainer: $('.j-main'),
         loadView : function(view) {
             this.view && this.view.remove();
             this.view = view;
@@ -711,7 +664,7 @@
         },
         updateView: function(view) {
             this.loadView(view);
-            this.$main.append(view.render().el);
+            this.$mainContainer.append(view.render().el);
         },
         routes: {
             '' : 'index',
@@ -720,7 +673,6 @@
             '!/course/:idCourse/lesson/:idLesson' : 'lesson',
             '*query' : 'default'
         },
-
         index: function() {
             var that =  this;
 
@@ -756,3 +708,129 @@
         }
     });
 }(window, jQuery, _, Backbone));
+;
+(function($, _){
+    'use strict';
+
+    LY.namespace('Helpers.Filters');
+
+    LY.Helpers.Filters = (function() {
+        function _getFilters() {
+            var filters = {};
+
+             _.each( LY.courses.filters, function(filter, i){
+                if( !(filter.value === 'all') ) {
+                    filters[filter.name] = filter.value;
+                }
+            });
+
+            return filters;
+        }
+
+        function _getFiltersCollection() {
+            var filters = _getFilters();
+
+            return _.where( LY.courses.original.toJSON(), filters);
+        }
+
+        function _setFilters(filterName, filterVal) {
+            _.each( LY.courses.filters, function(filter){
+                if(filter.name === filterName) {
+                    filter.value = filterVal; 
+                    return;
+                }
+            });
+
+            sessionStorage.setItem('filter_' + filterName, filterVal);
+        }
+
+        return {
+            setFilters: _setFilters,
+            getFiltersCollection: _getFiltersCollection
+        };
+    })();
+})(jQuery, _);
+;
+(function($){
+    'use strict';
+
+    LY.namespace('Helpers.Search');
+
+    LY.Helpers.Search = (function() {})();
+})(jQuery);
+;
+(function($){
+    'use strict';
+
+    LY.namespace('Helpers.Select');
+
+    LY.Helpers.Select = (function() {
+        var defaults = {
+            defaultValue: '<option value="all">Все</option>'
+        };
+
+        function _getOthersOptions( filterName ) {
+            return _.uniq( LY.courses.pluck(filterName) );
+        }
+
+        function _createOptions( args ) {
+            var $options = '';
+
+            _.each( _getOthersOptions(args.name), function (i) {
+                $options += '<option value="' + i + '">' + i + '</option>'
+            });
+
+            return $options;
+        }
+
+        function _selectedOption( $select, sumOfOptions, name, settings ) {
+            if (sumOfOptions < 2) {
+                $select.prop('disabled', true )
+                    .find('option:nth-child(1)')
+                    .prop('selected', true);
+            } else {
+                $select.prepend(settings.defaultValue);
+
+                if (sessionStorage.getItem('filter_' + name)) {
+                    $select.find('option[value="' + sessionStorage.getItem('filter_' + name) + '"]').prop('selected', true);
+                }
+            }
+        }
+        
+        function _createSelect( args, opts ) {
+            var settings = _.extend(defaults, opts),
+                $select = $('<select/>', {
+                    'name': args.name,
+                    'id': 'filterBy' + args.name,
+                    'class': 'ct-select ct-select-label j-filters'
+                }),
+                optionsHTML = '';
+
+            optionsHTML = _createOptions(args);
+
+            $select.append( optionsHTML );
+
+            _selectedOption($select, $(optionsHTML).length, args.name, settings);
+
+            return $('<div/>', {
+                'class': 'ct-select_wrap',
+                'title': args.title
+            }).append( $select );
+        }
+
+        function _createListOfSelects() {
+            var selectsWrap = $( document.createDocumentFragment() );
+
+            _.each(LY.courses.filters, function(filter, i, filters) {
+                selectsWrap.append( _createSelect(filter) );
+            });
+
+            return selectsWrap;
+        }
+
+        return {
+            create: _createSelect,
+            createList: _createListOfSelects
+        };
+    })();
+})(jQuery);
