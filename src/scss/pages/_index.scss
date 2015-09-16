@@ -46,3 +46,103 @@
         width: 75%;
     }
 }
+
+/**
+ * courses preview
+ */
+
+.courses_preview {
+    @include container;
+}
+
+.courses_preview__list {
+    font-size: 0;
+}
+
+.courses_preview__item {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+
+    vertical-align: top;
+
+    &:before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 1px;
+
+        position: absolute;
+        left: 0;
+
+        background: #cdcfd9;
+
+        @include bp-large {
+            width: 95%;
+        }
+    }
+
+    @include bp-large {
+        width: 50%;
+        padding: 0 2.5% 0 0;
+
+        &:nth-child(2n){
+            padding: 0 0 0 2.5%;
+        }
+        &:nth-child(2n):before {
+            left: auto;
+            right: 0;
+        }
+    }
+}
+
+.course_review__inner {
+    position: relative;
+    margin: 25px 25px 30px;
+
+    font: $font;
+}
+
+.course_review__title {
+    margin: 0 40px 10px 0;
+
+    font-size: (24em/16);
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+.course_review__desc {
+    margin: 0 0 20px 0;
+    color: $black-light;
+}
+
+.course_review__desc span {
+    font-weight: 500;
+    color: $black;
+}
+
+.course_review__wrap_btn {
+    @extend %clearfix;
+}
+
+.course_review__link {
+    display: inline-block;
+    padding: 11px 18px;
+    float: right;
+
+    font-size: (18em/16);
+    font-weight: 400;
+    color: $brand;
+
+
+    background-color: transparent;
+    border: 1px solid $brand;
+    border-radius: 4px;
+
+    @include transition();
+
+    &:hover {
+        background-color: #0268c7;
+        color: #fff;
+    }
+}

@@ -1,105 +1,91 @@
-.lesson {}
-
-.lesson__link_to_course {
-    display: inline-block;
-    margin: 0 0 20px 0;
-}
-
 .lesson__video {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    padding-top: 25px;
-    height: 0;
-
-    margin-bottom: 25px;
-    z-index: 99;
-
-    &:before,
-    &:after {
-        content: " ";
-        position: absolute;
-        top: 0;
-
-        display: block;
-        width: 5.555555555555556%;
-        height: 100%;
-
-        background: #000;
-        z-index: 100;
-    }
-    &:before {
-        left: -5.555555555555556%;
-    }
-    &:after {
-        right: -5.555555555555556%;
-    }
+    background: #000;
 }
 
-.lesson__video iframe {
+.lesson__video_wrap {
+    @include container;
+}
+
+.lesson__video_inner {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+
+.lesson__video_inner iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+}
 
-    background-color: #000;
+.lesson__info {
+    @include container;
+    margin-top: 20px;
 }
 
 .lesson__title {
     margin: 0 0 20px 0;
 
-    font-size: (21em/16);
+    font-size: (24em/16);
     font-weight: 500;
-    color: #1ba8ed;
+    color: $black;
 }
 
 .lesson__desc {
     font-size: (16em/16);
     font-style: italic;
+    font-weight: 400;
     line-height: 1.25;
+    color: $black;
 }
 
 .lesson__neighbor_lesson {
-    display: inline-block;
-    width: 5.555555555555556%;
-    height: 50px;
-
     position: absolute;
-    top: 50%;
-    margin-top: -25px;
+    top: 0;
+    width: 6.25%;
+    height: 100%;
 
-    line-height: 50px;
-    color: #fff;
+    &:before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
 
-    background: #000 url("../imgs/chevron/chevron.png") center 0 no-repeat;
+        @extend .icon;
 
-    z-index: 101;
+        color: $black-light;
+        font-size: 18px;
+
+        @include transition($property: color);
+
+        @include bp-large {
+            font-size: 28px;
+        }
+    }
+
+
+
+    &:hover:before {
+        color: $black-lightest;
+    }
+
+    &.lesson__neighbor_lesson-back {
+        left: -6.25%;
+    }
+    &.lesson__neighbor_lesson-back:before {
+        content: '\e8ac';
+    }
+    &.lesson__neighbor_lesson-forward {
+        right: -6.25%;
+    }
+    &.lesson__neighbor_lesson-forward:before {
+        content: '\e8ab';
+    }
 }
-    .lesson__neighbor_lesson-forward {
-        background-position-y: 0;
-        right: -5.555555555555556%;
-    }
-    .lesson__neighbor_lesson-forward:hover {
-        background-position-y: -50px;
-    }
-    .lesson__neighbor_lesson-forward:active {
-        background-position-y: -100px;
-    }
-    .lesson__neighbor_lesson-back {
-        background-position-y: -150px;
-        left: -5.555555555555556%;
-    }
-    .lesson__neighbor_lesson-back:hover {
-        background-position-y: -200px;
-    }
-    .lesson__neighbor_lesson-back:active {
-        background-position-y: -250px;
-    }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (min-device-pixel-ratio: 2) {
-    .lesson__neighbor_lesson {
-        background-image: url("../imgs/chevron/chevron_x2.png");
-        background-size: 24px 300px;
-    }
-}
+

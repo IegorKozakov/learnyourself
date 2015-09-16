@@ -1,4 +1,5 @@
-.course_details {
+.course_details__inner {
+    @include container;
 }
 
 .course_details__title {
@@ -11,67 +12,31 @@
 }
 
 .course_details__desc {
-    @extend %clearfix;
-}
-
-.course_details__description,
-.course_details__author_desc {
     font-style: italic;
+    font-weight: 400;
+    line-height: 1.25;
     word-wrap: break-word;
 }
-    .course_details__title,
-    .course_details__description,
-    .course_details__lessons {
-        margin: 0 0 20px 0;
-    }
 
-.course_details__lessons_list {
-    padding-left: 10px;
+.course_details__title,
+.course_details__desc {
+    margin: 0 0 20px 0;
 }
 
-.course_details__link {
-    display: inline-block;
-    margin: 0 0 5px 0;
+.course_details__info {
+    @extend %clearfix;
 
-    font-size: (18em/16);
-    font-weight: 400;
-    line-height: 1.5;
-    color: #1578a9;
-    transition: color .3s ease;
+    h2 {
+        margin: 0 0 15px 0;
+        padding-left: 10px;
+        
+        font-size: $font-size;
+        line-height: 25px;
+        font-weight: 300;
+        color: $black-light;
 
-    &:hover,
-    &:active {
-        color: #1ba8ed;
+        border-bottom: 1px solid $black-lightest;
     }
-}
-
-.course_details__author h3 {
-    margin-bottom: 5px;
-    padding-left: 10px;
-}
-
-.course_details__author_title,
-.course_details__author span {
-    font-size: (18em/16);
-
-}
-    .course_details__author_title {
-        font-weight: 500;
-    }
-    .course_details__author span {
-        font-weight: 400;
-    }
-
-.course_details__desc h2 {
-    margin: 0 0 15px 0;
-    padding-left: 10px;
-    
-    font-size: 16px;
-    line-height: 25px;
-    font-weight: 300;
-    color: #767881;
-
-    border-bottom: 1px solid #cdcfd9;
 }
 
 .course_details__lessons,
@@ -83,12 +48,66 @@
 }
 
 .course_details__lessons {
+    .course_details__lessons_list {
+        padding-left: 10px;
+    }
+
+    .course_details__link {
+        display: inline-block;
+        margin: 0 0 5px 0;
+
+        font-size: (18em/16);
+        font-weight: 400;
+        line-height: 1.5;
+        color: $brand;
+
+        @include transition( $property: color );
+
+        &:hover,
+        &:active {
+            color: $brand-dark;
+        }
+
+        span {
+            color: $black-light;
+            font-size: $font-size;
+            font-style: italic;
+            font-weight: 300;
+        }
+    }
+
     @include bp-large {
         width: 58.33333333333333%;
     }
 }
 
 .course_details__author {
+    .course_details__author_title {
+        margin-bottom: 10px;
+        padding-left: 10px;
+
+        font-weight: 500;
+    }
+
+    h4 {
+        margin-bottom: 5px;
+        padding-left: 10px;
+
+        span {
+            font-weight: 500;
+        }
+    }
+
+    .course_details__author_desc {
+        margin-top: 10px;
+        padding-left: 10px;
+
+        font-weight: 400;
+        line-height: 1.15;
+        color: $black-light;
+    }
+
+
     @include bp-large {
         width: 41.66666666666667%;
         padding-left: 2%;

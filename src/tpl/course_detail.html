@@ -1,25 +1,25 @@
+<div class="breadcrumps">
+    <a href="#" class="breadcrumps__item">Вернуться к списку курсов</a>
+</div>
+
 <div class="course_details__inner">
-    <div class="breadcrumps">
-        <a href="#" class="breadcrumps__item">Вернуться к списку курсов</a>
-    </div>
+    
 
     <h2 class="course_details__title">
         {{title}}
 
         {{#if starred}}
             <button type="button" name="starredBtn" value="{{id}}" data-flag="remove" class="j-starred_course btn_star btn_star-active" title="Unstar">
-                <i class="icon-star1"></i>
             </button>
         {{else}}
             <button type="button" name="starredBtn" value="{{id}}" data-flag="add" class="j-starred_course btn_star" title="Star">
-                <i class="icon-star1"></i>
             </button>
         {{/if}}
     </h2>
 
-    <h3 class="course_details__description">{{description}}</h3>
+    <h3 class="course_details__desc">{{description}}</h3>
 
-    <div class="course_details__desc">
+    <div class="course_details__info">
         <div class="course_details__lessons">
             <h2>Уроки</h2>
             <ul class="course_details__lessons_list">
@@ -37,8 +37,8 @@
             <h2>О канале</h2>
             <h3 class="course_details__author_title">{{channelTitle}}</h3>
 
-            <h3>SubscriberCount: <span>{{channelSubscriberCount}}</span></h3>
-            <h3>channelViewCount: <span>{{channelViewCount}}</span></h3>
+            <h4>Подписчиков: <span>{{channelSubscriberCount}}</span></h4>
+            <h4>Просмотров канала: <span>{{channelViewCount}}</span></h4>
             
             <h3 class="course_details__author_desc">{{channelDescription}}</h3>
         </div>

@@ -2,7 +2,7 @@
  * VARIABLES
  */
 $container-width: 90%;
-$container-max-width: 1280px;
+$container-max-width: 1120px;
 
 $font: 300 16px/1 'Fira Sans', "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 $font-stack: 'Fira Sans', "Lucida Sans Unicode", "Lucida Grande", sans-serif;
@@ -38,7 +38,7 @@ $height-elems: 33px;
 /**
  * MIXINS
  */
-@mixin container( $with-max: true ) {
+@mixin container( $width: $container-width, $with-max: true ) {
     position: relative;
     width: $container-width;
     margin: 0 auto;

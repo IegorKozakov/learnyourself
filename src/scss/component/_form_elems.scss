@@ -56,6 +56,10 @@
     height: $height-elems;
     padding: 5px 45px 5px 15px;
 
+    font-family: $font-stack;
+    font-size: $font-size;
+    font-weight: 300;
+
     appearance:none;
     -moz-appearance:none;
     -webkit-appearance:none;
@@ -84,6 +88,7 @@
 .ct-search {
     position: relative;
 
+
     &:before {
         content: '\e804';
 
@@ -111,5 +116,56 @@
     height: $height-elems;
     padding: 5px 45px 5px 15px;
 
+    font-family: $font-stack;
+    font-size: $font-size;
+    font-weight: 300;
+    color: $black-light;
+    text-overflow: ellipsis;
+
     z-index: 10;
+
+    @include transition( $property: border-color );
+
+    &:hover,
+    &:focus {
+        border-color: $black-light;
+    }
+}
+
+/**
+ * btn star
+ */
+.btn_star {
+    display: block;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    background: transparent;
+    border: none;
+    outline: none;
+
+     &:before {
+        content: '\e8d8';
+
+        @extend .icon;
+
+        margin-right: 0;
+        font-size: 25px;
+        color: $black-lightest;
+
+        @include transition( $property: color );
+    }
+
+    &:hover:before,
+    &.btn_star-active:active:before {
+        color: $black-light;
+    }
+
+    &:active:before,
+    &.btn_star-active:before,
+    &.btn_star-active:hover:before {
+        color: $brand-yellow;
+    }
 }
