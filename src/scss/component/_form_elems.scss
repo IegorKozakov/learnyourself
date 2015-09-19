@@ -20,6 +20,7 @@
 .ct-select_wrap {
     display: inline-block;
     position: relative;
+    max-width: 100%;
     padding-top: 15px;
 
     &:before {
@@ -53,6 +54,7 @@
     @extend %resetElement;
     @extend %elementRounded;
 
+    max-width: 100%;
     height: $height-elems;
     padding: 5px 45px 5px 15px;
 
