@@ -47,45 +47,63 @@
 .lesson__neighbor_lesson {
     position: absolute;
     top: 0;
-    width: 6.25%;
+    width: 15%;
     height: 100%;
+
+     @include bp-large {
+        width: 6.25%;
+    }
 
     &:before {
         position: absolute;
         top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
 
         @extend .icon;
 
+        margin-right: 0;
         color: $black-light;
         font-size: 18px;
 
         @include transition($property: color);
 
         @include bp-large {
-            font-size: 28px;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            right: auto;
         }
     }
-
-
 
     &:hover:before {
         color: $black-lightest;
     }
 
     &.lesson__neighbor_lesson-back {
-        left: -6.25%;
+        left: -5%;
+
+        @include bp-large {
+            left: -6.25%;
+        }
+
+        &:before {
+            content: '\e8ac';
+            left: -3px;
+
+            @include bp-large {
+                left: 50%;
+            }
+        }
     }
-    &.lesson__neighbor_lesson-back:before {
-        content: '\e8ac';
-    }
+
     &.lesson__neighbor_lesson-forward {
-        right: -6.25%;
-    }
-    &.lesson__neighbor_lesson-forward:before {
-        content: '\e8ab';
+        right: -5%;
+
+        @include bp-large {
+            right: -6.25%;
+        }
+
+        &:before {
+            content: '\e8ab';
+            right: -3px;
+        }
     }
 }
-
-

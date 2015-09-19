@@ -770,7 +770,7 @@
         };
 
         function _getOthersOptions( filterName ) {
-            return _.uniq( LY.courses.pluck(filterName) );
+            return _.uniq( LY.courses.original.pluck(filterName) );
         }
 
         function _createOptions( args ) {
