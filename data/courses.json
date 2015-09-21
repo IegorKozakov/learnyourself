@@ -33,5 +33,15 @@
         "id": "PLoonZ8wII66iUm84o7nadL-oqINzBLk5g",
         "lang": "ru",
         "tags": ["VCS", "Git"]
+    },
+    {
+        "id": "PL1F56EA413018EEE1",
+        "lang": "en",
+        "tags": ["VCS", "Git"]
+    },
+    {
+        "id": "PL6gx4Cwl9DGAKWClAD_iKpNC0bGHxGhcx",
+        "lang": "en",
+        "tags": ["VCS", "Git"]
     }
 ]
