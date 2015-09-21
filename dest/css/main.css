@@ -1265,6 +1265,15 @@ select {
 /**
  * MIXINS
  */
+.title, .course_review__title, .course_details__title, .lesson__title {
+  font-size: 1.25em;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #2d2e32; }
+  @media only screen and (min-width: 780px) {
+    .title, .course_review__title, .course_details__title, .lesson__title {
+      font-size: 1.375em; } }
+
 /* Component */
 .header {
   width: 100%;
@@ -1440,6 +1449,7 @@ select {
     left: -8px; }
 
 .main {
+  display: block;
   position: relative;
   margin: 30px auto 40px;
   font: 300 16px/1 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
@@ -1543,10 +1553,7 @@ select {
   font: 300 16px/1 "Fira Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
 
 .course_review__title {
-  margin: 0 40px 10px 0;
-  font-size: 1.5em;
-  font-weight: 500;
-  line-height: 1.25; }
+  margin: 0 40px 10px 0; }
 
 .course_review__desc {
   margin: 0 0 20px 0;
@@ -1579,10 +1586,7 @@ select {
 
 .course_details__title {
   position: relative;
-  padding: 0 40px 0 0;
-  font-size: 1.5em;
-  font-weight: 500;
-  line-height: 1.25; }
+  padding: 0 40px 0 0; }
 
 .course_details__desc {
   font-style: italic;
@@ -1688,10 +1692,7 @@ select {
   margin-top: 20px; }
 
 .lesson__title {
-  margin: 0 0 20px 0;
-  font-size: 1.5em;
-  font-weight: 500;
-  color: #2d2e32; }
+  margin: 0 0 20px 0; }
 
 .lesson__desc {
   font-size: 1em;

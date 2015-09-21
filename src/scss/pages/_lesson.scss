@@ -31,9 +31,7 @@
 .lesson__title {
     margin: 0 0 20px 0;
 
-    font-size: (24em/16);
-    font-weight: 500;
-    color: $black;
+    @extend .title;
 }
 
 .lesson__desc {

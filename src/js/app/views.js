@@ -104,21 +104,19 @@
             this.$( this.maps.courses ).html(coursesView);
         },
         _compareWithQuery: function (course, query) {
-            var title = course.get('title').toLocaleLowerCase(),
-                description = course.get('description').toLocaleLowerCase(),
-                channelTitle = course.get('channelTitle').toLocaleLowerCase();
+            var title = course.title.toLocaleLowerCase();
 
-            return title.indexOf(query) !== -1 || channelTitle.indexOf(query) !== -1;
+            return title.indexOf(query) !== -1;
         },
-        _getFilteredCollectionByQuery: function(query, isOriginalCollection) {
+        _getFilteredCollectionByQuery: function(query, filtersCollection) {
             var that = this,
-                collection = (isOriginalCollection) ? that.collection.original.models : that.collection.models;
+                collection = (filtersCollection) ? filtersCollection : that.collection.original.toJSON();
           
             return _.filter(collection, function (item) { return that._compareWithQuery(item, query) });
         },
         searchByQuery: function(e) {
             var that = this,
-                query = e ? ( e.currentTarget.value ).toLocaleLowerCase() : sessionStorage.getItem('searchQuery'),
+                query = e ? $.trim(( e.currentTarget.value ).toLocaleLowerCase()) : sessionStorage.getItem('searchQuery'),
                 filteredCollection = [];
 
             /* set searchQuery */
@@ -127,12 +125,12 @@
 
             if(query === '') {
                 that.filterByType();
-                that._getFilteredCollectionByQuery(query,true);
+                that._getFilteredCollectionByQuery(query);
             } else {
-                filteredCollection = that._getFilteredCollectionByQuery(query);
-
-                if(!filteredCollection.length){
+                if( LY.Helpers.Filters.isEnableFilter() ) {
                     filteredCollection = that._getFilteredCollectionByQuery(query);
+                } else {
+                    filteredCollection = that._getFilteredCollectionByQuery(query, LY.Helpers.Filters.getFiltersCollection());
                 }
 
                 that.collection.reset(filteredCollection);
