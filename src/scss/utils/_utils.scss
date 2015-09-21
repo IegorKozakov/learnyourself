@@ -8,6 +8,9 @@ $font: 300 16px/1 'Fira Sans', "Lucida Sans Unicode", "Lucida Grande", sans-seri
 $font-stack: 'Fira Sans', "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 $font-size: 16px;
 
+$title-size: 20em/16;
+$big-title-size: 22em/16;
+
 /* colors */
 $brand: #0268c7;
 $brand-dark: #00529f;
@@ -25,14 +28,14 @@ $height-elems: 33px;
  * HELPERS
  */
 %clearfix {
-  *zoom: 1;
-  &:before, &:after {
-    content: " ";
-    display: table;
-  }
-  &:after {
-    clear: both;
-  }
+    *zoom: 1;
+    &:before, &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
 }
 
 /**
@@ -56,4 +59,16 @@ $height-elems: 33px;
 
 @mixin transition( $property: all, $duration: .4s, $timing: ease-out, $delay: 0s) {
     transition: $property $duration $timing $delay;
+}
+
+.title {
+    font-size: $title-size;
+    font-weight: 500;
+    line-height: 1.25;
+
+    color: $black;
+
+    @include bp-large {
+        font-size: $big-title-size;
+    }
 }

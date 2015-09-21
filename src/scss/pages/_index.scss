@@ -106,9 +106,7 @@
 .course_review__title {
     margin: 0 40px 10px 0;
 
-    font-size: (24em/16);
-    font-weight: 500;
-    line-height: 1.25;
+    @extend .title;
 }
 
 .course_review__desc {
