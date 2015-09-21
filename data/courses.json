@@ -18,5 +18,30 @@
     {
         "id": "PL6LDsbZOeyrx462VmH18qS0a9Dw9LwpSu",
         "lang": "ru"
+    },
+    {
+        "id": "PLIU76b8Cjem5B3sufBJ_KFTpKkMEvaTQR",
+        "lang": "ru",
+        "tags": ["VCS", "Git"]
+    },
+    {
+        "id": "PL-bKhiP7inoox1aWvVlSv_Pk1tq9p4Ric",
+        "lang": "ru",
+        "tags": ["VCS", "Git", "Github", "SmartGit"]
+    },
+    {
+        "id": "PLoonZ8wII66iUm84o7nadL-oqINzBLk5g",
+        "lang": "ru",
+        "tags": ["VCS", "Git"]
+    },
+    {
+        "id": "PL1F56EA413018EEE1",
+        "lang": "en",
+        "tags": ["VCS", "Git"]
+    },
+    {
+        "id": "PL6gx4Cwl9DGAKWClAD_iKpNC0bGHxGhcx",
+        "lang": "en",
+        "tags": ["VCS", "Git"]
     }
 ]
