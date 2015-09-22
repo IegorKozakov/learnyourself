@@ -17,11 +17,9 @@
         },
         toggleStarred: function(e) {
             var that = this,
-                $btn = $(e.currentTarget),
-                courseId = $btn.val(),
-                action = $btn.data('flag');
+                $btn = $(e.currentTarget);
 
-            if ( LY.Courses.Star.update(courseId, action, that) ) {
+            if ( LY.Courses.Star.update($btn.val(), $btn.data('flag'), that) ) {
                  that.render();
             }
         }
@@ -31,14 +29,17 @@
         tagName: 'div',
         className: 'courses_preview__list',
         render: function(){
-            this.$el.empty();
+            var that = this;
 
-            this.collection.each(function(course, i, listCourses) {
+            that.$el.empty();
+
+            that.collection.each(function(course, i, listCourses) {
                 var item = new LY.Views.Course({model: course});
-                this.$el.append(item.render().el);
-            }, this);
 
-            return this;
+                that.$el.append( item.render().el );
+            }, that);
+
+            return that;
         }
     });
 
@@ -63,84 +64,74 @@
         },
         tpl: LY.Helpers.getTpl('index'),
         events: {
-            'input .j-search': 'searchByQuery',
-            'change .j-filters': 'setFilter'
+            'change .j-filters': 'setFilter',
+            'input  .j-search' : 'setSearchQuery'
         },
         initialize: function() {
-            this.on("change:filterType", this.filterByType, this);
-            this.collection.on("reset", this.renderFilteredList, this);
+            this.on('change:actualizeStateCollection', this.actualizeStateCollection, this);
+            this.collection.on('reset', this.renderFilteredList, this);
         },
         render: function () {
+            var lastSearchQuery = sessionStorage.getItem('searchQuery');
+
             this.$el.html( this.tpl() );
 
-            /* render courses */
-            this.$( this.maps.courses ).html( new LY.Views.Courses({collection: this.collection}) );
-
-            /* filters */
+            /** render filters */
             this.$( this.maps.filters ).html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
-            this.filterByType();
 
-            /* init search */
-            if ( sessionStorage.getItem('searchQuery') ) {
-                this.$('.j-search').val( sessionStorage.getItem('searchQuery') );
-                this.searchByQuery();
+            /** render courses */
+            this.$( this.maps.courses ).html( new LY.Views.Courses({ collection: this.collection.original }).render().el );
+
+            if( lastSearchQuery ) {
+                LY.Helpers.Search.setQuery(lastSearchQuery);
+                this.$el.find('.j-search').val(lastSearchQuery);
             }
+
+            this.actualizeStateCollection();
 
             return this;
         },
         setFilter: function(e) {
             var $select = $(e.currentTarget);
 
-            LY.Helpers.Filters.setFilters( $select.attr('name'), $select.val() );
-
-            this.trigger("change:filterType");
+            if ( $select.attr('name') ) {
+                LY.Helpers.Filters.setFilters( $select.attr('name'), $select.val() );
+                
+                this.trigger("change:actualizeStateCollection");
+            }
         },
-        filterByType: function() {
-            this.collection.reset( LY.Helpers.Filters.getFiltersCollection() );
+        setSearchQuery: function(e){
+            var query = e ? $.trim(( e.currentTarget.value ).toLocaleLowerCase()) : sessionStorage.getItem('searchQuery');
+
+            LY.Helpers.Search.setQuery( query );
+
+            this.trigger("change:actualizeStateCollection");
+        },
+        actualizeStateCollection: function() {
+            var collection = [];
+
+            if( LY.Helpers.Filters.isEnableFilter() && LY.Helpers.Search.getQuery() === '' ){
+                collection = LY.courses.original.toJSON();
+
+            } else if ( !LY.Helpers.Filters.isEnableFilter() && LY.Helpers.Search.getQuery() === '' ) {
+                collection = LY.Helpers.Filters.getFiltersCollection();
+
+            } else if ( LY.Helpers.Filters.isEnableFilter() && LY.Helpers.Search.getQuery() !== '') {
+                 collection = LY.Helpers.Search.getCollectionByQuery( );
+
+            } else {
+                collection = LY.Helpers.Search.getCollectionByQuery(false, LY.Helpers.Filters.getFiltersCollection());
+            }
+
+            this.collection.reset( collection );
         },
         renderFilteredList: function() {
             var coursesView = new LY.Views.Courses({ collection: this.collection }).render().el;
 
             this.$( this.maps.courses ).html(coursesView);
-        },
-        _compareWithQuery: function (course, query) {
-            var title = course.title.toLocaleLowerCase();
-
-            return title.indexOf(query) !== -1;
-        },
-        _getFilteredCollectionByQuery: function(query, filtersCollection) {
-            var that = this,
-                collection = (filtersCollection) ? filtersCollection : that.collection.original.toJSON();
-          
-            return _.filter(collection, function (item) { return that._compareWithQuery(item, query) });
-        },
-        searchByQuery: function(e) {
-            var that = this,
-                query = e ? $.trim(( e.currentTarget.value ).toLocaleLowerCase()) : sessionStorage.getItem('searchQuery'),
-                filteredCollection = [];
-
-            /* set searchQuery */
-            that.collection.searchQuery = query;
-            sessionStorage.setItem('searchQuery', query);
-
-            if(query === '') {
-                that.filterByType();
-                that._getFilteredCollectionByQuery(query);
-            } else {
-                if( LY.Helpers.Filters.isEnableFilter() ) {
-                    filteredCollection = that._getFilteredCollectionByQuery(query);
-                } else {
-                    filteredCollection = that._getFilteredCollectionByQuery(query, LY.Helpers.Filters.getFiltersCollection());
-                }
-
-                that.collection.reset(filteredCollection);
-            }
         }
     });
 
-    /**
-     * View of CourseDetail page
-     */
     LY.Views.CourseDetail = Backbone.View.extend({
         className: 'course_details',
         tpl: LY.Helpers.getTpl('course_detail'),
@@ -163,9 +154,6 @@
         }
     });
 
-    /**
-     * View of Lesson page
-     */
     LY.Views.Lesson = Backbone.View.extend({
         className: 'lesson',
         tpl: LY.Helpers.getTpl('lesson'),
@@ -176,9 +164,6 @@
         }
     });
 
-    /**
-     * View of about page
-     */
     LY.Views.aboutPage = Backbone.View.extend({
         className: 'about_page',
         tpl: 'about',
