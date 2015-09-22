@@ -328,76 +328,6 @@
 }(window, jQuery, _));
 ;
 (function(window, $, _, Backbone){
-    LY.namespace('Courses.Star');
-
-    LY.Courses.Star = (function() {
-        var name = 'coursesStarred';
-
-        function _getCoursesStarred() {
-            var courses = localStorage.getItem(name),
-                answ;
-
-            if ( _.isString(courses) && !_.isEmpty(courses) ) {
-                answ = JSON.parse(courses);
-            } else {
-                answ = false;
-            }
-
-            return answ;
-        }
-
-        function _updateStorage(courses) {
-            localStorage.setItem(name, JSON.stringify(courses) );
-        }
-
-        function _setCourseStarred(id, action, view) {
-            var originalModel = LY.courses.original.get(id);
-
-            view.model.set('starred', action);
-            originalModel.set('starred', action);
-        }
-
-        return {
-            getCoursesStarred: _getCoursesStarred,
-            isEmpty: function() {
-                var courses = _getCoursesStarred();
-
-                return ( courses === null ) ? true : false ;
-            },
-            isCourseStarredById: function(id) {
-                var courses = _getCoursesStarred();
-
-                if ( courses ) {
-                    return ( courses.indexOf(id) !== -1 ) ? true : false;
-                } else {
-                    return false;
-                }
-            },
-            update: function(id, action, view) {
-                var courses = _getCoursesStarred() || [],
-                    updatedCourses = [];
-
-                if( action === 'add' ) {
-                    updatedCourses = courses.push(id);
-                    updatedCourses = courses;
-                } else if ( action === 'remove' ) {
-                    updatedCourses = _.without(courses, id);
-                }
-                _updateStorage(updatedCourses);
-
-                if (view.model.get('starred')) {
-                    _setCourseStarred(id, false, view)
-                } else {
-                    _setCourseStarred(id, true, view);
-                }
-
-                return true;
-            }
-        }
-    })();
-}(window, jQuery, _, Backbone));
-;
-(function(window, $, _, Backbone){
     'use strict';
 
     LY.namespace('Models');
@@ -474,11 +404,9 @@
         },
         toggleStarred: function(e) {
             var that = this,
-                $btn = $(e.currentTarget),
-                courseId = $btn.val(),
-                action = $btn.data('flag');
+                $btn = $(e.currentTarget);
 
-            if ( LY.Courses.Star.update(courseId, action, that) ) {
+            if ( LY.Courses.Star.update($btn.val(), $btn.data('flag'), that) ) {
                  that.render();
             }
         }
@@ -488,14 +416,17 @@
         tagName: 'div',
         className: 'courses_preview__list',
         render: function(){
-            this.$el.empty();
+            var that = this;
 
-            this.collection.each(function(course, i, listCourses) {
+            that.$el.empty();
+
+            that.collection.each(function(course, i, listCourses) {
                 var item = new LY.Views.Course({model: course});
-                this.$el.append(item.render().el);
-            }, this);
 
-            return this;
+                that.$el.append( item.render().el );
+            }, that);
+
+            return that;
         }
     });
 
@@ -520,84 +451,74 @@
         },
         tpl: LY.Helpers.getTpl('index'),
         events: {
-            'input .j-search': 'searchByQuery',
-            'change .j-filters': 'setFilter'
+            'change .j-filters': 'setFilter',
+            'input  .j-search' : 'setSearchQuery'
         },
         initialize: function() {
-            this.on("change:filterType", this.filterByType, this);
-            this.collection.on("reset", this.renderFilteredList, this);
+            this.on('change:actualizeStateCollection', this.actualizeStateCollection, this);
+            this.collection.on('reset', this.renderFilteredList, this);
         },
         render: function () {
+            var lastSearchQuery = sessionStorage.getItem('searchQuery');
+
             this.$el.html( this.tpl() );
 
-            /* render courses */
-            this.$( this.maps.courses ).html( new LY.Views.Courses({collection: this.collection}) );
-
-            /* filters */
+            /** render filters */
             this.$( this.maps.filters ).html( new LY.Views.Filters({ collection: this.collection.original }).render().el );
-            this.filterByType();
 
-            /* init search */
-            if ( sessionStorage.getItem('searchQuery') ) {
-                this.$('.j-search').val( sessionStorage.getItem('searchQuery') );
-                this.searchByQuery();
+            /** render courses */
+            this.$( this.maps.courses ).html( new LY.Views.Courses({ collection: this.collection.original }).render().el );
+
+            if( lastSearchQuery ) {
+                LY.Helpers.Search.setQuery(lastSearchQuery);
+                this.$el.find('.j-search').val(lastSearchQuery);
             }
+
+            this.actualizeStateCollection();
 
             return this;
         },
         setFilter: function(e) {
             var $select = $(e.currentTarget);
 
-            LY.Helpers.Filters.setFilters( $select.attr('name'), $select.val() );
-
-            this.trigger("change:filterType");
+            if ( $select.attr('name') ) {
+                LY.Helpers.Filters.setFilters( $select.attr('name'), $select.val() );
+                
+                this.trigger("change:actualizeStateCollection");
+            }
         },
-        filterByType: function() {
-            this.collection.reset( LY.Helpers.Filters.getFiltersCollection() );
+        setSearchQuery: function(e){
+            var query = e ? $.trim(( e.currentTarget.value ).toLocaleLowerCase()) : sessionStorage.getItem('searchQuery');
+
+            LY.Helpers.Search.setQuery( query );
+
+            this.trigger("change:actualizeStateCollection");
+        },
+        actualizeStateCollection: function() {
+            var collection = [];
+
+            if( LY.Helpers.Filters.isEnableFilter() && LY.Helpers.Search.getQuery() === '' ){
+                collection = LY.courses.original.toJSON();
+
+            } else if ( !LY.Helpers.Filters.isEnableFilter() && LY.Helpers.Search.getQuery() === '' ) {
+                collection = LY.Helpers.Filters.getFiltersCollection();
+
+            } else if ( LY.Helpers.Filters.isEnableFilter() && LY.Helpers.Search.getQuery() !== '') {
+                 collection = LY.Helpers.Search.getCollectionByQuery( );
+
+            } else {
+                collection = LY.Helpers.Search.getCollectionByQuery(false, LY.Helpers.Filters.getFiltersCollection());
+            }
+
+            this.collection.reset( collection );
         },
         renderFilteredList: function() {
             var coursesView = new LY.Views.Courses({ collection: this.collection }).render().el;
 
             this.$( this.maps.courses ).html(coursesView);
-        },
-        _compareWithQuery: function (course, query) {
-            var title = course.title.toLocaleLowerCase();
-
-            return title.indexOf(query) !== -1;
-        },
-        _getFilteredCollectionByQuery: function(query, filtersCollection) {
-            var that = this,
-                collection = (filtersCollection) ? filtersCollection : that.collection.original.toJSON();
-          
-            return _.filter(collection, function (item) { return that._compareWithQuery(item, query) });
-        },
-        searchByQuery: function(e) {
-            var that = this,
-                query = e ? $.trim(( e.currentTarget.value ).toLocaleLowerCase()) : sessionStorage.getItem('searchQuery'),
-                filteredCollection = [];
-
-            /* set searchQuery */
-            that.collection.searchQuery = query;
-            sessionStorage.setItem('searchQuery', query);
-
-            if(query === '') {
-                that.filterByType();
-                that._getFilteredCollectionByQuery(query);
-            } else {
-                if( LY.Helpers.Filters.isEnableFilter() ) {
-                    filteredCollection = that._getFilteredCollectionByQuery(query);
-                } else {
-                    filteredCollection = that._getFilteredCollectionByQuery(query, LY.Helpers.Filters.getFiltersCollection());
-                }
-
-                that.collection.reset(filteredCollection);
-            }
         }
     });
 
-    /**
-     * View of CourseDetail page
-     */
     LY.Views.CourseDetail = Backbone.View.extend({
         className: 'course_details',
         tpl: LY.Helpers.getTpl('course_detail'),
@@ -620,9 +541,6 @@
         }
     });
 
-    /**
-     * View of Lesson page
-     */
     LY.Views.Lesson = Backbone.View.extend({
         className: 'lesson',
         tpl: LY.Helpers.getTpl('lesson'),
@@ -633,9 +551,6 @@
         }
     });
 
-    /**
-     * View of about page
-     */
     LY.Views.aboutPage = Backbone.View.extend({
         className: 'about_page',
         tpl: 'about',
@@ -732,7 +647,7 @@
         function _isEnableFilter() {
             var values = _.pluck(LY.courses.filters, 'value');
 
-            console.log(_.every(values, _isEveryFiltersByDefault));
+            return _.every(values, _isEveryFiltersByDefault);
         }
 
         function _getFiltersCollection() {
@@ -765,7 +680,38 @@
 
     LY.namespace('Helpers.Search');
 
-    LY.Helpers.Search = (function() {})();
+    LY.Helpers.Search = (function() {
+        var name = 'searchQuery';
+
+        function _getQuery() {
+            return LY.courses[name];
+        }
+
+        function _setSearchQuery(query) {
+            LY.courses[name] = query;
+            sessionStorage.setItem( name, query);
+        }
+
+        function _compareItemWithQuery(i, query) {
+            var title = i.title.toLocaleLowerCase();
+
+            return title.indexOf(query) !== -1;
+        }
+
+        function _getCollectionByQuery(q, collectionUnfiltered) {
+            var that = this,
+                query = q || _getQuery(),
+                collection = ( collectionUnfiltered ) ? collectionUnfiltered : LY.courses.original.toJSON();
+          
+            return _.filter(collection, function (item) { return _compareItemWithQuery(item, query) });
+        }
+
+        return {
+            getQuery: _getQuery,
+            setQuery: _setSearchQuery,
+            getCollectionByQuery: _getCollectionByQuery
+        };
+    })();
 })(jQuery);
 ;
 (function($){
@@ -843,3 +789,74 @@
         };
     })();
 })(jQuery);
+
+;
+(function(window, $, _, Backbone){
+    LY.namespace('Courses.Star');
+
+    LY.Courses.Star = (function() {
+        var name = 'coursesStarred';
+
+        function _getCoursesStarred() {
+            var courses = localStorage.getItem(name),
+                answ;
+
+            if ( _.isString(courses) && !_.isEmpty(courses) ) {
+                answ = JSON.parse(courses);
+            } else {
+                answ = false;
+            }
+
+            return answ;
+        }
+
+        function _updateStorage(courses) {
+            localStorage.setItem(name, JSON.stringify(courses) );
+        }
+
+        function _setCourseStarred(id, action, view) {
+            var originalModel = LY.courses.original.get(id);
+
+            view.model.set('starred', action);
+            originalModel.set('starred', action);
+        }
+
+        return {
+            getCoursesStarred: _getCoursesStarred,
+            isEmpty: function() {
+                var courses = _getCoursesStarred();
+
+                return ( courses === null ) ? true : false ;
+            },
+            isCourseStarredById: function(id) {
+                var courses = _getCoursesStarred();
+
+                if ( courses ) {
+                    return ( courses.indexOf(id) !== -1 ) ? true : false;
+                } else {
+                    return false;
+                }
+            },
+            update: function(id, action, view) {
+                var courses = _getCoursesStarred() || [],
+                    updatedCourses = [];
+
+                if( action === 'add' ) {
+                    updatedCourses = courses.push(id);
+                    updatedCourses = courses;
+                } else if ( action === 'remove' ) {
+                    updatedCourses = _.without(courses, id);
+                }
+                _updateStorage(updatedCourses);
+
+                if (view.model.get('starred')) {
+                    _setCourseStarred(id, false, view)
+                } else {
+                    _setCourseStarred(id, true, view);
+                }
+
+                return true;
+            }
+        };
+    })();
+}(window, jQuery, _, Backbone));

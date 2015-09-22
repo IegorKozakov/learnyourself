@@ -65,6 +65,6 @@
 
                 return true;
             }
-        }
+        };
     })();
 }(window, jQuery, _, Backbone));

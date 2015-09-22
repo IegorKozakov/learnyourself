@@ -24,7 +24,7 @@
         function _isEnableFilter() {
             var values = _.pluck(LY.courses.filters, 'value');
 
-            console.log(_.every(values, _isEveryFiltersByDefault));
+            return _.every(values, _isEveryFiltersByDefault);
         }
 
         function _getFiltersCollection() {
