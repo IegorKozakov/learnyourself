@@ -6,7 +6,7 @@
 
     LY.Helpers.Select = (function() {
         var DEFAULT_OPTION = '<option value="all">Все</option>',
-            LANGUAGES_PATH = '/data/languages.json';
+            LANGUAGES_PATH = LY.Helpers.getPathToData() + '/languages.json';
 
         function _getOthersOptions( filterName ) {
             return _.uniq( LY.courses.original.pluck(filterName) );
@@ -51,7 +51,7 @@
                 }
             }
         }
-        
+
         function _createSelect( args, opts ) {
             var $select = $('<select/>', {
                     'name': args.name,

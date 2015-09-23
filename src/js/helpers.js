@@ -110,7 +110,7 @@
 
     LY.Helpers.getPathToData = function(){
         var helpers = this,
-            pathIn = '/data/courses.json';
+            pathIn = '/data';
 
         return (helpers.getNameOfServer() === 'github') ? helpers.getUrlOrigin() + '/learnyourself' + pathIn : helpers.getUrlOrigin() + pathIn;
     };
