@@ -74,7 +74,7 @@
                     };
 
                 if( LY.courses === undefined ) {
-                    $.getJSON(LY.Helpers.getPathToData()).then(function(data) {
+                    $.getJSON(LY.Helpers.getPathToData() + '/courses.json').then(function(data) {
                         initialCollection = data;
                         params.id =  _.pluck(data, 'id').join(',');
 
