@@ -368,7 +368,7 @@
         },
         initialize: function() {
             /* set default searchQuery */
-            this.searchQuery = sessionStorage.getItem('filter_lang') || '';
+            this.searchQuery = sessionStorage.getItem('searchQuery') || '';
             /* set defaults filters */
             this.filters = [
                 {
@@ -714,37 +714,52 @@
     })();
 })(jQuery);
 ;
-(function($){
+(function($, _){
     'use strict';
 
     LY.namespace('Helpers.Select');
 
     LY.Helpers.Select = (function() {
-        var defaults = {
-            defaultValue: '<option value="all">Все</option>'
-        };
+        var DEFAULT_OPTION = '<option value="all">Все</option>',
+            LANGUAGES_PATH = '/data/languages.json';
 
         function _getOthersOptions( filterName ) {
             return _.uniq( LY.courses.original.pluck(filterName) );
         }
 
-        function _createOptions( args ) {
+        function _createOptions(args, isLangFilter) {
             var $options = '';
 
-            _.each( _getOthersOptions(args.name), function (i) {
-                $options += '<option value="' + i + '">' + i + '</option>'
-            });
+            if( isLangFilter ) {
+                $.ajax({
+                    type: 'GET',
+                    url: LANGUAGES_PATH,
+                    async: false,
+                    dataType: 'json',
+                    success: function(data){
+                         _.each( _getOthersOptions(args.name), function(i) {
+                            var langDetails = _.where(data, {'shortName': i});
+
+                            $options += '<option value="' + i + '">' + langDetails[0].fullName + '</option>';
+                        });
+                    }
+                });
+            } else {
+                _.each( _getOthersOptions(args.name), function(i) {
+                    $options += '<option value="' + i + '">' + i + '</option>';
+                });
+            }
 
             return $options;
         }
 
-        function _selectedOption( $select, sumOfOptions, name, settings ) {
-            if (sumOfOptions < 2) {
+        function _selectedOption( $select, sumOfOptions, name) {
+            if (sumOfOptions < 1) {
                 $select.prop('disabled', true )
                     .find('option:nth-child(1)')
                     .prop('selected', true);
             } else {
-                $select.prepend(settings.defaultValue);
+                $select.prepend(DEFAULT_OPTION);
 
                 if (sessionStorage.getItem('filter_' + name)) {
                     $select.find('option[value="' + sessionStorage.getItem('filter_' + name) + '"]').prop('selected', true);
@@ -753,19 +768,19 @@
         }
         
         function _createSelect( args, opts ) {
-            var settings = _.extend(defaults, opts),
-                $select = $('<select/>', {
+            var $select = $('<select/>', {
                     'name': args.name,
                     'id': 'filterBy' + args.name,
                     'class': 'ct-select ct-select-label j-filters'
                 }),
-                optionsHTML = '';
+                optionsHTML = '',
+                isLangFilter = (args.name === 'lang') ? true : false;
 
-            optionsHTML = _createOptions(args);
+            optionsHTML = _createOptions(args, isLangFilter);
 
             $select.append( optionsHTML );
 
-            _selectedOption($select, $(optionsHTML).length, args.name, settings);
+            _selectedOption($select, $(optionsHTML).length, args.name);
 
             return $('<div/>', {
                 'class': 'ct-select_wrap',
@@ -788,7 +803,7 @@
             createList: _createListOfSelects
         };
     })();
-})(jQuery);
+})(jQuery, _);
 
 ;
 (function(window, $, _, Backbone){

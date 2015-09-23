@@ -11,7 +11,7 @@
         },
         initialize: function() {
             /* set default searchQuery */
-            this.searchQuery = sessionStorage.getItem('filter_lang') || '';
+            this.searchQuery = sessionStorage.getItem('searchQuery') || '';
             /* set defaults filters */
             this.filters = [
                 {
