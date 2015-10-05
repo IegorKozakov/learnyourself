@@ -41,13 +41,13 @@ $height-elems: 33px;
 /**
  * MIXINS
  */
-@mixin container( $width: $container-width, $with-max: true ) {
+@mixin container( $width: $container-width, $with-max: true, $max-width: $container-max-width ) {
     position: relative;
     width: $container-width;
     margin: 0 auto;
 
-    @if $with-max { 
-        max-width: $container-max-width;
+    @if $with-max {
+        max-width: $max-width;
     }
 }
 

@@ -5,7 +5,7 @@
 }
 
 .lesson__video_wrap {
-    @include container;
+    @include container($max-width: 980px);
 }
 
 .lesson__video_inner {
