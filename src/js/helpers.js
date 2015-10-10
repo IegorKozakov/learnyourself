@@ -132,4 +132,13 @@
 
         return lesson;
     }
+    LY.Helpers.getContent = function(url){
+        var defer = $.Deferred();
+        $.ajax({
+            url:url
+        }).then(function(data){
+            defer.resolve(data);
+        });
+        return defer.promise();
+    }
 }(window, jQuery, Handlebars, _));

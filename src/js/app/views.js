@@ -168,9 +168,8 @@
         className: 'about_page',
         tpl: 'about',
         render: function(){
-            var content = LY.Helpers.getStaticPage('about');
-            $(this.el).html(content);
-
+            var that = this;
+            LY.Helpers.getContent('http://github-raw-cors-proxy.herokuapp.com/dimaspirit/learnyourself/blob/gh-pages/README.md').then(function(data){$(that.el).html(data);});
             return this;
         }
     });
