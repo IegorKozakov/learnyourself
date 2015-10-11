@@ -570,11 +570,13 @@
         className: 'about_page',
         tpl: 'about',
         render: function(){
-            var that = this;
-            LY.Helpers.getContent('http://github-raw-cors-proxy.herokuapp.com/dimaspirit/learnyourself/blob/gh-pages/README.md').then(function(data){
-                var converter = new showdown.Converter();
-                $(that.el).html(converter.makeHtml(data));
+            var that = this,
+                url = 'https://cdn.rawgit.com/dimaspirit/learnyourself/gh-pages/README.md';
+
+            LY.Helpers.getContent(url).then(function(data){
+                $(that.el).html(new showdown.Converter().makeHtml(data));
             });
+
             return this;
         }
     });
