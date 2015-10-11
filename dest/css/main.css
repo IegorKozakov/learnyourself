@@ -1746,15 +1746,16 @@ select {
       right: -3px; }
 
 .about_page {
+  position: relative;
   width: 90%;
-  max-width: 1120px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  max-width: 1120px; }
   .about_page h4,
   .about_page h5 {
-    font-size: 1.25em;
-    line-height: 1.25;
+    margin: 0 0 10px;
     font-weight: 500;
-    margin: 0 0 10px; }
+    font-size: 1.25em;
+    line-height: 1.25; }
   .about_page p {
     margin: 0 0 10px; }
   .about_page a {
