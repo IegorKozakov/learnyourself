@@ -1744,3 +1744,21 @@ select {
     .lesson__neighbor_lesson.lesson__neighbor_lesson-forward:before {
       content: '\e8ab';
       right: -3px; }
+
+.about_page {
+  width: 90%;
+  max-width: 1120px;
+  margin: 0 auto; }
+  .about_page h4,
+  .about_page h5 {
+    font-size: 1.25em;
+    line-height: 1.25;
+    font-weight: 500;
+    margin: 0 0 10px; }
+  .about_page p {
+    margin: 0 0 10px; }
+  .about_page a {
+    color: #0268c7;
+    transition: all 0.4s ease-out 0s; }
+    .about_page a:hover {
+      color: #00529f; }

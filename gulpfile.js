@@ -59,7 +59,8 @@ gulp.task('build-js-libs', function() {
         path.bower + 'underscore/underscore.js',
         path.bower + 'backbone/backbone.js',
         path.bower + 'handlebars/handlebars.js',
-        path.bower + 'parsemejs/parseMe.js'
+        path.bower + 'parsemejs/parseMe.js',
+        path.bower + 'showdown/dist/showdown.js'
     ])
     .pipe(concat('libs.js'))
     .pipe(uglify())

@@ -61,6 +61,11 @@ $height-elems: 33px;
     transition: $property $duration $timing $delay;
 }
 
+@mixin f-param($f-size:normal, $l-height:normal) {
+    font-size: $f-size;
+    line-height:$l-height;
+}
+
 .title {
     font-size: $title-size;
     font-weight: 500;

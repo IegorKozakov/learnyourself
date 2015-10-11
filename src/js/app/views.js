@@ -169,7 +169,10 @@
         tpl: 'about',
         render: function(){
             var that = this;
-            LY.Helpers.getContent('http://github-raw-cors-proxy.herokuapp.com/dimaspirit/learnyourself/blob/gh-pages/README.md').then(function(data){$(that.el).html(data);});
+            LY.Helpers.getContent('http://github-raw-cors-proxy.herokuapp.com/dimaspirit/learnyourself/blob/gh-pages/README.md').then(function(data){
+                var converter = new showdown.Converter();
+                $(that.el).html(converter.makeHtml(data));
+            });
             return this;
         }
     });
